@@ -9,7 +9,7 @@
 
 Notre application web sera basée sur un modèle de rencontre en ligne traditionnel. Vous aurez la possibilité de créer un compte, d'y ajouter des photos avant de vous lancer dans la recherche de l'amour :revolving_hearts:.
 
-Nous vous proposerons en fonction des dons que vous effectuerez sur notre site un certain nombre de like, en cas de like réciproque s'active le mode chat. Le reste ne dépend que de vous :smirk:.
+Nous vous proposerons en fonction des dons que vous effectuerez sur notre site un certain nombre de like. En cas de like réciproque, le mode chat s'activera. Le reste ne dépend que de vous :smirk:.
 
 Vous pourrez bien sûr, définir _votre ville_, ainsi qu'_un rayon_ dans lequel lancer votre recherche mais également sur des critères bien plus important tel que _le jeu_ sur lequel se trouve votre futur moitié, ainsi que _son classement_ sur ce même jeu :video_game:.
 
