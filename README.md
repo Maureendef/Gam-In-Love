@@ -25,4 +25,4 @@ Les uses cases du général avec un zoom sur des parties plus spécifique:
 ![uses case 3](https://media.discordapp.net/attachments/642305625468174336/642328486194708506/unknown.png "Gestion Compte")
 
 Le MCD :
-![MCD](https://github.com/Maureendef/GaminLove/blob/master/docs/Diagram/MCD.PNG "MCD")
+![MCD](https://github.com/Maureendef/Gam-In-Love/blob/master/docs/Diagram/MCD.PNG "MCD")
