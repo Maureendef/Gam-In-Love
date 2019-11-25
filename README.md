@@ -1,4 +1,4 @@
-![logo](https://github.com/Maureendef/Gam-In-Love/blob/master/docs/Maquette/accueil2.jpg "Accueil")
+![logo](https://github.com/Maureendef/Gam-In-Love/blob/master/docs/Maquette/accueil2.jpg)
 
 <!-- blank line -->
 ----
