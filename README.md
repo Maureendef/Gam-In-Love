@@ -15,14 +15,72 @@ Vous pourrez bien sûr, définir _votre ville_, ainsi qu'_un rayon_ dans lequel 
 
 Il faut savoir que nous ne sommes pas une organisation bénévole et dans cet unique but, il vous sera proposé des services additionnels (allant de la simple extension du nombre de like, la possibilité de voir qui vous like, ou encore des services plus "**spéciaux**") contre une certaine somme :moneybag:.
 
-Voici une maquette du site : [Cliquez ici!](https://marvelapp.com/jg52b09/screen/63516085)
+**Voici une maquette du site :** [Cliquez ici!](https://marvelapp.com/jg52b09/screen/63516085)
 
-Les uses cases du général avec un zoom sur des parties plus spécifique:
+**Les uses cases du général avec un zoom sur des parties plus spécifique:**
 ![uses case 1](https://media.discordapp.net/attachments/642305625468174336/642328326677069829/unknown.png "cas général")
 
 ![uses case 2](https://media.discordapp.net/attachments/642305625468174336/642328411884355584/unknown.png "Rechercher")
 
 ![uses case 3](https://media.discordapp.net/attachments/642305625468174336/642328486194708506/unknown.png "Gestion Compte")
 
-Le MCD :
+**Le MCD :**
 ![MCD](https://github.com/Maureendef/Gam-In-Love/blob/master/docs/Diagram/MCD.PNG "MCD")
+
+**Liste des endpoints :**
+
+```
+Endpoint de base
+/gaminlove
+
+Se connecter
+/gaminlove/log_in
+
+S'inscrire
+/gaminlove/sign_up
+
+Modifier son profil
+/gaminlove/update_profile
+
+Supprimer son profil
+/gaminlove/delete_profile
+
+Faire une recherche
+/gaminlove/search
+
+Afficher un geek
+/gaminlove/geek
+
+Liker
+/gaminlove/like
+
+Superliker
+/gaminlove/superlike
+
+Disliker
+/gaminlove/dislike
+
+Afficher les matchs
+/gaminlove/matchs
+
+Supprimer un match
+/gaminlove/delete_match
+
+Afficher les mp
+/gaminlove/mp
+
+Envoyer un mp
+/gaminlove/send_mp
+
+Afficher les events
+/gaminlove/events
+
+Participer à un event
+/gaminlove/participate_event
+
+Ajouter un jeu
+/gaminlove/add_game
+
+Etre admin
+/gaminlove/admin
+```
