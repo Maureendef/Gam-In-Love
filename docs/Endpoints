@@ -1,0 +1,53 @@
+Endpoint de base
+/gaminlove
+
+Se connecter
+/gaminlove/log_in
+
+S'inscrire
+/gaminlove/sign_up
+
+Modifier son profil
+/gaminlove/update_profile
+
+Supprimer son profil
+/gaminlove/delete_profile
+
+Faire une recherche
+/gaminlove/search
+
+Afficher un geek
+/gaminlove/geek
+
+Liker
+/gaminlove/like
+
+Superliker
+/gaminlove/superlike
+
+Disliker
+/gaminlove/dislike
+
+Afficher les matchs
+/gaminlove/matchs
+
+Supprimer un match
+/gaminlove/delete_match
+
+Afficher les mp
+/gaminlove/mp
+
+Envoyer un mp
+/gaminlove/send_mp
+
+Afficher les events
+/gaminlove/events
+
+Participer à un event
+/gaminlove/participate_event
+
+Ajouter un jeu
+/gaminlove/add_game
+
+Etre admin
+/gaminlove/admin
