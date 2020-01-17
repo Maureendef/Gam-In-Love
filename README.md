@@ -80,7 +80,4 @@ Participer à un event
 
 Ajouter un jeu
 /gaminlove/add_game
-
-Etre admin
-/gaminlove/admin
 ```
