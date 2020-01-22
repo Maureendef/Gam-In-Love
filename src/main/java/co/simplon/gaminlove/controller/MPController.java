@@ -55,7 +55,7 @@ public class MPController {
 			return ResponseEntity.ok(optMP.get());
 		} else {
 			return ResponseEntity.notFound().build();
-		}s
+		}
 	}
 	@RequestMapping("/del/{id}")
 	public void delOne(@PathVariable int id) {
