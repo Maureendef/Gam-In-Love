@@ -38,8 +38,10 @@ public class Geek {
 	private String compte;
 	private String email;
 	@OneToOne(cascade = CascadeType.ALL)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Album album;
 	@OneToOne(cascade = CascadeType.ALL)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Catalogue catalogue;
 
 }
