@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.gaminlove.model.Album;
 import co.simplon.gaminlove.model.Photo;
+import co.simplon.gaminlove.repository.AlbumRepository;
 import co.simplon.gaminlove.repository.PhotoRepository;
 
 /**
@@ -28,6 +29,7 @@ public class PhotoController {
 
 	@Autowired
 	private PhotoRepository photoRepository;
+	private AlbumRepository albumRepository;
 
 	/**
 	 * Crée une nouvelle photo avec l'url spécifié et l'enregistre en base.
@@ -35,12 +37,18 @@ public class PhotoController {
 	 * @param url album
 	 * @return la photo stockée en base (avec l'id à jour si généré)
 	 */
-	@RequestMapping(path = "/add/{url}/{album}")
-	public Photo addNew(@PathVariable String url, @PathVariable Album album) {
+	@RequestMapping(path = "/add/{album}/{url}")
+	public Photo addNew(@PathVariable Album album, @PathVariable String url) {
 
 		Photo newPhoto = new Photo();
 		newPhoto.setUrl(url);
-		newPhoto.setAlbum(album);
+
+		Optional<Album> optAlbum = albumRepository.findById(album.getId());
+		Album updateAlbum = albumRepository.findById(album.getId()).get();
+		if (optAlbum.isPresent()) {
+			updateAlbum.getPhotos().add(newPhoto);
+
+		}
 
 		return photoRepository.save(newPhoto);
 	}
