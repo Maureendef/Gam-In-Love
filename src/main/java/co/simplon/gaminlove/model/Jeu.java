@@ -36,5 +36,7 @@ public class Jeu {
 	private Geek geekId;
 	private String nom;
 	private String rang;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Catalogue catalogue;
 
 }
