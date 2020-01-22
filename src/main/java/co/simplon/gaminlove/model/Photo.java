@@ -28,8 +28,6 @@ public class Photo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Geek geekId;
 	private String url;
 
 }

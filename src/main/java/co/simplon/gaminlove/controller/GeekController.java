@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import co.simplon.gaminlove.repository.GeekRepository;
  */
 @RestController
 @RequestMapping(path = "/geek")
+@CrossOrigin("*")
 public class GeekController {
 	
 	// permet d'initialiser le repo, par le mécanisme d'injection de dépendance
@@ -39,7 +41,7 @@ public class GeekController {
 	 * @return le geek stocké en base (avec l'id à jour si généré)
 	 */
 	@RequestMapping(path = "/add/{age}/{pseudo}/{lieu}/{sexe}/{compte}/{email}")
-	public Geek addNew(@PathVariable int age, @PathVariable String pseudo, @PathVariable String lieu, @PathVariable String sexe, @PathVariable String compte, @PathVariable String email) {
+	public Geek addNew(@PathVariable int age, @PathVariable String pseudo, @PathVariable String lieu, @PathVariable String sexe, @PathVariable String compte, @PathVariable String email, @PathVariable String photo) {
 		Geek newGeek = new Geek();
 		newGeek.setAge(age);
 		newGeek.setPseudo(pseudo);
@@ -47,6 +49,9 @@ public class GeekController {
 		newGeek.setSexe(sexe);
 		newGeek.setCompte(compte);
 		newGeek.setEmail(email);
+//		Photo newPhoto = new Photo();
+//		newPhoto.setUrl(photo);
+//		newGeek.getPhoto().add(newPhoto);
 		return geekRepository.save(newGeek);
 	}
 
