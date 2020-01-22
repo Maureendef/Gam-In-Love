@@ -1,5 +1,6 @@
 package co.simplon.gaminlove.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,9 +32,9 @@ public class MP {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Geek geekEmetteur;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Geek geekRecepteur;
 
 }

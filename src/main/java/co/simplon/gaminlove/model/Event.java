@@ -3,6 +3,7 @@ package co.simplon.gaminlove.model;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,7 +32,7 @@ public class Event {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL)
 	private Collection<Geek> listeParticipant;
 	private String nom;
 	private String lieu;

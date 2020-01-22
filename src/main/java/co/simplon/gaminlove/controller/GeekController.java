@@ -1,6 +1,5 @@
 package co.simplon.gaminlove.controller;
 
-import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +38,8 @@ public class GeekController {
 	 * @param nom
 	 * @return le geek stocké en base (avec l'id à jour si généré)
 	 */
-	@RequestMapping(path = "/add")
-	public Geek addNew(@RequestParam int age, @RequestParam String pseudo, @RequestParam String lieu, @RequestParam String sexe, @RequestParam String compte, @RequestParam String email) {
+	@RequestMapping(path = "/add/{age}/{pseudo}/{lieu}/{sexe}/{compte}/{email}")
+	public Geek addNew(@PathVariable int age, @PathVariable String pseudo, @PathVariable String lieu, @PathVariable String sexe, @PathVariable String compte, @PathVariable String email) {
 		Geek newGeek = new Geek();
 		newGeek.setAge(age);
 		newGeek.setPseudo(pseudo);
@@ -52,9 +51,9 @@ public class GeekController {
 	}
 
 	/**
-	 * Retourne tous les heros de la base.
+	 * Retourne tous les geek de la base.
 	 * 
-	 * @return une liste de heros
+	 * @return une liste de geek
 	 */
 	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<Geek> getAll() {
@@ -67,8 +66,8 @@ public class GeekController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping(path = "/get")
-	public ResponseEntity<Geek> getOne(@RequestParam int id) {
+	@GetMapping(path = "/get/{id}")
+	public ResponseEntity<Geek> getOne(@PathVariable int id) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		if (optGeek.isPresent()) {
 			return ResponseEntity.ok(optGeek.get());
@@ -83,11 +82,10 @@ public class GeekController {
 	 * @param id, age, lieu, compte
 	 * @return geek à jour
 	 */
-	@GetMapping(path = "/update")
-	public Geek updateOne(@RequestParam int id, int age, String lieu, String compte) {
+	@GetMapping(path = "/update/{id}/{age}/{lieu}/{compte}")
+	public Geek updateOne(@PathVariable int id, @PathVariable int age, @PathVariable String lieu, @PathVariable String compte) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		Geek updateGeek = geekRepository.findById(id).get();
-		// Geek newGeek = new Geek();
 		if (optGeek.isPresent()) {
 			updateGeek.setAge(age);
 			updateGeek.setLieu(lieu);
