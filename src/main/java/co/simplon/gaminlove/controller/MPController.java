@@ -2,6 +2,7 @@ package co.simplon.gaminlove.controller;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ import co.simplon.gaminlove.repository.MPRepository;
 @CrossOrigin("*")
 public class MPController {
 	
+	@Autowired
 	private MPRepository mpRepository;
 	/**
 	 * Crée un MP et l'enregistre en base.
