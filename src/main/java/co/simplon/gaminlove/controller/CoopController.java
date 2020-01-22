@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.gaminlove.model.Geek;
-import co.simplon.gaminlove.model.Match;
-import co.simplon.gaminlove.repository.MatchRepository;
+import co.simplon.gaminlove.model.Coop;
+import co.simplon.gaminlove.repository.CoopRepository;
 
 /**
  * Le controller qui permet d'acceder au CRUD de la table Match
@@ -21,12 +21,12 @@ import co.simplon.gaminlove.repository.MatchRepository;
  *
  */
 @RestController
-@RequestMapping(path="/match")
+@RequestMapping(path="/coop")
 @CrossOrigin("*")
-public class MatchController {
+public class CoopController {
 
 	@Autowired
-	private MatchRepository matchRepository;
+	private CoopRepository matchRepository;
 	
 	/**
 	 * Crée un nouveau match avec le type spécifié et l'enregistre en base.
@@ -35,8 +35,8 @@ public class MatchController {
 	 * @return l'action est stockée en base (avec l'id auto-générée)
 	 */
 	@RequestMapping(path = "/add/{emetteur}/{recepteur}")
-	public Match addNew(@PathVariable Geek emetteur, @PathVariable Geek recepteur) {
-		Match newMatch = new Match();
+	public Coop addNew(@PathVariable Geek emetteur, @PathVariable Geek recepteur) {
+		Coop newMatch = new Coop();
 		newMatch.setEmetteur(emetteur);
 		newMatch.setRecepteur(recepteur);
 		return matchRepository.save(newMatch);		
@@ -48,7 +48,7 @@ public class MatchController {
 	 * @return une liste d'action
 	 */
 	@GetMapping(path = "/all")
-	public @ResponseBody Iterable<Match> getAll(){
+	public @ResponseBody Iterable<Coop> getAll(){
 		return matchRepository.findAll();		
 	}
 	
@@ -60,7 +60,7 @@ public class MatchController {
 	 */
 	@RequestMapping("/del/{id}")
 	public void delOne(@PathVariable int id) {
-		Optional<Match> optMatch = matchRepository.findById(id);
+		Optional<Coop> optMatch = matchRepository.findById(id);
 		if (optMatch.isPresent() ) {
 			matchRepository.deleteById(id);
 			System.out.println("Action supprimée");

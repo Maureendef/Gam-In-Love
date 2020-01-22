@@ -14,7 +14,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Une simple classe pour représenter un match: un id, l'id du geek émetteur et
+ * Une simple classe pour représenter une Coop: un id, l'id du geek émetteur et
  * de l'id du geek récepteur.
  * 
  * @author Maureen, Nicolas, Virgile
@@ -26,7 +26,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Match {
+public class Coop {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

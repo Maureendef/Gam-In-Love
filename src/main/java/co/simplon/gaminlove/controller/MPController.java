@@ -14,6 +14,12 @@ import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.model.MP;
 import co.simplon.gaminlove.repository.MPRepository;
 
+/**
+ * Le controller qui permet d'acceder au CRUD de la table MP
+ * 
+ * @author Maureen, Nicolas, Virgile
+ *
+ */
 @RestController
 @RequestMapping(path = "/mp")
 @CrossOrigin("*")
@@ -26,24 +32,26 @@ public class MPController {
 	 * @param geekEmetteur & geekRecepteur
 	 * @return le MP stocké en base (avec l'id à jour si généré)
 	 */
-	@RequestMapping(path = "/add/{geekEmetteur}/{geekRecepteur}")
-	public MP addNew(@PathVariable Geek geekEmetteur, @PathVariable Geek geekRecepteur) {
+	@RequestMapping(path = "/add/{geekEmetteur}/{geekRecepteur}/{message}")
+	public MP addNew(@PathVariable Geek geekEmetteur, @PathVariable Geek geekRecepteur, @PathVariable String message) {
 		MP newMP = new MP();
 		newMP.setGeekEmetteur(geekEmetteur);
 		newMP.setGeekRecepteur(geekRecepteur);
-
+		newMP.setMessage(message);
 
 		return mpRepository.save(newMP);
 	}	
+	
 	/**
 	 * Retourne tous Mp de la base
 	 * 
 	 * @return une liste de MP
 	 */
-	@GetMapping(path = "/allmp")
+	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<MP> getAll() {
 		return mpRepository.findAll();
 	}
+	
 	/**
 	 * Retourne le mp d'id spécifié.
 	 * 

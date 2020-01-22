@@ -36,5 +36,6 @@ public class MP {
 	private Geek geekEmetteur;
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Geek geekRecepteur;
+	private String message;
 
 }
