@@ -1,5 +1,7 @@
 package co.simplon.gaminlove.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
 
 import co.simplon.gaminlove.model.Event;
@@ -13,4 +15,6 @@ import co.simplon.gaminlove.model.Event;
  */
 public interface EventRepository extends CrudRepository<Event, Integer> {
 
+	public Optional<Event> findByNom(String nom);
 }
+
