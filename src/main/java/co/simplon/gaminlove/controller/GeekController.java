@@ -39,14 +39,18 @@ public class GeekController {
 	 * @return le geek stocké en base (avec l'id à jour si généré)
 	 */
 	@RequestMapping(path = "/add/{age}/{pseudo}/{lieu}/{sexe}/{compte}/{email}")
-	public Geek addNew(@PathVariable int age, @PathVariable String pseudo, @PathVariable String lieu, @PathVariable String sexe, @PathVariable String compte, @PathVariable String email, @PathVariable Album album, @PathVariable Catalogue catalogue) {
+	public Geek addNew(@PathVariable int age, @PathVariable String pseudo, @PathVariable String lieu, @PathVariable String sexe, @PathVariable String compte, @PathVariable String email) {
 		Geek newGeek = new Geek();
+		Album newAlbum = new Album();
+		Catalogue newCatalogue = new Catalogue();
 		newGeek.setAge(age);
 		newGeek.setPseudo(pseudo);
 		newGeek.setLieu(lieu);
 		newGeek.setSexe(sexe);
 		newGeek.setCompte(compte);
 		newGeek.setEmail(email);
+		newGeek.setCatalogue(newCatalogue);
+		newGeek.setAlbum(newAlbum);
 		return geekRepository.save(newGeek);
 	}
 
