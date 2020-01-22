@@ -14,6 +14,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Une simple classe pour représenter un Album: un id et une collection de photos.
+ * 
+ * @author Maureen, Nicolas, Virgile
+ *
+ */
 @Entity
 @Getter
 @Setter

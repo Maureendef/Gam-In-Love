@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import co.simplon.gaminlove.model.Coop;
 
 /**
- * Le repository Match, l'héritage de CRUD donne des méthodes de base : save,
+ * Le repository Coop, l'héritage de CRUD donne des méthodes de base : save,
  * findById, findAll, etc....
  *
  * @author Maureen, Nicolas, Virgile

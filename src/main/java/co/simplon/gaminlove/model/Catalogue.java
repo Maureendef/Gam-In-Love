@@ -14,6 +14,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Une simple classe pour représenter un Catalogue: un id et une collection de jeux.
+ * 
+ * @author Maureen, Nicolas, Virgile
+ *
+ */
 @Entity
 @Getter
 @Setter

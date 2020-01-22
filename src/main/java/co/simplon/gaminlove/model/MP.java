@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Une simple classe pour représenter un MP: un id, l'id du geek émetteur et de
- * l'id du geek récepteur.
+ * Une simple classe pour représenter un MP: un id, l'id du geek émetteur,
+ * l'id du geek récepteur et le message.
  * 
  * @author Maureen, Nicolas, Virgile
  *
