@@ -14,11 +14,10 @@ import co.simplon.gaminlove.model.Jeu;
  *
  */
 public interface JeuRepository extends CrudRepository<Jeu, Integer> {
-	// on peut générer automatiquement des méthodes de recherche dans le repository
+	// on peut gï¿½nï¿½rer automatiquement des mï¿½thodes de recherche dans le repository
     // https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
 	public Optional<Jeu> findByNom(String nom);
-	public Optional<Jeu> deleteByNom(String nom);
-
+	public Optional<Jeu> findAllByNom(String nom);
 	
 }
 
