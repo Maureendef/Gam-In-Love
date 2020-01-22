@@ -1,11 +1,9 @@
 package co.simplon.gaminlove.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +32,5 @@ public class Jeu {
 	private int id;
 	private String nom;
 	private String rang;
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Catalogue catalogue;
 
 }

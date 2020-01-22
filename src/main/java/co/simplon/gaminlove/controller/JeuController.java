@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.simplon.gaminlove.model.Album;
 import co.simplon.gaminlove.model.Catalogue;
 import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.model.Jeu;
+import co.simplon.gaminlove.repository.CatalogueRepository;
 import co.simplon.gaminlove.repository.GeekRepository;
 import co.simplon.gaminlove.repository.JeuRepository;
 /**
@@ -29,19 +31,25 @@ import co.simplon.gaminlove.repository.JeuRepository;
 public class JeuController {
 	@Autowired
 	private JeuRepository jeuRepository;
+	@Autowired
+	private CatalogueRepository catalogueRepository;
 	/**
 	 * Crée un nouveau jeu avec le nom spécifié et l'enregistre en base.
 	 * 
 	 * @param nom & rang
 	 * @return le jeu stocké en base (avec l'id à jour si généré)
 	 */
-	@RequestMapping(path = "/add/{nom}/{rang}")
-	public Jeu addNew(@PathVariable String nom,@PathVariable String rang) {
+	@RequestMapping(path = "/add/{catalogue}/{nom}/{rang}")
+	public Jeu addNew(@PathVariable Catalogue catalogue, @PathVariable String nom,@PathVariable String rang) {
 		Jeu newJeu = new Jeu();
-		Catalogue newCatalogue = new Catalogue();
 		newJeu.setNom(nom);
 		newJeu.setRang(rang);
-		newJeu.setCatalogue(newCatalogue);
+		
+		Optional<Catalogue> optCatalogue = catalogueRepository.findById(catalogue.getId());
+		Catalogue updateCatalogue = catalogueRepository.findById(catalogue.getId()).get();
+		if (optCatalogue.isPresent()) {
+			updateCatalogue.getJeux().add(newJeu);
+		}
 		return jeuRepository.save(newJeu);
 	}
 	/**
