@@ -38,7 +38,7 @@ public class ActionController {
 	 * @return l'action est stockée en base (avec l'id auto-générée)
 	 */
 	@RequestMapping(path = "/add/{action}/{emetteur}/{recepteur}")
-	public Action addNew(@RequestParam String action, @PathVariable Geek emetteur, @RequestParam Geek recepteur) {
+	public Action addNew(@PathVariable String action, @PathVariable Geek emetteur, @PathVariable Geek recepteur) {
 		Action newAction = new Action();
 		newAction.setAction(action);
 		newAction.setEmetteur(emetteur);
