@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Une simple classe pour représenter un match: un id, l'id du geek émetteur et
@@ -24,14 +25,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Match {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne(cascade = CascadeType.ALL)
-	private Geek geekEmetteur;
+	private Geek emetteur;
 	@ManyToOne(cascade = CascadeType.ALL)
-	private Geek geekRecepteur;
+	private Geek recepteur;
 
+	
 }

@@ -1,10 +1,7 @@
 package co.simplon.gaminlove.repository;
 
-import java.util.Optional;
-
 import org.springframework.data.repository.CrudRepository;
 
-import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.model.Match;
 
 /**
@@ -16,5 +13,4 @@ import co.simplon.gaminlove.model.Match;
  */
 public interface MatchRepository extends CrudRepository<Match, Integer> {
 
-	public Optional<Match> findByGeekEmetteur(Geek geekEmetteur);
 }
