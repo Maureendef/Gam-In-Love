@@ -37,15 +37,15 @@ public class ActionController {
 	 * @param action, émetteur, récepteur
 	 * @return l'action est stockée en base (avec l'id auto-générée)
 	 */
-	@RequestMapping(path = "/add")
-	public Action addNew(@RequestParam String action, @RequestParam Geek emetteur, @RequestParam Geek recepteur) {
+	@RequestMapping(path = "/add/{action}/{emetteur}/{recepteur}")
+	public Action addNew(@RequestParam String action, @PathVariable Geek emetteur, @RequestParam Geek recepteur) {
 		Action newAction = new Action();
 		newAction.setAction(action);
 		newAction.setEmetteur(emetteur);
 		newAction.setRecepteur(recepteur);
 		return actionRepository.save(newAction);
 	}
-
+	
 	/**
 	 * Retourne toutes les actions de la base.
 	 * 
@@ -62,8 +62,8 @@ public class ActionController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping(path = "/get")
-	public ResponseEntity<Action> getOne(@RequestParam int id) {
+	@GetMapping(path = "/get/{id}")
+	public ResponseEntity<Action> getOne(@PathVariable int id) {
 		Optional<Action> optAction = actionRepository.findById(id);
 		if (optAction.isPresent()) {
 			return ResponseEntity.ok(optAction.get());

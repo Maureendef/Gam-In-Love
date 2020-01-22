@@ -18,9 +18,16 @@ import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.model.Photo;
 import co.simplon.gaminlove.repository.GeekRepository;
 
+/**
+ * Le controller qui permet d'acceder au CRUD de la table Geek
+ * 
+ * @author Maureen, Nicolas, Virgile
+ *
+ */
 @RestController
 @RequestMapping(path = "/geek")
 public class GeekController {
+	
 	// permet d'initialiser le repo, par le mécanisme d'injection de dépendance
 	// (IOC)
 	@Autowired
@@ -33,7 +40,7 @@ public class GeekController {
 	 * @return le geek stocké en base (avec l'id à jour si généré)
 	 */
 	@RequestMapping(path = "/add")
-	public Geek addNew(@RequestParam int age, String pseudo, String lieu, String sexe, String compte, String email) {
+	public Geek addNew(@RequestParam int age, @RequestParam String pseudo, @RequestParam String lieu, @RequestParam String sexe, @RequestParam String compte, @RequestParam String email) {
 		Geek newGeek = new Geek();
 		newGeek.setAge(age);
 		newGeek.setPseudo(pseudo);
