@@ -34,7 +34,7 @@ public class JeuController {
 	 * @param nom & rang
 	 * @return le jeu stocké en base (avec l'id à jour si généré)
 	 */
-	@RequestMapping(path = "/add/{jeu}/{rang}")
+	@RequestMapping(path = "/add/{nom}/{rang}")
 	public Jeu addNew(@PathVariable String nom,@PathVariable String rang) {
 		Jeu newJeu = new Jeu();
 		newJeu.setNom(nom);

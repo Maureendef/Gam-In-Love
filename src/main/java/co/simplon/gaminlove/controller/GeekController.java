@@ -49,9 +49,6 @@ public class GeekController {
 		newGeek.setSexe(sexe);
 		newGeek.setCompte(compte);
 		newGeek.setEmail(email);
-//		Photo newPhoto = new Photo();
-//		newPhoto.setUrl(photo);
-//		newGeek.getPhoto().add(newPhoto);
 		return geekRepository.save(newGeek);
 	}
 
