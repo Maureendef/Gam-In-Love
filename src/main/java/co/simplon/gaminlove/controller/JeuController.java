@@ -49,7 +49,7 @@ public class JeuController {
 	 * 
 	 * @return une liste de jeuc
 	 */
-	@GetMapping(path = "/allgame")
+	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<Jeu> getAll() {
 		return jeuRepository.findAll();
 	}
@@ -60,13 +60,14 @@ public class JeuController {
 	 * @param nom
 	 * @return
 	 */
+	// WORK IN PROGRESS
 	@GetMapping(path = "/get/{nom}")
-	public ResponseEntity<Jeu> getOne(@PathVariable String nom) {
+	public Optional<Jeu> getOne(@PathVariable String nom)  {
 		Optional<Jeu> optJeu = jeuRepository.findByNom(nom);
 		if (optJeu.isPresent()) {
-			return ResponseEntity.ok(optJeu.get());
+			return optJeu;
 		} else {
-			return ResponseEntity.notFound().build();
+			return optJeu;
 		}
 	}
 	/**
@@ -75,10 +76,10 @@ public class JeuController {
 	 * @param nom et rang
 	 * @return jeu à jour
 	 */
-	@GetMapping(path = "/update/{nom}/{rang}")
-	public Jeu updateOne(@PathVariable String nom,@PathVariable String rang) {
-		Optional<Jeu> optJeu = jeuRepository.findByNom(nom);
-		Jeu updateJeu = jeuRepository.findByNom(nom).get();
+	@GetMapping(path = "/update/{id}/{nom}/{rang}")
+	public Jeu updateOne(@PathVariable int id,@PathVariable String nom,@PathVariable String rang) {
+		Optional<Jeu> optJeu = jeuRepository.findById(id);
+		Jeu updateJeu = jeuRepository.findById(id).get();
 		if (optJeu.isPresent()) {
 			updateJeu.setNom(nom);
 			updateJeu.setRang(rang);
