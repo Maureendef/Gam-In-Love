@@ -24,7 +24,7 @@ import co.simplon.gaminlove.repository.JeuRepository;
  *
  */
 @RestController
-@RequestMapping(path = "/jeux")
+@RequestMapping(path = "/jeu")
 @CrossOrigin("*")
 public class JeuController {
 	@Autowired

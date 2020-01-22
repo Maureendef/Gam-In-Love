@@ -5,17 +5,15 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.simplon.gaminlove.model.Album;
+import co.simplon.gaminlove.model.Catalogue;
 import co.simplon.gaminlove.model.Geek;
-import co.simplon.gaminlove.model.Photo;
 import co.simplon.gaminlove.repository.GeekRepository;
 
 /**
@@ -40,8 +38,8 @@ public class GeekController {
 	 * @param nom
 	 * @return le geek stocké en base (avec l'id à jour si généré)
 	 */
-	@RequestMapping(path = "/add/{age}/{pseudo}/{lieu}/{sexe}/{compte}/{email}")
-	public Geek addNew(@PathVariable int age, @PathVariable String pseudo, @PathVariable String lieu, @PathVariable String sexe, @PathVariable String compte, @PathVariable String email, @PathVariable String photo) {
+	@RequestMapping(path = "/add/{age}/{pseudo}/{lieu}/{sexe}/{compte}/{email}/{album}/{catalogue}")
+	public Geek addNew(@PathVariable int age, @PathVariable String pseudo, @PathVariable String lieu, @PathVariable String sexe, @PathVariable String compte, @PathVariable String email, @PathVariable Album album, @PathVariable Catalogue catalogue) {
 		Geek newGeek = new Geek();
 		newGeek.setAge(age);
 		newGeek.setPseudo(pseudo);
@@ -49,6 +47,8 @@ public class GeekController {
 		newGeek.setSexe(sexe);
 		newGeek.setCompte(compte);
 		newGeek.setEmail(email);
+		newGeek.setAlbum(album);
+		newGeek.setCatalogue(catalogue);
 		return geekRepository.save(newGeek);
 	}
 
