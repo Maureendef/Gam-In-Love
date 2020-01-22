@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.simplon.gaminlove.model.Catalogue;
 import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.model.Jeu;
 import co.simplon.gaminlove.repository.GeekRepository;
@@ -37,8 +38,10 @@ public class JeuController {
 	@RequestMapping(path = "/add/{nom}/{rang}")
 	public Jeu addNew(@PathVariable String nom,@PathVariable String rang) {
 		Jeu newJeu = new Jeu();
+		Catalogue newCatalogue = new Catalogue();
 		newJeu.setNom(nom);
 		newJeu.setRang(rang);
+		newJeu.setCatalogue(newCatalogue);
 		return jeuRepository.save(newJeu);
 	}
 	/**
