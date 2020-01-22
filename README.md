@@ -33,51 +33,124 @@ Il faut savoir que nous ne sommes pas une organisation bénévole et dans cet un
 Endpoint de base
 /gaminlove
 
+---
+
 Se connecter
 /gaminlove/log_in
 
 S'inscrire
 /gaminlove/sign_up
 
-Modifier son profil
-/gaminlove/update_profile
+---
 
-Supprimer son profil
-/gaminlove/delete_profile
+Créer un profil
+/gaminlove/geek/add
+
+Modifier un profil
+/gaminlove/geek/update
+
+Supprimer un profil
+/gaminlove/geek/del
 
 Faire une recherche
-/gaminlove/search
+/gaminlove/geek/get
 
-Afficher un geek
-/gaminlove/geek
+Afficher les geeks
+/gaminlove/geek/all
 
-Liker
-/gaminlove/like
+---
 
-Superliker
-/gaminlove/superlike
+Supprimer un album
+/gaminlove/album/del
 
-Disliker
-/gaminlove/dislike
+---
+
+Ajouter une photo
+/gaminlove/photo/add
+
+Supprimer une photo
+/gaminlove/photo/del
+
+Afficher les photos
+/gaminlove/photo/all
+
+Rechercher une photo
+/gaminlove/photo/get
+
+---
+
+Faire une action (like/superlike/dislike)
+/gaminlove/action/add
+
+Supprimer une action
+/gaminlove/action/del
+
+Rechercher une action
+/gaminlove/action/get
+
+---
+
+Créer un match
+/gaminlove/coop/add
 
 Afficher les matchs
-/gaminlove/matchs
+/gaminlove/coop/all
 
 Supprimer un match
-/gaminlove/delete_match
+/gaminlove/coop/del
+
+---
 
 Afficher les mp
-/gaminlove/mp
+/gaminlove/mp/all
 
 Envoyer un mp
-/gaminlove/send_mp
+/gaminlove/mp/add
+
+Supprimer un mp
+/gaminlove/mp/del
+
+Chercher un mp?
+
+---
 
 Afficher les events
-/gaminlove/events
+/gaminlove/event/all
+
+Rechercher un event
+/gaminlove/event/get
+
+Modifier un event
+/gaminlove/event/update
+
+Ajouter un event
+/gaminlove/event/add
+
+Supprimer un event
+/gaminlove/event/del
 
 Participer à un event
 /gaminlove/participate_event
 
+---
+
+Supprimer un catalogue
+/gaminlove/catalogue/del
+
+---
+
+Afficher les jeux
+/gaminlove/jeu/all
+
+Rechercher un jeu
+/gaminlove/jeu/get
+
+Modifier un jeu
+/gaminlove/jeu/update
+
 Ajouter un jeu
-/gaminlove/add_game
+/gaminlove/jeu/add
+
+Supprimer un jeu
+/gaminlove/jeu/del
 ```
