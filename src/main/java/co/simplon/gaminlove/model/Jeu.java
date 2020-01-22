@@ -32,8 +32,6 @@ public class Jeu {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ManyToOne(cascade = CascadeType.ALL)
-	private Geek geekId;
 	private String nom;
 	private String rang;
 	@ManyToOne(cascade = CascadeType.ALL)
