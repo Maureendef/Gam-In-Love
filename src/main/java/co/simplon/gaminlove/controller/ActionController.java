@@ -16,6 +16,12 @@ import co.simplon.gaminlove.model.Action;
 import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.repository.ActionRepository;
 
+/**
+ * Le controller qui permet d'acceder au CRUD de la table Action
+ * 
+ * @author Maureen, Nicolas, Virgile
+ *
+ */
 @RestController
 @RequestMapping(path = "/action")
 public class ActionController {
@@ -32,7 +38,7 @@ public class ActionController {
 	 * @return l'action est stockée en base (avec l'id auto-générée)
 	 */
 	@RequestMapping(path = "/add")
-	public Action addNew(@RequestParam String action, Geek emetteur, Geek recepteur) {
+	public Action addNew(@RequestParam String action, @RequestParam Geek emetteur, @RequestParam Geek recepteur) {
 		Action newAction = new Action();
 		newAction.setAction(action);
 		newAction.setEmetteur(emetteur);
@@ -43,7 +49,7 @@ public class ActionController {
 	/**
 	 * Retourne toutes les actions de la base.
 	 * 
-	 * @return une liste de heros
+	 * @return une liste d'action
 	 */
 	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<Action> getAll() {
@@ -51,7 +57,7 @@ public class ActionController {
 	}
 
 	/**
-	 * Retourne le hero d'id spécifié.
+	 * Retourne l'action pour l'id spécifié.
 	 * 
 	 * @param id
 	 * @return
@@ -67,7 +73,7 @@ public class ActionController {
 	}
 
 	/**
-	 * supprime l'action d'id spécifié.
+	 * supprime l'action pour l'id spécifié.
 	 * 
 	 * @param id
 	 * @return
