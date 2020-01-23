@@ -1,6 +1,11 @@
 package co.simplon.gaminlove.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+
+import javax.persistence.ElementCollection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +24,7 @@ import co.simplon.gaminlove.model.Jeu;
 import co.simplon.gaminlove.repository.CatalogueRepository;
 import co.simplon.gaminlove.repository.GeekRepository;
 import co.simplon.gaminlove.repository.JeuRepository;
+
 /**
  * Le controller qui permet d'acceder au CRUD de la table Jeu
  * 
@@ -33,6 +39,7 @@ public class JeuController {
 	private JeuRepository jeuRepository;
 	@Autowired
 	private CatalogueRepository catalogueRepository;
+
 	/**
 	 * Crée un nouveau jeu avec le nom spécifié et l'enregistre en base.
 	 * 
@@ -40,11 +47,11 @@ public class JeuController {
 	 * @return le jeu stocké en base (avec l'id à jour si généré)
 	 */
 	@RequestMapping(path = "/add/{catalogue}/{nom}/{rang}")
-	public Jeu addNew(@PathVariable Catalogue catalogue, @PathVariable String nom,@PathVariable String rang) {
+	public Jeu addNew(@PathVariable Catalogue catalogue, @PathVariable String nom, @PathVariable String rang) {
 		Jeu newJeu = new Jeu();
 		newJeu.setNom(nom);
 		newJeu.setRang(rang);
-		
+
 		Optional<Catalogue> optCatalogue = catalogueRepository.findById(catalogue.getId());
 		Catalogue updateCatalogue = catalogueRepository.findById(catalogue.getId()).get();
 		if (optCatalogue.isPresent()) {
@@ -52,6 +59,7 @@ public class JeuController {
 		}
 		return jeuRepository.save(newJeu);
 	}
+
 	/**
 	 * Retourne tous les jeux
 	 * 
@@ -61,23 +69,20 @@ public class JeuController {
 	public @ResponseBody Iterable<Jeu> getAll() {
 		return jeuRepository.findAll();
 	}
-	
+
 	/**
-	 * Retourne le jeu selon le nom spécifié.
+	 * Retourne les jeux selon le nom spécifié.
 	 * 
 	 * @param nom
 	 * @return
 	 */
-	// WORK IN PROGRESS
 	@GetMapping(path = "/get/{nom}")
-	public Optional<Jeu> getOne(@PathVariable String nom)  {
-		Optional<Jeu> optJeu = jeuRepository.findByNom(nom);
-		if (optJeu.isPresent()) {
-			return optJeu;
-		} else {
-			return optJeu;
-		}
+	public Collection<Jeu> getAll2(@PathVariable String nom) {
+		Collection<Jeu> optJeu = jeuRepository.findAllByNom(nom);
+		return optJeu;
+
 	}
+
 	/**
 	 * Retourne le jeu selon le nom spécifié et le met à jour.
 	 * 
@@ -85,7 +90,7 @@ public class JeuController {
 	 * @return jeu à jour
 	 */
 	@GetMapping(path = "/update/{id}/{nom}/{rang}")
-	public Jeu updateOne(@PathVariable int id,@PathVariable String nom,@PathVariable String rang) {
+	public Jeu updateOne(@PathVariable int id, @PathVariable String nom, @PathVariable String rang) {
 		Optional<Jeu> optJeu = jeuRepository.findById(id);
 		Jeu updateJeu = jeuRepository.findById(id).get();
 		if (optJeu.isPresent()) {
@@ -96,6 +101,7 @@ public class JeuController {
 			return updateJeu;
 		}
 	}
+
 	/**
 	 * Supprime le jeu d'id spécifié.
 	 * 
@@ -112,11 +118,5 @@ public class JeuController {
 			System.out.println("Pas de jeu à supprimer");
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }
