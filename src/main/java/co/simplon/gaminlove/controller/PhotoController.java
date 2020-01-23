@@ -40,7 +40,7 @@ public class PhotoController {
 	 * @param url
 	 * @return la photo stockée en base (avec l'id à jour si généré)
 	 */
-	@RequestMapping(path = "/add/{url}")
+	@RequestMapping(path = "/add/{geek}/{url}")
 	public Photo addNew(@PathVariable Geek geek, @PathVariable String url) {
 		Photo newPhoto = new Photo();
 		newPhoto.setUrl(url);		
