@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.simplon.gaminlove.model.Album;
-import co.simplon.gaminlove.model.Catalogue;
 import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.repository.GeekRepository;
 
@@ -41,16 +39,12 @@ public class GeekController {
 	@RequestMapping(path = "/add/{age}/{pseudo}/{lieu}/{sexe}/{compte}/{email}")
 	public Geek addNew(@PathVariable int age, @PathVariable String pseudo, @PathVariable String lieu, @PathVariable String sexe, @PathVariable String compte, @PathVariable String email) {
 		Geek newGeek = new Geek();
-		Album newAlbum = new Album();
-		Catalogue newCatalogue = new Catalogue();
 		newGeek.setAge(age);
 		newGeek.setPseudo(pseudo);
 		newGeek.setLieu(lieu);
 		newGeek.setSexe(sexe);
 		newGeek.setCompte(compte);
 		newGeek.setEmail(email);
-		newGeek.setCatalogue(newCatalogue);
-		newGeek.setAlbum(newAlbum);
 		return geekRepository.save(newGeek);
 	}
 

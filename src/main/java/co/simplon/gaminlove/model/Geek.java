@@ -1,12 +1,13 @@
 package co.simplon.gaminlove.model;
 
+import java.util.Collection;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
+import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,9 +37,16 @@ public class Geek {
 	private String sexe;
 	private String compte;
 	private String email;
-	@OneToOne(cascade = CascadeType.ALL)
-	private Album album;
-	@OneToOne(cascade = CascadeType.ALL)	
-	private Catalogue catalogue;
+	
+//	@OneToOne(cascade = CascadeType.ALL)
+//	private Album album;
+//	@OneToOne(cascade = CascadeType.ALL)	
+//	private Catalogue catalogue;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private Collection<Photo> photos;
+	@OneToMany
+	private Collection<Jeu> jeux;
+	
 
 }
