@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.model.Jeu;
+import co.simplon.gaminlove.repository.GeekRepository;
 import co.simplon.gaminlove.repository.JeuRepository;
 
 /**
@@ -24,8 +26,12 @@ import co.simplon.gaminlove.repository.JeuRepository;
 @RequestMapping(path = "/jeu")
 @CrossOrigin("*")
 public class JeuController {
+	
 	@Autowired
 	private JeuRepository jeuRepository;
+	
+	@Autowired
+	private GeekRepository geekRepository;
 
 	/**
 	 * Crée un nouveau jeu avec le nom spécifié et l'enregistre en base.
@@ -33,11 +39,16 @@ public class JeuController {
 	 * @param nom & rang
 	 * @return le jeu stocké en base (avec l'id à jour si généré)
 	 */
-	@RequestMapping(path = "/add/{nom}/{rang}")
-	public Jeu addNew(@PathVariable String nom, @PathVariable String rang) {
+	@RequestMapping(path = "/add/{geek}/{nom}/{rang}")
+	public Jeu addNew(@PathVariable Geek geek, @PathVariable String nom, @PathVariable String rang) {
 		Jeu newJeu = new Jeu();
 		newJeu.setNom(nom);
-		newJeu.setRang(rang);
+		newJeu.setRang(rang);		
+		Optional<Geek> optGeek = geekRepository.findById(geek.getId());
+		Geek updateGeek = geekRepository.findById(geek.getId()).get();
+		if (optGeek.isPresent()) {
+			updateGeek.getJeux().add(newJeu);
+		}
 		return jeuRepository.save(newJeu);
 	}
 

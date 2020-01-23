@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.model.Photo;
+import co.simplon.gaminlove.repository.GeekRepository;
+import co.simplon.gaminlove.repository.JeuRepository;
 import co.simplon.gaminlove.repository.PhotoRepository;
 
 /**
@@ -27,6 +30,9 @@ public class PhotoController {
 
 	@Autowired
 	private PhotoRepository photoRepository;
+	
+	@Autowired
+	private GeekRepository geekRepository;
 
 	/**
 	 * Crée une nouvelle photo avec l'url spécifié et l'enregistre en base.
@@ -35,9 +41,14 @@ public class PhotoController {
 	 * @return la photo stockée en base (avec l'id à jour si généré)
 	 */
 	@RequestMapping(path = "/add/{url}")
-	public Photo addNew(@PathVariable String url) {
+	public Photo addNew(@PathVariable Geek geek, @PathVariable String url) {
 		Photo newPhoto = new Photo();
-		newPhoto.setUrl(url);
+		newPhoto.setUrl(url);		
+		Optional<Geek> optGeek = geekRepository.findById(geek.getId());
+		Geek updateGeek = geekRepository.findById(geek.getId()).get();
+		if (optGeek.isPresent()) {
+			updateGeek.getPhotos().add(newPhoto);
+		}
 		return photoRepository.save(newPhoto);
 	}
 
