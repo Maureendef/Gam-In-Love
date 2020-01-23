@@ -110,7 +110,8 @@ Envoyer un mp
 Supprimer un mp
 /gaminlove/mp/del
 
-Chercher un mp?
+Rechercher un mp
+/gaminlove/mp/get
 
 ---
 

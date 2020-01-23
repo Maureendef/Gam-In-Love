@@ -14,23 +14,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.simplon.gaminlove.model.Catalogue;
 import co.simplon.gaminlove.model.Event;
 import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.repository.EventRepository;
-import co.simplon.gaminlove.repository.GeekRepository;
+
+/**
+ * 
+ * @author Nicolas Congard
+ *
+ */
 
 @RestController
 @RequestMapping(path = "/event")
 @CrossOrigin("*")
 public class EventController {
 
+	
+	//permet d'initialiser le repo, par le mécanisme d'injection de dependance 
 	@Autowired
 	private EventRepository eventRepository;
 
-//	@Autowired
-//	private GeekRepository geekRepository;
-
+	/**
+	 * Creation d'un nouvel event
+	 * 
+	 * @param nom
+	 * @param lieu
+	 * @param date
+	 * @return un event qui vient d'etre cree
+	 */
 	@RequestMapping("/add")
 	public Event addNew(@RequestParam String nom, @RequestParam String lieu, @RequestParam Date date) {
 		Event newEvent = new Event();
@@ -40,26 +51,38 @@ public class EventController {
 		return eventRepository.save(newEvent);
 	}
 
-	@GetMapping(path = "/update/{id}/{listeParticipant}")
-	public Event updateOne(@PathVariable int id, @PathVariable Collection<Geek> listeParticipant) {
-		Event updateEvent = eventRepository.findById(id).get();
-		updateEvent.setListeParticipant(listeParticipant);
-		/*Optional<Geek> optCatalogue = geekRepository.findById(geek.getId());
-		Geek updateCatalogue = geekRepository.findById(geek.getId()).get();
-		if (optCatalogue.isPresent()) {
-			updateCatalogue.add(newEvent);
-		}*/
-		return eventRepository.save(updateEvent);
-		
+	/**
+	 * Ajoute un geek dans la liste des participants
+	 * 
+	 * @param event
+	 * @param geek
+	 * @return un event a jour
+	 */
+	@GetMapping(path = "/participate/{event}/{geek}")
+	public Event addParticipant(@PathVariable Event event, @PathVariable Geek geek) {
+		Event updateEvent = eventRepository.findById(event.getId()).get();
+		updateEvent.getListeParticipant().add(geek);
+		eventRepository.save(updateEvent);
+		return updateEvent;
 	}
 
+	/**
+	 * 
+	 * @return la liste des events
+	 */
 	@GetMapping(path = "/all")
 	public @ResponseBody Iterable<Event> getAll() {
 		return eventRepository.findAll();
 	}
 
-	@GetMapping(path = "/get/{id}")
-	public ResponseEntity<Event> getOne(@PathVariable int id) {
+	/**
+	 * Cherche un event selon l'id
+	 * 
+	 * @param id
+	 * @return un event s'il existe ou une erreur
+	 */
+	@GetMapping("/get")
+	public ResponseEntity<Event> getOne(@RequestParam int id) {
 		Optional<Event> optEvent = eventRepository.findById(id);
 		if (optEvent.isPresent()) {
 			return ResponseEntity.ok(optEvent.get());
@@ -68,8 +91,14 @@ public class EventController {
 		}
 	}
 
-	@GetMapping(path = "/get/{nom}")
-	public ResponseEntity<Event> getName(@PathVariable String nom) {
+	/**
+	 * Cherche un event selon le nom
+	 * 
+	 * @param nom
+	 * @return un event s'il existe ou une erreur
+	 */
+	@GetMapping("/get/name")
+	public ResponseEntity<Event> getName(@RequestParam String nom) {
 		Optional<Event> optEvent = eventRepository.findByNom(nom);
 		if (optEvent.isPresent()) {
 			return ResponseEntity.ok(optEvent.get());
@@ -78,6 +107,16 @@ public class EventController {
 		}
 	}
 
+	/**
+	 * Mise a jour de l'event
+	 * 
+	 * @param id
+	 * @param listeParticipant
+	 * @param nom
+	 * @param lieu
+	 * @param date
+	 * @return l'event a jour
+	 */
 	@GetMapping(path = "/update")
 	public Event updateOne(@PathVariable int id, @PathVariable Collection<Geek> listeParticipant,
 			@PathVariable String nom, @PathVariable String lieu, @PathVariable Date date) {
@@ -94,6 +133,11 @@ public class EventController {
 		}
 	}
 
+	/**
+	 * Supprime l'event via son id
+	 * 
+	 * @param id
+	 */
 	@RequestMapping("/del/{id}")
 	public void delOne(@PathVariable int id) {
 		Optional<Event> optEvent = eventRepository.findById(id);
