@@ -8,10 +8,18 @@ INSERT INTO gamin_love.jeux (id, nom, rang) VALUES (3, 'rocket_league', 'silver'
 INSERT INTO gamin_love.jeux (id, nom, rang) VALUES (4, 'sudoku2000', 'master');
 INSERT INTO gamin_love.jeux (id, nom, rang) VALUES (5, 'fifa', 'debutant');
 
+INSERT INTO gamin_love.geek_jeux (geek_id, jeux_id) VALUES (1, 2);
+INSERT INTO gamin_love.geek_jeux (geek_id, jeux_id) VALUES (2, 3);
+INSERT INTO gamin_love.geek_jeux (geek_id, jeux_id) VALUES (3, 4);
+INSERT INTO gamin_love.geek_jeux (geek_id, jeux_id) VALUES (4, 5);
+
 INSERT INTO gamin_love.coop (id, emetteur_id, recepteur_id) VALUES (1, 2, 3);
 
 INSERT INTO gamin_love.photo (id, url) VALUES (1, 'toto_a_la_plage');
 INSERT INTO gamin_love.photo (id, url) VALUES (2, 'ouioui.png');
+
+INSERT INTO gamin_love.geek_photos (geek_id, photos_id) VALUES (1, 1);
+INSERT INTO gamin_love.geek_photos (geek_id, photos_id) VALUES (1, 2);
 
 INSERT INTO gamin_love.event (id, date, lieu, nom) VALUES (1, '2020-05-04 22:00:00', 'paris', 'parismanga');
 INSERT INTO gamin_love.event (id, date, lieu, nom) VALUES (2, '2020-11-14 23:00:00', 'toulouse', 'toulousemanga');
