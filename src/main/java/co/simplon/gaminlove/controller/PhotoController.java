@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.model.Photo;
 import co.simplon.gaminlove.repository.GeekRepository;
-import co.simplon.gaminlove.repository.JeuRepository;
 import co.simplon.gaminlove.repository.PhotoRepository;
 
 /**

@@ -1,8 +1,10 @@
 package co.simplon.gaminlove.controller;
 
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.gaminlove.model.Geek;
@@ -28,7 +31,7 @@ import co.simplon.gaminlove.repository.GeekRepository;
 @RequestMapping(path = "/geek")
 @CrossOrigin("*")
 public class GeekController {
-	
+
 	// permet d'initialiser le repo, par le mécanisme d'injection de dépendance
 	// (IOC)
 	@Autowired
@@ -40,7 +43,7 @@ public class GeekController {
 	 * @param geek récupère un objet Json du front
 	 * @return le geek stocké en base (avec l'id à jour si généré)
 	 */
-	@PostMapping(path="/")
+	@PostMapping(path = "/")
 	public ResponseEntity<Geek> addNew(@RequestBody Geek geek) {
 		geekRepository.save(geek);
 		return ResponseEntity.ok(geek);
@@ -77,18 +80,40 @@ public class GeekController {
 	/**
 	 * Retourne le geek d'id spécifié et le met à jour.
 	 * 
-	 * @param id du geek à modifier et un objet geek contenant les informations à mettre à jour.
+	 * @param id du geek à modifier et un objet geek contenant les informations à
+	 *           mettre à jour.
 	 * @return le statut de la requête
 	 */
-	@PatchMapping(path = "{id}")
-	public ResponseEntity<Geek> updateOne(@PathVariable int id, @RequestBody Geek geek) {
+	@PatchMapping(path = "/{id}")
+	ResponseEntity<Geek> updateOne(@PathVariable int id, @RequestBody Geek geekInput) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		if (optGeek.isPresent()) {
+			System.out.println("compte : " + geekInput.getCompte());
+			Geek geek = optGeek.get();
+			if (geekInput.getAge() != 0) {
+				geek.setAge(geekInput.getAge());
+			}
+			if (geekInput.getPseudo() != null) {
+				geek.setPseudo(geekInput.getPseudo());
+			}
+			if (geekInput.getLieu() != null) {
+				geek.setLieu(geekInput.getLieu());
+			}
+			if (geekInput.getSexe() != null) {
+				geek.setSexe(geekInput.getSexe());
+			}
+			if (geekInput.getCompte() != null) {
+				geek.setCompte(geekInput.getCompte());
+			}
+			if (geekInput.getEmail() != null) {
+				geek.setEmail(geekInput.getEmail());
+			}
 			geekRepository.save(geek);
 			return ResponseEntity.ok(geek);
 		} else {
 			return ResponseEntity.notFound().build();
 		}
+
 	}
 
 	/**
@@ -98,13 +123,13 @@ public class GeekController {
 	 * @return
 	 */
 	@DeleteMapping("/{id}")
-	public void delOne(@PathVariable int id) {
+	public HttpStatus delOne(@PathVariable int id) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		if (optGeek.isPresent()) {
 			geekRepository.deleteById(id);
-			System.out.println("Geek supprimé");
+			return HttpStatus.OK;
 		} else {
-			System.out.println("Pas de geek à supprimer");
+			return HttpStatus.NOT_FOUND;
 		}
 	}
 }

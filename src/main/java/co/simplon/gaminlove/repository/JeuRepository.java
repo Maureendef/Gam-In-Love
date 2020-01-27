@@ -1,8 +1,6 @@
 package co.simplon.gaminlove.repository;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
@@ -17,7 +15,7 @@ import co.simplon.gaminlove.model.Jeu;
  *
  */
 public interface JeuRepository extends CrudRepository<Jeu, Integer> {
-	// on peut g�n�rer automatiquement des m�thodes de recherche dans le repository
+	// on peut générer automatiquement des méthodes de recherche dans le repository
     // https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
 	public Optional<Jeu> findByNom(String nom);
 	public Collection<Jeu> findAllByNom(String nom);
