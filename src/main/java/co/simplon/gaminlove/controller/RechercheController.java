@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 /**
- * Le controller qui permet d'acceder au CRUD de la table Jeu
+ * Le controller qui permet d'acceder au CRUD de la table Recherche
  * 
  * @author Maureen, Nicolas, Virgile
  *
