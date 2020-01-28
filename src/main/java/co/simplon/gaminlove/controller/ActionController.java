@@ -31,6 +31,11 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping(path = "/action")
 @Api(tags = "API pour les opérations CRUD sur les Actions.")
+@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
+		@ApiResponse(code = 400, message = "Mauvaise Requête"),
+		@ApiResponse(code = 401, message = "Echec Authentification"),
+		@ApiResponse(code = 403, message = "Accès Refusé"), 
+		@ApiResponse(code = 500, message = "Problème Serveur") })
 @CrossOrigin("*")
 public class ActionController {
 
@@ -47,11 +52,6 @@ public class ActionController {
 	 */
 	@PostMapping(path = "/")
 	@ApiOperation(value = "Crée une nouvelle action avec le type spécifié.")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
-			@ApiResponse(code = 400, message = "Mauvaise Requête"),
-			@ApiResponse(code = 401, message = "Echec Authentification"),
-			@ApiResponse(code = 403, message = "Accès Refusé"),
-			@ApiResponse(code = 500, message = "Problème Serveur") })
 	public ResponseEntity<Action> addNew(@RequestBody Action action) {
 		actionRepository.save(action);
 		return ResponseEntity.ok(action);
@@ -64,11 +64,6 @@ public class ActionController {
 	 */
 	@GetMapping(path = "/")
 	@ApiOperation(value = "Retourne toutes les actions.")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
-			@ApiResponse(code = 400, message = "Mauvaise Requête"),
-			@ApiResponse(code = 401, message = "Echec Authentification"),
-			@ApiResponse(code = 403, message = "Accès Refusé"),
-			@ApiResponse(code = 500, message = "Problème Serveur") })
 	public @ResponseBody Iterable<Action> getAll() {
 		return actionRepository.findAll();
 	}
@@ -81,11 +76,6 @@ public class ActionController {
 	 */
 	@GetMapping(path = "/{id}")
 	@ApiOperation(value = "Retourne l'action pour l'id spécifié.")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
-			@ApiResponse(code = 400, message = "Mauvaise Requête"),
-			@ApiResponse(code = 401, message = "Echec Authentification"),
-			@ApiResponse(code = 403, message = "Accès Refusé"),
-			@ApiResponse(code = 500, message = "Problème Serveur") })
 	public ResponseEntity<Action> getOne(@PathVariable int id) {
 		Optional<Action> optAction = actionRepository.findById(id);
 		return optAction.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -99,12 +89,6 @@ public class ActionController {
 	 */
 	@DeleteMapping("/{id}")
 	@ApiOperation(value = "Supprime l'action pour l'id spécifié.")
-	@ApiResponses(value = { 
-			@ApiResponse(code = 200, message = "Succès"),
-			@ApiResponse(code = 400, message = "Mauvaise Requête"),
-			@ApiResponse(code = 401, message = "Echec Authentification"),
-			@ApiResponse(code = 403, message = "Accès Refusé"),
-			@ApiResponse(code = 500, message = "Problème Serveur") })
 	public HttpStatus delOne(@PathVariable int id) {
 		Optional<Action> optAction = actionRepository.findById(id);
 		if (optAction.isPresent()) {

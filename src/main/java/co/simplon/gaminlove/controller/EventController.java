@@ -33,6 +33,11 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping(path = "/event")
 @Api(tags = "API pour les opérations CRUD sur les Events.")
+@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
+		@ApiResponse(code = 400, message = "Mauvaise Requête"),
+		@ApiResponse(code = 401, message = "Echec Authentification"),
+		@ApiResponse(code = 403, message = "Accès Refusé"), 
+		@ApiResponse(code = 500, message = "Problème Serveur") })
 @CrossOrigin("*")
 public class EventController {
 
@@ -51,20 +56,6 @@ public class EventController {
 	 */
 	@PostMapping("/")
 	@ApiOperation(value = "Création d'un nouvel event.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
-	/*public Event addNew(@RequestBody String nom, @RequestBody String lieu, @RequestBody Date date) {
-		Event newEvent = new Event();
-		newEvent.setNom(nom);
-		newEvent.setLieu(lieu);
-		newEvent.setDate(date);
-		return eventRepository.save(newEvent);
-	}*/
-	
 	public ResponseEntity<Event> addNew(@RequestBody Event event) {
 		eventRepository.save(event);
 		return ResponseEntity.ok(event);
@@ -79,12 +70,6 @@ public class EventController {
 	 */
 	@PostMapping(path = "/participation/{id}")
 	@ApiOperation(value = "Ajoute un geek à la liste des participants")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public Event addParticipant(@PathVariable int id, @RequestBody Geek geek) {
 		Event updateEvent = eventRepository.findById(id).get();
 		updateEvent.getListeParticipant().add(geek);
@@ -101,12 +86,6 @@ public class EventController {
 	 */
 	@DeleteMapping(path = "/participation/{id}")
 	@ApiOperation(value = "Supprime un geek à la liste des participants")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public Event removeParticipant(@PathVariable int id, @RequestBody Geek geek) {
 		Event updateEvent = eventRepository.findById(id).get();
 		updateEvent.getListeParticipant().remove(geek);
@@ -120,12 +99,6 @@ public class EventController {
 	 */
 	@GetMapping(path = "/")
 	@ApiOperation(value = "Affiche tous les events.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public @ResponseBody Iterable<Event> getAll() {
 		return eventRepository.findAll();
 	}
@@ -138,12 +111,6 @@ public class EventController {
 	 */
 	@GetMapping(path = "/{id}")
 	@ApiOperation(value = "Cherche un event selon l'id.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public ResponseEntity<Event> getOne(@PathVariable int id) {
 		Optional<Event> optEvent = eventRepository.findById(id);
 		return optEvent.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -157,12 +124,6 @@ public class EventController {
 	 */
 	@GetMapping(path = "/name")
 	@ApiOperation(value = "Cherche un event selon le nom.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public ResponseEntity<Event> getName(@RequestBody String nom) {
 		Optional<Event> optEvent = eventRepository.findByNom(nom);
 		return optEvent.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -176,12 +137,6 @@ public class EventController {
 	 */
 	@PatchMapping(path = "/{id}")
 	@ApiOperation(value = "Mise a jour de l'event")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public ResponseEntity<Event> updateOne(@PathVariable int id, @RequestBody Event eventInput) {
 		Optional<Event> optEvent = eventRepository.findById(id);
 		if (optEvent.isPresent()) {
@@ -209,12 +164,6 @@ public class EventController {
 	 */
 	@DeleteMapping(path = "/{id}")
 	@ApiOperation(value = "Supprime l'event via son id.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public HttpStatus delOne(@PathVariable int id) {
 		Optional<Event> optEvent = eventRepository.findById(id);
 		if (optEvent.isPresent()) {

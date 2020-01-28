@@ -31,6 +31,11 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping(path = "/mp")
 @Api(tags = "API pour les opérations CRUD sur les MP.")
+@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
+		@ApiResponse(code = 400, message = "Mauvaise Requête"),
+		@ApiResponse(code = 401, message = "Echec Authentification"),
+		@ApiResponse(code = 403, message = "Accès Refusé"), 
+		@ApiResponse(code = 500, message = "Problème Serveur") })
 @CrossOrigin("*")
 public class MPController {
 	
@@ -44,12 +49,6 @@ public class MPController {
 	 */
 	@PostMapping(path = "/")
 	@ApiOperation(value = "Crée un MP.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public ResponseEntity<MP> addNew(@RequestBody MP mp) {
 		mpRepository.save(mp);
 		return ResponseEntity.ok(mp);
@@ -62,12 +61,6 @@ public class MPController {
 	 */
 	@GetMapping(path = "/")
 	@ApiOperation(value = "Retourne tous MP.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public @ResponseBody Iterable<MP> getAll() {
 		return mpRepository.findAll();
 	}
@@ -80,12 +73,6 @@ public class MPController {
 	 */
 	@GetMapping(path = "/{id}")
 	@ApiOperation(value = "Retourne le mp d'id spécifié.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public ResponseEntity<MP> getOne(@PathVariable int id) {
 		Optional<MP> optMP = mpRepository.findById(id);
 		return optMP.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -97,12 +84,6 @@ public class MPController {
 	 */
 	@DeleteMapping("/{id}")
 	@ApiOperation(value = "Supprime le MP avec l'id spécifié.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public HttpStatus delOne(@PathVariable int id) {
 		Optional<MP> optMP = mpRepository.findById(id);
 		if (optMP.isPresent()) {

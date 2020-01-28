@@ -35,6 +35,11 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping(path = "/jeu")
 @Api(tags = "API pour les opérations CRUD sur les Jeux.")
+@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
+		@ApiResponse(code = 400, message = "Mauvaise Requête"),
+		@ApiResponse(code = 401, message = "Echec Authentification"),
+		@ApiResponse(code = 403, message = "Accès Refusé"), 
+		@ApiResponse(code = 500, message = "Problème Serveur") })
 @CrossOrigin("*")
 public class JeuController {
 
@@ -52,11 +57,6 @@ public class JeuController {
 	 */
 	@PostMapping(path = "/{id}")
 	@ApiOperation(value = "Crée un nouveau jeu avec le nom spécifié pour le geek sélectionné.")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
-			@ApiResponse(code = 400, message = "Mauvaise Requête"),
-			@ApiResponse(code = 401, message = "Echec Authentification"),
-			@ApiResponse(code = 403, message = "Accès Refusé"),
-			@ApiResponse(code = 500, message = "Problème Serveur") })
 	public ResponseEntity<Jeu> addNew(@PathVariable int id, @RequestBody Jeu jeu) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		if (optGeek.isPresent()) {
@@ -74,11 +74,6 @@ public class JeuController {
 	 */
 	@GetMapping(path = "/")
 	@ApiOperation(value = "Retourne tous les jeux.")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
-			@ApiResponse(code = 400, message = "Mauvaise Requête"),
-			@ApiResponse(code = 401, message = "Echec Authentification"),
-			@ApiResponse(code = 403, message = "Accès Refusé"),
-			@ApiResponse(code = 500, message = "Problème Serveur") })
 	public @ResponseBody Iterable<Jeu> getAll() {
 		return jeuRepository.findAll();
 	}
@@ -91,11 +86,6 @@ public class JeuController {
 	 */
 	@GetMapping(path = "/nom")
 	@ApiOperation(value = "Retourne les jeux selon le nom spécifié.")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
-			@ApiResponse(code = 400, message = "Mauvaise Requête"),
-			@ApiResponse(code = 401, message = "Echec Authentification"),
-			@ApiResponse(code = 403, message = "Accès Refusé"),
-			@ApiResponse(code = 500, message = "Problème Serveur") })
 	public Collection<Jeu> getName(@RequestBody String nom) {
 		Collection<Jeu> optJeu = jeuRepository.findAllByNom(nom);
 		return optJeu;
@@ -109,11 +99,6 @@ public class JeuController {
 	 */
 	@PatchMapping(path = "/{id}")
 	@ApiOperation(value = "Retourne le jeu selon le nom spécifié et le met à jour.")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
-			@ApiResponse(code = 400, message = "Mauvaise Requête"),
-			@ApiResponse(code = 401, message = "Echec Authentification"),
-			@ApiResponse(code = 403, message = "Accès Refusé"),
-			@ApiResponse(code = 500, message = "Problème Serveur") })
 	public ResponseEntity<Jeu> updateOne(@PathVariable int id, @RequestBody Jeu jeuInput) {
 		Optional<Jeu> optJeu = jeuRepository.findById(id);
 		if (optJeu.isPresent()) {
@@ -139,11 +124,6 @@ public class JeuController {
 	 */
 	@DeleteMapping("/{idGeek}/{idJeu}")
 	@ApiOperation(value = "Supprime le jeu d'id spécifié.")
-	@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
-			@ApiResponse(code = 400, message = "Mauvaise Requête"),
-			@ApiResponse(code = 401, message = "Echec Authentification"),
-			@ApiResponse(code = 403, message = "Accès Refusé"),
-			@ApiResponse(code = 500, message = "Problème Serveur") })
 	public HttpStatus delOne(@PathVariable int idGeek, @PathVariable int idJeu) {
 		Optional<Geek> optGeek = geekRepository.findById(idGeek);
 		Optional<Jeu> optJeu = jeuRepository.findById(idJeu);

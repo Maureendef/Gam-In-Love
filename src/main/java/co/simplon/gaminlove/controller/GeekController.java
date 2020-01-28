@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,6 +32,11 @@ import io.swagger.annotations.ApiResponse;
 @RestController
 @RequestMapping(path = "/geek")
 @Api(tags = "API pour les opérations CRUD sur les Geeks.")
+@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
+		@ApiResponse(code = 400, message = "Mauvaise Requête"),
+		@ApiResponse(code = 401, message = "Echec Authentification"),
+		@ApiResponse(code = 403, message = "Accès Refusé"), 
+		@ApiResponse(code = 500, message = "Problème Serveur") })
 @CrossOrigin("*")
 public class GeekController {
 
@@ -49,12 +53,6 @@ public class GeekController {
 	 */
 	@PostMapping(path = "/")
 	@ApiOperation(value = "Crée un nouveau geek avec le nom spécifié.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public ResponseEntity<Geek> addNew(@RequestBody Geek geek) {
 		geekRepository.save(geek);
 		return ResponseEntity.ok(geek);
@@ -67,12 +65,6 @@ public class GeekController {
 	 */
 	@GetMapping(path = "/")
 	@ApiOperation(value = "Retourne tous les Geeks.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public @ResponseBody Iterable<Geek> getAll() {
 		return geekRepository.findAll();
 	}
@@ -85,12 +77,6 @@ public class GeekController {
 	 */
 	@GetMapping(path = "/{id}")
 	@ApiOperation(value = "Retourne le Geek pour l'id spécifié.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public ResponseEntity<Geek> getOne(@PathVariable int id) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		return optGeek.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -111,12 +97,6 @@ public class GeekController {
 	 */
 	@PutMapping(path = "/{id}")
 	@ApiOperation(value = "Retourne le Geek pour l'id spécifié et le met à jour.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	ResponseEntity<Geek> updateOne(@PathVariable int id, @RequestBody Geek geekInput) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		if (optGeek.isPresent()) {
@@ -155,12 +135,6 @@ public class GeekController {
 	 */
 	@DeleteMapping("/{id}")
 	@ApiOperation(value = "Supprime le Geek pour l'id spécifié.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public HttpStatus delOne(@PathVariable int id) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		if (optGeek.isPresent()) {

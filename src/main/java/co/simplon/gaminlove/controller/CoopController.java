@@ -29,6 +29,11 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping(path="/coop")
 @Api(tags = "API pour les opérations CRUD sur les Coop.")
+@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
+		@ApiResponse(code = 400, message = "Mauvaise Requête"),
+		@ApiResponse(code = 401, message = "Echec Authentification"),
+		@ApiResponse(code = 403, message = "Accès Refusé"), 
+		@ApiResponse(code = 500, message = "Problème Serveur") })
 @CrossOrigin("*")
 public class CoopController {
 
@@ -43,12 +48,6 @@ public class CoopController {
 	 */
 	@PostMapping(path = "/")
 	@ApiOperation(value = "Crée un nouveau match avec le type spécifié.")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public ResponseEntity<Coop> addNew(@RequestBody Coop coop) {
 		coopRepository.save(coop);
 		return ResponseEntity.ok(coop);
@@ -61,12 +60,6 @@ public class CoopController {
 	 */
 	@GetMapping(path = "/")
 	@ApiOperation(value = "Retourne tous les matchs")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public @ResponseBody Iterable<Coop> getAll(){
 		return coopRepository.findAll();		
 	}
@@ -79,12 +72,6 @@ public class CoopController {
 	 */
 	@GetMapping("/{id}")
 	@ApiOperation(value = "Retourne le match pour l'id spécifié")
-	@ApiResponses(value = {
-			@ApiResponse(code = 200, message="Succès"),
-			@ApiResponse(code = 400, message="Mauvaise Requête"),
-			@ApiResponse(code = 401, message="Echec Authentification"),
-			@ApiResponse(code = 403, message="Accès Refusé"),
-			@ApiResponse(code = 500, message="Problème Serveur")})
 	public ResponseEntity<Coop> delOne(@PathVariable int id) {
 		Optional<Coop> optCoop = coopRepository.findById(id);
 		return optCoop.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
