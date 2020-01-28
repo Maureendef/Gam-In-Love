@@ -77,7 +77,7 @@ public class CoopController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping("/{id}")
+	@GetMapping("/{id}")
 	@ApiOperation(value = "Retourne le match pour l'id spécifié")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message="Succès"),

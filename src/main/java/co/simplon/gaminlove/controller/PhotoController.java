@@ -7,11 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.gaminlove.model.Geek;
+import co.simplon.gaminlove.model.Jeu;
 import co.simplon.gaminlove.model.Photo;
 import co.simplon.gaminlove.repository.GeekRepository;
 import co.simplon.gaminlove.repository.PhotoRepository;
@@ -44,7 +47,7 @@ public class PhotoController {
 	 * @param url
 	 * @return la photo stockée en base (avec l'id à jour si généré)
 	 */
-	@RequestMapping(path = "/add/{geek}/{url}")
+	@PostMapping(path = "/add/{geek}/{url}")
 	@ApiOperation(value = "Crée une nouvelle photo avec l'url spécifié et l'enregistre en base.")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message="Succès"),
@@ -61,6 +64,16 @@ public class PhotoController {
 			updateGeek.getPhotos().add(newPhoto);
 		}
 		return photoRepository.save(newPhoto);
+	}
+	
+	public ResponseEntity<Photo> addNew(@PathVariable int id, @RequestBody Photo photo) {
+		Optional<Geek> optGeek = geekRepository.findById(id);
+		if (optGeek.isPresent()) {
+			photoRepository.save(photo);
+			optGeek.get().getPhotos().add(photo);
+			geekRepository.save(optGeek.get());
+		}
+		return ResponseEntity.ok(photo);
 	}
 
 	/**
