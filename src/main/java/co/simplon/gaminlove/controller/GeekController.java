@@ -1,6 +1,5 @@
 package co.simplon.gaminlove.controller;
 
-import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.repository.GeekRepository;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * Le controller qui permet d'acceder au CRUD de la table Geek
@@ -44,6 +43,7 @@ public class GeekController {
 	 * @return le geek stocké en base (avec l'id à jour si généré)
 	 */
 	@PostMapping(path = "/")
+	@ApiOperation(value = "Crée un nouveau geek avec le nom spécifié et l'enregistre en base.")
 	public ResponseEntity<Geek> addNew(@RequestBody Geek geek) {
 		geekRepository.save(geek);
 		return ResponseEntity.ok(geek);
@@ -55,17 +55,19 @@ public class GeekController {
 	 * @return une liste de geek
 	 */
 	@GetMapping(path = "/")
+	@ApiOperation(value = "Retourne tous les geek de la base.")
 	public @ResponseBody Iterable<Geek> getAll() {
 		return geekRepository.findAll();
 	}
 
 	/**
-	 * Retourne le geek d'id spécifié.
+	 * Retourne le geek pour l'id spécifié.
 	 * 
 	 * @param id du geek à retourner.
 	 * @return le statut de la requête.
 	 */
 	@GetMapping(path = "/{id}")
+	@ApiOperation(value = "Retourne le geek pour l'id spécifié.")
 	public ResponseEntity<Geek> getOne(@PathVariable int id) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		return optGeek.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -78,13 +80,14 @@ public class GeekController {
 	}
 
 	/**
-	 * Retourne le geek d'id spécifié et le met à jour.
+	 * Retourne le geek pour l'id spécifié et le met à jour.
 	 * 
 	 * @param id du geek à modifier et un objet geek contenant les informations à
 	 *           mettre à jour.
 	 * @return le statut de la requête
 	 */
 	@PatchMapping(path = "/{id}")
+	@ApiOperation(value = "Retourne le geek pour l'id spécifié et le met à jour.")
 	ResponseEntity<Geek> updateOne(@PathVariable int id, @RequestBody Geek geekInput) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		if (optGeek.isPresent()) {
@@ -117,12 +120,13 @@ public class GeekController {
 	}
 
 	/**
-	 * Supprime le geek d'id spécifié.
+	 * Supprime le geek pour l'id spécifié.
 	 * 
 	 * @param id du geek à supprimer
 	 * @return
 	 */
 	@DeleteMapping("/{id}")
+	@ApiOperation(value = "Supprime le geek pour l'id spécifié.")
 	public HttpStatus delOne(@PathVariable int id) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		if (optGeek.isPresent()) {
