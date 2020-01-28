@@ -36,13 +36,11 @@ import io.swagger.annotations.ApiResponses;
 @ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
 		@ApiResponse(code = 400, message = "Mauvaise Requête"),
 		@ApiResponse(code = 401, message = "Echec Authentification"),
-		@ApiResponse(code = 403, message = "Accès Refusé"), 
-		@ApiResponse(code = 500, message = "Problème Serveur") })
+		@ApiResponse(code = 403, message = "Accès Refusé"), @ApiResponse(code = 500, message = "Problème Serveur") })
 @CrossOrigin("*")
 public class EventController {
 
-	
-	//permet d'initialiser le repo, par le mécanisme d'injection de dépendance 
+	// permet d'initialiser le repo, par le mécanisme d'injection de dépendance
 	@Autowired
 	private EventRepository eventRepository;
 
@@ -70,13 +68,15 @@ public class EventController {
 	 */
 	@PostMapping(path = "/participation/{id}")
 	@ApiOperation(value = "Ajoute un geek à la liste des participants")
-	public Event addParticipant(@PathVariable int id, @RequestBody Geek geek) {
-		Event updateEvent = eventRepository.findById(id).get();
-		updateEvent.getListeParticipant().add(geek);
-		eventRepository.save(updateEvent);
-		return updateEvent;
+	public ResponseEntity<Event> addParticipant(@PathVariable int id, @RequestBody Geek geek) {
+		Optional<Event> updateEvent = eventRepository.findById(id);
+		if (updateEvent.isPresent()) {
+			updateEvent.get().getGeekParticipant().add(geek);
+			eventRepository.save(updateEvent.get());
+		}
+		return ResponseEntity.ok(updateEvent.get());
 	}
-	
+
 	/**
 	 * Supprime un geek à la liste des participants
 	 * 
@@ -86,15 +86,18 @@ public class EventController {
 	 */
 	@DeleteMapping(path = "/participation/{id}")
 	@ApiOperation(value = "Supprime un geek à la liste des participants")
-	public Event removeParticipant(@PathVariable int id, @RequestBody Geek geek) {
-		Event updateEvent = eventRepository.findById(id).get();
-		updateEvent.getListeParticipant().remove(geek);
-		eventRepository.save(updateEvent);
-		return updateEvent;
+	public ResponseEntity<Event> removeParticipant(@PathVariable int id, @RequestBody Geek geek) {
+		Optional<Event> removeEvent = eventRepository.findById(id);
+		if (removeEvent.isPresent()) {
+			removeEvent.get().getGeekParticipant().remove(geek);
+			eventRepository.save(removeEvent.get());
+		}
+		return ResponseEntity.ok(removeEvent.get());
 	}
-	
+
 	/**
 	 * Affiche tous les events.
+	 * 
 	 * @return la liste des events
 	 */
 	@GetMapping(path = "/")

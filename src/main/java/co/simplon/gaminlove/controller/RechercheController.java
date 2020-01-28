@@ -1,5 +1,6 @@
 package co.simplon.gaminlove.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,18 @@ public class RechercheController {
 	}
 
 	/**
+	 * Retourne la recherche pour l'id spécifié.
+	 * 
+	 * @return une liste de recherche
+	 */
+	@GetMapping(path = "/{id}")
+	@ApiOperation(value = "Retourne la recherche pour l'id spécifié.")
+	public ResponseEntity<Recherche> getOne(@PathVariable int id) {
+		Optional<Recherche> optRecherche = rechercheRepository.findById(id);
+		return optRecherche.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+	}
+
+	/**
 	 * Retourne toutes les recherches de la base.
 	 * 
 	 * @return une liste de recherche
@@ -90,12 +103,36 @@ public class RechercheController {
 		Optional<Recherche> optRecherche = rechercheRepository.findById(idRecherche);
 		if (optGeek.isPresent() && optRecherche.isPresent()) {
 			optGeek.get().getRecherches().remove(optRecherche.get());
-			geekRepository.save(optGeek.get());
 			rechercheRepository.deleteById(idRecherche);
+			geekRepository.save(optGeek.get());
 			return HttpStatus.OK;
 		} else {
 			return HttpStatus.NOT_FOUND;
 		}
 	}
-
+	
+	/**
+	 * Cherche parmi la liste de Geek tous les hommes
+	 * 
+	 * @return liste d'homme
+	 */
+	@GetMapping(path = "/male")
+	@ApiOperation(value = "Retourne les Geek de Sexe masculin.")
+	public List<Geek> getMale() {
+		List<Geek> optMale = rechercheRepository.findMale();
+		return optMale;
+	}
+	
+	/**
+	 * Cherche parmi la liste de Geek tous les enfants
+	 * 
+	 * @return liste d'enfant
+	 */
+	@GetMapping(path = "/kinder")
+	@ApiOperation(value = "Retourne les Geek de Sexe masculin.")
+	public List<Geek> getKinder() {
+		List<Geek> optMale = rechercheRepository.findKinder();
+		return optMale;
+	}
+	
 }

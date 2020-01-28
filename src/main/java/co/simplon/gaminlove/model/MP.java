@@ -13,8 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Une simple classe pour représenter un MP: un id, l'id du geek émetteur,
- * l'id du geek récepteur et le message.
+ * Une simple classe pour représenter un MP (message privé).
  * 
  * @author Maureen, Nicolas, Virgile
  *
@@ -32,8 +31,7 @@ public class MP {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne
-	private Geek emetteur;
-	@ManyToOne
-	private Geek recepteur;
+	private Geek geekCible;
 	private String message;
+	
 }

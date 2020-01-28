@@ -13,8 +13,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Une simple classe pour représenter une Coop: un id, l'id du geek émetteur et
- * de l'id du geek récepteur.
+ * Une simple classe pour représenter une Coop (match).
  * 
  * @author Maureen, Nicolas, Virgile
  *
@@ -31,9 +30,6 @@ public class Coop {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne
-	private Geek emetteur;
-	@ManyToOne
-	private Geek recepteur;
-
+	private Geek geekCible;
 	
 }

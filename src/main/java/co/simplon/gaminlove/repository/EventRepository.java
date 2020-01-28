@@ -19,5 +19,6 @@ public interface EventRepository extends CrudRepository<Event, Integer> {
 
 	public Optional<Event> findByNom(String nom);
 	public Collection<Event> findAllByDate(Date date);
+	
 }
 

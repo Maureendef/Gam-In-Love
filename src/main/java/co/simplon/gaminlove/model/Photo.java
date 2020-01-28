@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * Une simple classe pour représenter une Photo: un id et l'id du geek.
+ * Une simple classe pour représenter une Photo.
  * 
  * @author Maureen, Nicolas, Virgile
  *
@@ -27,5 +27,5 @@ public class Photo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String url;
-
+	
 }

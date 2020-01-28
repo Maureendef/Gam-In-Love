@@ -13,8 +13,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Une simple classe pour représenter une Action: un id, l'id du geek émetteur,
- * l'id du geek récepteur et un type d'action (like/superlike/dislike).
+ * Une simple classe pour représenter une Action (like/superlike/dislike).
  * 
  * @author Maureen, Nicolas, Virgile
  *
@@ -30,10 +29,8 @@ public class Action {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String action;
+	private String typeAction;
 	@ManyToOne
-	private Geek emetteur;
-	@ManyToOne
-	private Geek recepteur;
+	private Geek geekCible;
 
 }

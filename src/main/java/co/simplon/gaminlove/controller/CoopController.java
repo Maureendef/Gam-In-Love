@@ -14,14 +14,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.gaminlove.model.Coop;
+import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.repository.CoopRepository;
+import co.simplon.gaminlove.repository.GeekRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 /**
- * Le controller qui permet d'acceder au CRUD de la table Match
+ * Le controller qui permet d'acceder au CRUD de la table Coop
  * 
  * @author Maureen, Nicolas, Virgile
  *
@@ -40,16 +42,23 @@ public class CoopController {
 	@Autowired
 	private CoopRepository coopRepository;
 	
+	@Autowired
+	private GeekRepository geekRepository;
 	/**
 	 * Crée un nouveau match avec le type spécifié.
 	 * 
 	 * @param action, émetteur, récepteur
 	 * @return l'action est stockée en base (avec l'id auto-générée)
 	 */
-	@PostMapping(path = "/")
+	@PostMapping(path = "/{id}")
 	@ApiOperation(value = "Crée un nouveau match avec le type spécifié.")
-	public ResponseEntity<Coop> addNew(@RequestBody Coop coop) {
+	public ResponseEntity<Coop> addNew(@PathVariable int id, @RequestBody Coop coop) {
+		Optional<Geek> optGeek = geekRepository.findById(id);
+		if (optGeek.isPresent()) {
 		coopRepository.save(coop);
+		optGeek.get().getCoop().add(coop);
+		geekRepository.save(optGeek.get());
+	}
 		return ResponseEntity.ok(coop);
 	}
 	

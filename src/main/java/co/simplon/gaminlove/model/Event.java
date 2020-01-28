@@ -11,14 +11,17 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
- * Une simple classe pour représenter un event: un id, un nom, un lieu, une date
- * ainsi que la liste des participants.
+ * Une simple classe pour représenter un événement.
  * 
  * @author Maureen, Nicolas, Virgile
  *
@@ -28,16 +31,18 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Event {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@ManyToMany
-	private Collection<Geek> listeParticipant;
 	private String nom;
 	private String lieu;
 	@Temporal(TemporalType.DATE)
 	private Date date;
-
+	@JsonInclude(Include.NON_EMPTY)
+	@ManyToMany
+	private Collection<Geek> geekParticipant;
+	
 }

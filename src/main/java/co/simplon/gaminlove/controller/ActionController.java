@@ -71,7 +71,7 @@ public class ActionController {
 	/**
 	 * Retourne l'action pour l'id spécifié.
 	 * 
-	 * @param id
+	 * @param id de l'action
 	 * @return
 	 */
 	@GetMapping(path = "/{id}")
@@ -84,7 +84,7 @@ public class ActionController {
 	/**
 	 * Supprime l'action pour l'id spécifié.
 	 * 
-	 * @param id
+	 * @param id de l'action
 	 * @return
 	 */
 	@DeleteMapping("/{id}")

@@ -1,6 +1,5 @@
 package co.simplon.gaminlove.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,14 +106,14 @@ public class GeekController {
 			if (geekInput.getPseudo() != null) {
 				geek.setPseudo(geekInput.getPseudo());
 			}
-			if (geekInput.getLieu() != null) {
-				geek.setLieu(geekInput.getLieu());
+			if (geekInput.getVille() != null) {
+				geek.setVille(geekInput.getVille());
 			}
 			if (geekInput.getSexe() != null) {
 				geek.setSexe(geekInput.getSexe());
 			}
-			if (geekInput.getCompte() != null) {
-				geek.setCompte(geekInput.getCompte());
+			if (geekInput.getTypeCompte() != null) {
+				geek.setTypeCompte(geekInput.getTypeCompte());
 			}
 			if (geekInput.getEmail() != null) {
 				geek.setEmail(geekInput.getEmail());
@@ -144,16 +143,5 @@ public class GeekController {
 			return HttpStatus.NOT_FOUND;
 		}
 	}
-
-	/**
-	 * Cherche parmi la liste de Geek tous les hommes
-	 * 
-	 * @return liste d'homme
-	 */
-	@GetMapping(path = "/male")
-	@ApiOperation(value = "Retourne les Geek de Sexe masculin.")
-	public List<Geek> getMale() {
-		List<Geek> optMale = geekRepository.findMale();
-		return optMale;
-	}
+	
 }

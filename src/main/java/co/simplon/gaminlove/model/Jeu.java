@@ -13,8 +13,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 /**
- * Une simple classe pour représenter un jeux: un id, un nom et le rang du geek
- * dans ce jeu.
+ * Une simple classe pour représenter un jeu.
  * 
  * @author Maureen, Nicolas, Virgile
  *

@@ -26,8 +26,9 @@ public class Recherche {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	private int ageMin;
+	private int ageMax;
 	private String nom;
-	private int age;
 	private String sexe;
 	private String lieu;
 	private String jeu;
