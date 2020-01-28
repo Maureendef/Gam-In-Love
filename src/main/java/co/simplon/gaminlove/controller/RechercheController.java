@@ -1,5 +1,6 @@
 package co.simplon.gaminlove.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,7 @@ import io.swagger.annotations.ApiResponses;
 @ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
 		@ApiResponse(code = 400, message = "Mauvaise Requête"),
 		@ApiResponse(code = 401, message = "Echec Authentification"),
-		@ApiResponse(code = 403, message = "Accès Refusé"), 
-		@ApiResponse(code = 500, message = "Problème Serveur") })
+		@ApiResponse(code = 403, message = "Accès Refusé"), @ApiResponse(code = 500, message = "Problème Serveur") })
 @CrossOrigin("*")
 public class RechercheController {
 
@@ -45,7 +45,7 @@ public class RechercheController {
 	// (IOC)
 	@Autowired
 	private RechercheRepository rechercheRepository;
-	
+
 	@Autowired
 	private GeekRepository geekRepository;
 
@@ -99,4 +99,14 @@ public class RechercheController {
 		}
 	}
 
+	/**
+     * Cherche parmi la liste de Geek tous les hommes
+     * @return liste d'homme
+     */
+    @GetMapping(path = "/male")
+    @ApiOperation(value = "Retourne les Geek de Sexe masculin.")
+    public List<Geek> getMale() {
+        List<Geek> optMale = rechercheRepository.findMale();
+        return optMale;
+    }
 }

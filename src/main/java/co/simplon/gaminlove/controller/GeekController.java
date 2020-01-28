@@ -1,5 +1,7 @@
 package co.simplon.gaminlove.controller;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.gaminlove.model.Geek;
+import co.simplon.gaminlove.model.Jeu;
 import co.simplon.gaminlove.repository.GeekRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
