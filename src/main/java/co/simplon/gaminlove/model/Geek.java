@@ -45,12 +45,6 @@ public class Geek {
 	private String compte;
 	@Column(nullable = false)
 	private String email;
-	
-//	@OneToOne(cascade = CascadeType.ALL)
-//	private Album album;
-//	@OneToOne(cascade = CascadeType.ALL)	
-//	private Catalogue catalogue;
-	
 	@OneToMany
 	private Collection<Photo> photos;
 	@ManyToMany
