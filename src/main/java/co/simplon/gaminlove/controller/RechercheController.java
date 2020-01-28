@@ -1,6 +1,5 @@
 package co.simplon.gaminlove.controller;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,14 +98,4 @@ public class RechercheController {
 		}
 	}
 
-	/**
-     * Cherche parmi la liste de Geek tous les hommes
-     * @return liste d'homme
-     */
-    @GetMapping(path = "/male")
-    @ApiOperation(value = "Retourne les Geek de Sexe masculin.")
-    public List<Geek> getMale() {
-        List<Geek> optMale = rechercheRepository.findMale();
-        return optMale;
-    }
 }

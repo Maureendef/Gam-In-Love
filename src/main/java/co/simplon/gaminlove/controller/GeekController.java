@@ -1,6 +1,5 @@
 package co.simplon.gaminlove.controller;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.gaminlove.model.Geek;
-import co.simplon.gaminlove.model.Jeu;
 import co.simplon.gaminlove.repository.GeekRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,8 +36,7 @@ import io.swagger.annotations.ApiResponse;
 @ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
 		@ApiResponse(code = 400, message = "Mauvaise Requête"),
 		@ApiResponse(code = 401, message = "Echec Authentification"),
-		@ApiResponse(code = 403, message = "Accès Refusé"), 
-		@ApiResponse(code = 500, message = "Problème Serveur") })
+		@ApiResponse(code = 403, message = "Accès Refusé"), @ApiResponse(code = 500, message = "Problème Serveur") })
 @CrossOrigin("*")
 public class GeekController {
 
@@ -146,5 +143,17 @@ public class GeekController {
 		} else {
 			return HttpStatus.NOT_FOUND;
 		}
+	}
+
+	/**
+	 * Cherche parmi la liste de Geek tous les hommes
+	 * 
+	 * @return liste d'homme
+	 */
+	@GetMapping(path = "/male")
+	@ApiOperation(value = "Retourne les Geek de Sexe masculin.")
+	public List<Geek> getMale() {
+		List<Geek> optMale = geekRepository.findMale();
+		return optMale;
 	}
 }

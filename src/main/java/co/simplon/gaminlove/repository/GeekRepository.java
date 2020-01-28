@@ -1,12 +1,9 @@
 package co.simplon.gaminlove.repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.http.ResponseEntity;
-
 import co.simplon.gaminlove.model.Geek;
 
 /**
@@ -18,5 +15,8 @@ import co.simplon.gaminlove.model.Geek;
  *
  */
 public interface GeekRepository extends CrudRepository<Geek, Integer> {
-
+	@Query("select g from Geek g where g.sexe = 'homme'")
+    List<Geek> findMale();
+	@Query("select f from Geek f where f.sexe = 'femme'")
+    List<Geek> findFemale();
 }
