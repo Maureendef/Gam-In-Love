@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.model.MP;
+import co.simplon.gaminlove.model.Photo;
+import co.simplon.gaminlove.repository.GeekRepository;
 import co.simplon.gaminlove.repository.MPRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,16 +44,25 @@ public class MPController {
 	
 	@Autowired
 	private MPRepository mpRepository;
+
+	@Autowired
+	private GeekRepository geekRepository;
+	
 	/**
 	 * Crée un MP.
 	 * 
 	 * @param geekEmetteur & geekRecepteur
 	 * @return le MP stocké en base (avec l'id à jour si généré)
 	 */
-	@PostMapping(path = "/")
+	@PostMapping(path = "/{id}")
 	@ApiOperation(value = "Crée un MP.")
-	public ResponseEntity<MP> addNew(@RequestBody MP mp) {
+	public ResponseEntity<MP> addNew(@PathVariable int id, @RequestBody MP mp) {
+		Optional<Geek> optGeek = geekRepository.findById(id);
+		if (optGeek.isPresent()) {
 		mpRepository.save(mp);
+		optGeek.get().getMp().add(mp);
+		geekRepository.save(optGeek.get());
+		}
 		return ResponseEntity.ok(mp);
 	}	
 	

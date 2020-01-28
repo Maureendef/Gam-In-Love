@@ -3,6 +3,7 @@ package co.simplon.gaminlove.model;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,10 +37,12 @@ public class Geek {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private int age;
+	@Column(unique=true)
 	private String pseudo;
 	private String ville;
 	private String sexe;
 	private String typeCompte;
+	@Column(unique=true)
 	private String email;
 	@JsonIgnore
 	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
