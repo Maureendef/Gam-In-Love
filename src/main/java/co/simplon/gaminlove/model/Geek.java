@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,9 +51,9 @@ public class Geek {
 //	@OneToOne(cascade = CascadeType.ALL)	
 //	private Catalogue catalogue;
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	private Collection<Photo> photos;
 	@OneToMany
+	private Collection<Photo> photos;
+	@ManyToMany
 	private Collection<Jeu> jeux;
 	
 

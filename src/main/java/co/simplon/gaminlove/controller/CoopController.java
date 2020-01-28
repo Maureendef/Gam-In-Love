@@ -3,16 +3,22 @@ package co.simplon.gaminlove.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.model.Coop;
 import co.simplon.gaminlove.repository.CoopRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * Le controller qui permet d'acceder au CRUD de la table Match
@@ -22,34 +28,47 @@ import co.simplon.gaminlove.repository.CoopRepository;
  */
 @RestController
 @RequestMapping(path="/coop")
+@Api(tags = "API pour les opérations CRUD sur les Coop.")
 @CrossOrigin("*")
 public class CoopController {
 
 	@Autowired
-	private CoopRepository matchRepository;
+	private CoopRepository coopRepository;
 	
 	/**
-	 * Crée un nouveau match avec le type spécifié et l'enregistre en base.
+	 * Crée un nouveau match avec le type spécifié.
 	 * 
 	 * @param action, émetteur, récepteur
 	 * @return l'action est stockée en base (avec l'id auto-générée)
 	 */
-	@RequestMapping(path = "/add/{emetteur}/{recepteur}")
-	public Coop addNew(@PathVariable Geek emetteur, @PathVariable Geek recepteur) {
-		Coop newMatch = new Coop();
-		newMatch.setEmetteur(emetteur);
-		newMatch.setRecepteur(recepteur);
-		return matchRepository.save(newMatch);		
+	@PostMapping(path = "/")
+	@ApiOperation(value = "Crée un nouveau match avec le type spécifié.")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message="Succès"),
+			@ApiResponse(code = 400, message="Mauvaise Requête"),
+			@ApiResponse(code = 401, message="Echec Authentification"),
+			@ApiResponse(code = 403, message="Accès Refusé"),
+			@ApiResponse(code = 500, message="Problème Serveur")})
+	public ResponseEntity<Coop> addNew(@RequestBody Coop coop) {
+		coopRepository.save(coop);
+		return ResponseEntity.ok(coop);
 	}
 	
 	/**
-	 * Retourne tous les matchs de la base.
+	 * Retourne tous les matchs.
 	 * 
 	 * @return une liste d'action
 	 */
-	@GetMapping(path = "/all")
+	@GetMapping(path = "/")
+	@ApiOperation(value = "Retourne tous les matchs")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message="Succès"),
+			@ApiResponse(code = 400, message="Mauvaise Requête"),
+			@ApiResponse(code = 401, message="Echec Authentification"),
+			@ApiResponse(code = 403, message="Accès Refusé"),
+			@ApiResponse(code = 500, message="Problème Serveur")})
 	public @ResponseBody Iterable<Coop> getAll(){
-		return matchRepository.findAll();		
+		return coopRepository.findAll();		
 	}
 	
 	/**
@@ -58,16 +77,16 @@ public class CoopController {
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping("/del/{id}")
-	public void delOne(@PathVariable int id) {
-		Optional<Coop> optMatch = matchRepository.findById(id);
-		if (optMatch.isPresent() ) {
-			matchRepository.deleteById(id);
-			System.out.println("Action supprimée");
-		} else {
-			System.out.println("Pas d'action à supprimer");
-		}
+	@RequestMapping("/{id}")
+	@ApiOperation(value = "Retourne le match pour l'id spécifié")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message="Succès"),
+			@ApiResponse(code = 400, message="Mauvaise Requête"),
+			@ApiResponse(code = 401, message="Echec Authentification"),
+			@ApiResponse(code = 403, message="Accès Refusé"),
+			@ApiResponse(code = 500, message="Problème Serveur")})
+	public ResponseEntity<Coop> delOne(@PathVariable int id) {
+		Optional<Coop> optCoop = coopRepository.findById(id);
+		return optCoop.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}
-	
-	
 }

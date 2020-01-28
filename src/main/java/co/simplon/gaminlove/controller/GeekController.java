@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.repository.GeekRepository;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ApiResponse;
 
 /**
  * Le controller qui permet d'acceder au CRUD de la table Geek
@@ -28,6 +31,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequestMapping(path = "/geek")
+@Api(tags = "API pour les opérations CRUD sur les Geeks.")
 @CrossOrigin("*")
 public class GeekController {
 
@@ -43,7 +47,13 @@ public class GeekController {
 	 * @return le geek stocké en base (avec l'id à jour si généré)
 	 */
 	@PostMapping(path = "/")
-	@ApiOperation(value = "Crée un nouveau geek avec le nom spécifié et l'enregistre en base.")
+	@ApiOperation(value = "Crée un nouveau geek avec le nom spécifié.")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message="Succès"),
+			@ApiResponse(code = 400, message="Mauvaise Requête"),
+			@ApiResponse(code = 401, message="Echec Authentification"),
+			@ApiResponse(code = 403, message="Accès Refusé"),
+			@ApiResponse(code = 500, message="Problème Serveur")})
 	public ResponseEntity<Geek> addNew(@RequestBody Geek geek) {
 		geekRepository.save(geek);
 		return ResponseEntity.ok(geek);
@@ -55,7 +65,13 @@ public class GeekController {
 	 * @return une liste de geek
 	 */
 	@GetMapping(path = "/")
-	@ApiOperation(value = "Retourne tous les geek de la base.")
+	@ApiOperation(value = "Retourne tous les Geeks.")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message="Succès"),
+			@ApiResponse(code = 400, message="Mauvaise Requête"),
+			@ApiResponse(code = 401, message="Echec Authentification"),
+			@ApiResponse(code = 403, message="Accès Refusé"),
+			@ApiResponse(code = 500, message="Problème Serveur")})
 	public @ResponseBody Iterable<Geek> getAll() {
 		return geekRepository.findAll();
 	}
@@ -67,7 +83,13 @@ public class GeekController {
 	 * @return le statut de la requête.
 	 */
 	@GetMapping(path = "/{id}")
-	@ApiOperation(value = "Retourne le geek pour l'id spécifié.")
+	@ApiOperation(value = "Retourne le Geek pour l'id spécifié.")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message="Succès"),
+			@ApiResponse(code = 400, message="Mauvaise Requête"),
+			@ApiResponse(code = 401, message="Echec Authentification"),
+			@ApiResponse(code = 403, message="Accès Refusé"),
+			@ApiResponse(code = 500, message="Problème Serveur")})
 	public ResponseEntity<Geek> getOne(@PathVariable int id) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		return optGeek.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
@@ -87,11 +109,16 @@ public class GeekController {
 	 * @return le statut de la requête
 	 */
 	@PatchMapping(path = "/{id}")
-	@ApiOperation(value = "Retourne le geek pour l'id spécifié et le met à jour.")
+	@ApiOperation(value = "Retourne le Geek pour l'id spécifié et le met à jour.")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message="Succès"),
+			@ApiResponse(code = 400, message="Mauvaise Requête"),
+			@ApiResponse(code = 401, message="Echec Authentification"),
+			@ApiResponse(code = 403, message="Accès Refusé"),
+			@ApiResponse(code = 500, message="Problème Serveur")})
 	ResponseEntity<Geek> updateOne(@PathVariable int id, @RequestBody Geek geekInput) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		if (optGeek.isPresent()) {
-			System.out.println("compte : " + geekInput.getCompte());
 			Geek geek = optGeek.get();
 			if (geekInput.getAge() != 0) {
 				geek.setAge(geekInput.getAge());
@@ -126,7 +153,13 @@ public class GeekController {
 	 * @return
 	 */
 	@DeleteMapping("/{id}")
-	@ApiOperation(value = "Supprime le geek pour l'id spécifié.")
+	@ApiOperation(value = "Supprime le Geek pour l'id spécifié.")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message="Succès"),
+			@ApiResponse(code = 400, message="Mauvaise Requête"),
+			@ApiResponse(code = 401, message="Echec Authentification"),
+			@ApiResponse(code = 403, message="Accès Refusé"),
+			@ApiResponse(code = 500, message="Problème Serveur")})
 	public HttpStatus delOne(@PathVariable int id) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		if (optGeek.isPresent()) {

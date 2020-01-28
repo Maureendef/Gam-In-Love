@@ -3,17 +3,24 @@ package co.simplon.gaminlove.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.simplon.gaminlove.model.Action;
-import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.repository.ActionRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * Le controller qui permet d'acceder au CRUD de la table Action
@@ -23,6 +30,7 @@ import co.simplon.gaminlove.repository.ActionRepository;
  */
 @RestController
 @RequestMapping(path = "/action")
+@Api(tags = "API pour les opérations CRUD sur les Actions.")
 @CrossOrigin("*")
 public class ActionController {
 
@@ -32,26 +40,35 @@ public class ActionController {
 	private ActionRepository actionRepository;
 
 	/**
-	 * Crée une nouvelle action avec le type spécifié et l'enregistre en base.
+	 * Crée une nouvelle action avec le type spécifié.
 	 * 
-	 * @param action, émetteur, récepteur
+	 * @param action récupère un objet Json du front
 	 * @return l'action est stockée en base (avec l'id auto-générée)
 	 */
-	@RequestMapping(path = "/add/{action}/{emetteur}/{recepteur}")
-	public Action addNew(@PathVariable String action, @PathVariable Geek emetteur, @PathVariable Geek recepteur) {
-		Action newAction = new Action();
-		newAction.setAction(action);
-		newAction.setEmetteur(emetteur);
-		newAction.setRecepteur(recepteur);
-		return actionRepository.save(newAction);
+	@PostMapping(path = "/")
+	@ApiOperation(value = "Crée une nouvelle action avec le type spécifié.")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
+			@ApiResponse(code = 400, message = "Mauvaise Requête"),
+			@ApiResponse(code = 401, message = "Echec Authentification"),
+			@ApiResponse(code = 403, message = "Accès Refusé"),
+			@ApiResponse(code = 500, message = "Problème Serveur") })
+	public ResponseEntity<Action> addNew(@RequestBody Action action) {
+		actionRepository.save(action);
+		return ResponseEntity.ok(action);
 	}
 	
 	/**
-	 * Retourne toutes les actions de la base.
+	 * Retourne toutes les actions.
 	 * 
 	 * @return une liste d'action
 	 */
-	@GetMapping(path = "/all")
+	@GetMapping(path = "/")
+	@ApiOperation(value = "Retourne toutes les actions.")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
+			@ApiResponse(code = 400, message = "Mauvaise Requête"),
+			@ApiResponse(code = 401, message = "Echec Authentification"),
+			@ApiResponse(code = 403, message = "Accès Refusé"),
+			@ApiResponse(code = 500, message = "Problème Serveur") })
 	public @ResponseBody Iterable<Action> getAll() {
 		return actionRepository.findAll();
 	}
@@ -62,30 +79,39 @@ public class ActionController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping(path = "/get/{id}")
+	@GetMapping(path = "/{id}")
+	@ApiOperation(value = "Retourne l'action pour l'id spécifié.")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
+			@ApiResponse(code = 400, message = "Mauvaise Requête"),
+			@ApiResponse(code = 401, message = "Echec Authentification"),
+			@ApiResponse(code = 403, message = "Accès Refusé"),
+			@ApiResponse(code = 500, message = "Problème Serveur") })
 	public ResponseEntity<Action> getOne(@PathVariable int id) {
 		Optional<Action> optAction = actionRepository.findById(id);
-		if (optAction.isPresent()) {
-			return ResponseEntity.ok(optAction.get());
-		} else {
-			return ResponseEntity.notFound().build();
-		}
+		return optAction.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
 	/**
-	 * supprime l'action pour l'id spécifié.
+	 * Supprime l'action pour l'id spécifié.
 	 * 
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping("/del/{id}")
-	public void delOne(@PathVariable int id) {
-		Optional<Action> optGeek = actionRepository.findById(id);
-		if (optGeek.isPresent()) {
+	@DeleteMapping("/{id}")
+	@ApiOperation(value = "Supprime l'action pour l'id spécifié.")
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Succès"),
+			@ApiResponse(code = 400, message = "Mauvaise Requête"),
+			@ApiResponse(code = 401, message = "Echec Authentification"),
+			@ApiResponse(code = 403, message = "Accès Refusé"),
+			@ApiResponse(code = 500, message = "Problème Serveur") })
+	public HttpStatus delOne(@PathVariable int id) {
+		Optional<Action> optAction = actionRepository.findById(id);
+		if (optAction.isPresent()) {
 			actionRepository.deleteById(id);
-			System.out.println("Action supprimée");
+			return HttpStatus.OK;
 		} else {
-			System.out.println("Pas d'action à supprimer");
+			return HttpStatus.NOT_FOUND;
 		}
 	}
 }

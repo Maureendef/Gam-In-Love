@@ -15,6 +15,10 @@ import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.model.Photo;
 import co.simplon.gaminlove.repository.GeekRepository;
 import co.simplon.gaminlove.repository.PhotoRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 /**
  * Le controller qui permet d'acceder au CRUD de la table Jeu
@@ -24,6 +28,7 @@ import co.simplon.gaminlove.repository.PhotoRepository;
  */
 @RestController
 @RequestMapping(path = "/photo")
+@Api(tags = "API pour les opérations CRUD sur les Photos.")
 @CrossOrigin("*")
 public class PhotoController {
 
@@ -40,6 +45,13 @@ public class PhotoController {
 	 * @return la photo stockée en base (avec l'id à jour si généré)
 	 */
 	@RequestMapping(path = "/add/{geek}/{url}")
+	@ApiOperation(value = "Crée une nouvelle photo avec l'url spécifié et l'enregistre en base.")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message="Succès"),
+			@ApiResponse(code = 400, message="Mauvaise Requête"),
+			@ApiResponse(code = 401, message="Echec Authentification"),
+			@ApiResponse(code = 403, message="Accès Refusé"),
+			@ApiResponse(code = 500, message="Problème Serveur")})
 	public Photo addNew(@PathVariable Geek geek, @PathVariable String url) {
 		Photo newPhoto = new Photo();
 		newPhoto.setUrl(url);		
@@ -52,11 +64,18 @@ public class PhotoController {
 	}
 
 	/**
-	 * Retourne toutes les photos
+	 * Retourne toutes les photos.
 	 * 
 	 * @return une liste de photo
 	 */
 	@GetMapping(path = "/all")
+	@ApiOperation(value = "Retourne toutes les photos.")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message="Succès"),
+			@ApiResponse(code = 400, message="Mauvaise Requête"),
+			@ApiResponse(code = 401, message="Echec Authentification"),
+			@ApiResponse(code = 403, message="Accès Refusé"),
+			@ApiResponse(code = 500, message="Problème Serveur")})
 	public @ResponseBody Iterable<Photo> getAll() {
 		return photoRepository.findAll();
 	}
@@ -68,6 +87,13 @@ public class PhotoController {
 	 * @return
 	 */
 	@GetMapping(path = "/get/{id}")
+	@ApiOperation(value = "Retourne la photo pour l'id spécifié.")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message="Succès"),
+			@ApiResponse(code = 400, message="Mauvaise Requête"),
+			@ApiResponse(code = 401, message="Echec Authentification"),
+			@ApiResponse(code = 403, message="Accès Refusé"),
+			@ApiResponse(code = 500, message="Problème Serveur")})
 	public ResponseEntity<Photo> getOne(@PathVariable int id) {
 		Optional<Photo> optPhoto = photoRepository.findById(id);
 		if (optPhoto.isPresent()) {
@@ -78,12 +104,19 @@ public class PhotoController {
 	}
 
 	/**
-	 * Supprime la photo pour l'id spécifié spécifié.
+	 * Supprime la photo pour l'id spécifié.
 	 * 
 	 * @param id
 	 * @return
 	 */
 	@RequestMapping("/del/{id}")
+	@ApiOperation(value = "Supprime la photo pour l'id spécifié.")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message="Succès"),
+			@ApiResponse(code = 400, message="Mauvaise Requête"),
+			@ApiResponse(code = 401, message="Echec Authentification"),
+			@ApiResponse(code = 403, message="Accès Refusé"),
+			@ApiResponse(code = 500, message="Problème Serveur")})
 	public void delOne(@PathVariable int id) {
 		Optional<Photo> optPhoto = photoRepository.findById(id);
 		if (optPhoto.isPresent()) {
