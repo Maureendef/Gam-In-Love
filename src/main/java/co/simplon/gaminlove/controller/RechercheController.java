@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.model.Recherche;
+import co.simplon.gaminlove.repository.GeekRepository;
 import co.simplon.gaminlove.repository.RechercheRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -43,6 +45,9 @@ public class RechercheController {
 	// (IOC)
 	@Autowired
 	private RechercheRepository rechercheRepository;
+	
+	@Autowired
+	private GeekRepository geekRepository;
 
 	/**
 	 * Crée une nouvelle recherche et l'enregistre en base.
@@ -50,10 +55,15 @@ public class RechercheController {
 	 * @param recherche récupère via un objet JSON du front
 	 * @return la recherche stockée en base (avec l'id a jour si génère)
 	 */
-	@PostMapping(path = "/")
+	@PostMapping(path = "/{id}")
 	@ApiOperation(value = "Crée une nouvelle recherche.")
-	public ResponseEntity<Recherche> addRecherche(@RequestBody Recherche recherche) {
-		rechercheRepository.save(recherche);
+	public ResponseEntity<Recherche> addNew(@PathVariable int id, @RequestBody Recherche recherche) {
+		Optional<Geek> optGeek = geekRepository.findById(id);
+		if (optGeek.isPresent()) {
+			rechercheRepository.save(recherche);
+			optGeek.get().getRecherches().add(recherche);
+			geekRepository.save(optGeek.get());
+		}
 		return ResponseEntity.ok(recherche);
 	}
 
@@ -74,12 +84,15 @@ public class RechercheController {
 	 * @param id de la recherche a supprimer
 	 * @return
 	 */
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/{idGeek}/{idRecherche}")
 	@ApiOperation(value = "Supprime la recherche pour l'id spécifié.")
-	public HttpStatus delOne(@PathVariable int id) {
-		Optional<Recherche> optRecherche = rechercheRepository.findById(id);
-		if (optRecherche.isPresent()) {
-			rechercheRepository.deleteById(id);
+	public HttpStatus delOne(@PathVariable int idGeek, @PathVariable int idRecherche) {
+		Optional<Geek> optGeek = geekRepository.findById(idGeek);
+		Optional<Recherche> optRecherche = rechercheRepository.findById(idRecherche);
+		if (optGeek.isPresent() && optRecherche.isPresent()) {
+			optGeek.get().getRecherches().remove(optRecherche.get());
+			geekRepository.save(optGeek.get());
+			rechercheRepository.deleteById(idRecherche);
 			return HttpStatus.OK;
 		} else {
 			return HttpStatus.NOT_FOUND;

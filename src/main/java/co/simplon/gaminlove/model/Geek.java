@@ -48,6 +48,8 @@ public class Geek {
 	private Collection<Photo> photos;
 	@ManyToMany
 	private Collection<Jeu> jeux;
+	@OneToMany
+	private Collection<Recherche> recherches;
 	
 
 }
