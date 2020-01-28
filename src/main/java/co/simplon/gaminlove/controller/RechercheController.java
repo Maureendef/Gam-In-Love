@@ -22,13 +22,20 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+/**
+ * Le controller qui permet d'acceder au CRUD de la table Jeu
+ * 
+ * @author Maureen, Nicolas, Virgile
+ *
+ */
 @RestController
 @RequestMapping("/recherche")
 @Api(tags = "API pour les opérations CRUD sur les Recherches.")
 @ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
 		@ApiResponse(code = 400, message = "Mauvaise Requête"),
 		@ApiResponse(code = 401, message = "Echec Authentification"),
-		@ApiResponse(code = 403, message = "Accès Refusé"), @ApiResponse(code = 500, message = "Problème Serveur") })
+		@ApiResponse(code = 403, message = "Accès Refusé"), 
+		@ApiResponse(code = 500, message = "Problème Serveur") })
 @CrossOrigin("*")
 public class RechercheController {
 
@@ -38,10 +45,10 @@ public class RechercheController {
 	private RechercheRepository rechercheRepository;
 
 	/**
-	 * Cree une nouvelle recherche et l'enregistre en base.
+	 * Crée une nouvelle recherche et l'enregistre en base.
 	 * 
-	 * @param recherche recuperee via un objet JSON du front
-	 * @return la recherche stockee en base (avec l'id a jour si genere)
+	 * @param recherche récupère via un objet JSON du front
+	 * @return la recherche stockée en base (avec l'id a jour si génère)
 	 */
 	@PostMapping(path = "/")
 	@ApiOperation(value = "Crée une nouvelle recherche.")
@@ -62,7 +69,7 @@ public class RechercheController {
 	}
 
 	/**
-	 * Supprime la recherche pour l'id specifie.
+	 * Supprime la recherche pour l'id spécifié.
 	 * 
 	 * @param id de la recherche a supprimer
 	 * @return

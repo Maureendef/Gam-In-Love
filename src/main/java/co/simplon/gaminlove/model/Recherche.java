@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
+ * Une simple classe pour représenter une recherche personnalisée.
  * 
- * 
- * @author Nicolas Congard
+ * @author Maureen, Nicolas, Virgile
  *
  */
 @Entity
