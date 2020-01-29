@@ -1,7 +1,6 @@
 package co.simplon.gaminlove.repository;
 
 import org.springframework.data.repository.CrudRepository;
-
 import co.simplon.gaminlove.model.Coop;
 
 /**
@@ -11,6 +10,7 @@ import co.simplon.gaminlove.model.Coop;
  * @author Maureen, Nicolas, Virgile
  *
  */
+
 public interface CoopRepository extends CrudRepository<Coop, Integer> {
 
 }

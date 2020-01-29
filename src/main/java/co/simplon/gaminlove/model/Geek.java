@@ -1,8 +1,6 @@
 package co.simplon.gaminlove.model;
 
 import java.util.Collection;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,9 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +21,7 @@ import lombok.ToString;
  * @author Maureen, Nicolas, Virgile
  *
  */
+
 @Entity
 @Getter
 @Setter
@@ -45,24 +42,22 @@ public class Geek {
 	@Column(unique=true)
 	private String email;
 	@JsonIgnore
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
+	@OneToMany
 	private Collection<Photo> photos;
 	@JsonIgnore
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
+	@OneToMany
 	private Collection<Recherche> recherches;
 	@JsonIgnore
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
+	@OneToMany
 	private Collection<Coop> coop;
 	@JsonIgnore
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
+	@OneToMany
 	private Collection<Action> action;
 	@JsonIgnore
-	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
+	@OneToMany
 	private Collection<MP> mp;	
-	
 	@ManyToMany
 	private Collection<Jeu> jeux;
-	@JsonIgnore
 	@ManyToMany
 	private Collection<Event> event;
 

@@ -1,7 +1,6 @@
 package co.simplon.gaminlove.controller;
 
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.model.Photo;
 import co.simplon.gaminlove.repository.GeekRepository;
@@ -25,19 +23,19 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 /**
- * Le controller qui permet d'acceder au CRUD de la table Jeu
+ * Le controller qui gère les endpoint de l'entité Photo
  * 
  * @author Maureen, Nicolas, Virgile
  *
  */
+
 @RestController
 @RequestMapping(path = "/photo")
 @Api(tags = "API pour les opérations CRUD sur les Photos.")
 @ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
 		@ApiResponse(code = 400, message = "Mauvaise Requête"),
 		@ApiResponse(code = 401, message = "Echec Authentification"),
-		@ApiResponse(code = 403, message = "Accès Refusé"), 
-		@ApiResponse(code = 500, message = "Problème Serveur") })
+		@ApiResponse(code = 403, message = "Accès Refusé"), @ApiResponse(code = 500, message = "Problème Serveur") })
 @CrossOrigin("*")
 public class PhotoController {
 
@@ -48,13 +46,14 @@ public class PhotoController {
 	private GeekRepository geekRepository;
 
 	/**
-	 * Crée une nouvelle photo avec l'url spécifié et l'enregistre en base.
+	 * Ajoute une photo pour le Geek.
 	 * 
-	 * @param url
-	 * @return la photo stockée en base (avec l'id à jour si généré)
+	 * @param un objet photo sous forme Json et l'id du Geek
+	 * @return la photo crée (avec id auto-généré)
 	 */
+
 	@PostMapping(path = "/{id}")
-	@ApiOperation(value = "Crée une nouvelle photo avec l'url spécifié et l'enregistre en base.")
+	@ApiOperation(value = "Ajoute une photo pour le Geek.")
 	public ResponseEntity<Photo> addNew(@PathVariable int id, @RequestBody Photo photo) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		if (optGeek.isPresent()) {
@@ -70,6 +69,9 @@ public class PhotoController {
 	 * 
 	 * @return une liste de photo
 	 */
+
+	// TODO à changer pour un seul geek !
+
 	@GetMapping(path = "/")
 	@ApiOperation(value = "Retourne toutes les photos.")
 	public @ResponseBody Iterable<Photo> getAll() {
@@ -79,9 +81,10 @@ public class PhotoController {
 	/**
 	 * Retourne la photo pour l'id spécifié.
 	 * 
-	 * @param nom
-	 * @return
+	 * @param id d'une photo
+	 * @return une ou des photos si elle(s) existe(nt).
 	 */
+
 	@GetMapping(path = "/{id}")
 	@ApiOperation(value = "Retourne la photo pour l'id spécifié.")
 	public ResponseEntity<Photo> getOne(@PathVariable int id) {
@@ -93,8 +96,9 @@ public class PhotoController {
 	 * Supprime la photo pour l'id spécifié.
 	 * 
 	 * @param id
-	 * @return
+	 * @return code la requête (200 => OK)
 	 */
+
 	@DeleteMapping("/{idGeek}/{idPhoto}")
 	@ApiOperation(value = "Supprime la photo pour l'id spécifié.")
 	public HttpStatus delOne(@PathVariable int idGeek, @PathVariable int idPhoto) {

@@ -2,7 +2,6 @@ package co.simplon.gaminlove.controller;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.model.Recherche;
 import co.simplon.gaminlove.repository.GeekRepository;
@@ -27,11 +24,12 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 /**
- * Le controller qui permet d'acceder au CRUD de la table Recherche
+ * Le controller qui gère les endpoint de l'entité Recherche
  * 
  * @author Maureen, Nicolas, Virgile
  *
  */
+
 @RestController
 @RequestMapping("/recherche")
 @Api(tags = "API pour les opérations CRUD sur les Recherches.")
@@ -51,11 +49,12 @@ public class RechercheController {
 	private GeekRepository geekRepository;
 
 	/**
-	 * Crée une nouvelle recherche et l'enregistre en base.
+	 * Crée une nouvelle recherche.
 	 * 
-	 * @param recherche récupère via un objet JSON du front
-	 * @return la recherche stockée en base (avec l'id a jour si génère)
+	 * @param un objet recherche sous forme Json
+	 * @return la recherche crée (avec id auto-généré)
 	 */
+	
 	@PostMapping(path = "/{id}")
 	@ApiOperation(value = "Crée une nouvelle recherche.")
 	public ResponseEntity<Recherche> addNew(@PathVariable int id, @RequestBody Recherche recherche) {
@@ -73,6 +72,7 @@ public class RechercheController {
 	 * 
 	 * @return une liste de recherche
 	 */
+	
 	@GetMapping(path = "/{id}")
 	@ApiOperation(value = "Retourne la recherche pour l'id spécifié.")
 	public ResponseEntity<Recherche> getOne(@PathVariable int id) {
@@ -81,10 +81,11 @@ public class RechercheController {
 	}
 
 	/**
-	 * Retourne toutes les recherches de la base.
+	 * Retourne toutes les recherches.
 	 * 
 	 * @return une liste de recherche
 	 */
+	
 	@GetMapping(path = "/")
 	@ApiOperation(value = "Retourne toutes les recherches.")
 	public @ResponseBody Iterable<Recherche> getAll() {
@@ -95,8 +96,9 @@ public class RechercheController {
 	 * Supprime la recherche pour l'id spécifié.
 	 * 
 	 * @param id de la recherche a supprimer
-	 * @return
+	 * @return code la requête (200 => OK)
 	 */
+	
 	@DeleteMapping("/{idGeek}/{idRecherche}")
 	@ApiOperation(value = "Supprime la recherche pour l'id spécifié.")
 	public HttpStatus delOne(@PathVariable int idGeek, @PathVariable int idRecherche) {
@@ -111,42 +113,20 @@ public class RechercheController {
 			return HttpStatus.NOT_FOUND;
 		}
 	}
-	
+
 	/**
-	 * Cherche parmi la liste de Geek tous les hommes
+	 * Retourne les Geek pour les critères renseignés
 	 * 
-	 * @return liste d'homme
+	 * @return un ou plusieurs Geek(s)
 	 */
-	@GetMapping(path = "/male")
-	@ApiOperation(value = "Retourne les Geek de Sexe masculin.")
-	public List<Geek> getMale() {
-		List<Geek> optMale = rechercheRepository.findMale();
-		return optMale;
-	}
-	@GetMapping(path = "/female")
-	@ApiOperation(value = "Retourne les Geek de Sexe Féminin")
-	public List<Geek> getFemale() {
-		List<Geek> optFemale = rechercheRepository.findFemale();
-		return optFemale;
-	}
-	
-	/**
-	 * Cherche parmi la liste de Geek tous les enfants
-	 * 
-	 * @return liste d'enfant
-	 */
-	@GetMapping(path = "/kinder")
-	@ApiOperation(value = "Retourne les Geek agés de 18 à 24 ans.")
-	public List<Geek> getKinder() {
-		List<Geek> optKinder = rechercheRepository.findByYears();
-		return optKinder;
-	}
+
 	@GetMapping(path = "/search")
-	@ApiOperation(value = "Retourne les Geek d'une même ville.")
+	@ApiOperation(value = "Retourne les Geek pour les critères renseignés.")
 	public List<Geek> getCity(@RequestBody Recherche recherche) {
-		List<Geek> optCity = rechercheRepository.findCity(recherche.getSexe(), recherche.getVille(), recherche.getAgeMin(), recherche.getAgeMax(), recherche.getJeu());
+		List<Geek> optCity = rechercheRepository.findCity(recherche.getSexe(), recherche.getVille(),
+				recherche.getAgeMin(), recherche.getAgeMax(), recherche.getJeu());
 		System.out.println("jeux : " + recherche.getJeu());
 		return optCity;
 	}
-	
+
 }

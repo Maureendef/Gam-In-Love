@@ -1,20 +1,13 @@
 package co.simplon.gaminlove.model;
 
-import java.util.Collection;
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +20,7 @@ import lombok.ToString;
  * @author Maureen, Nicolas, Virgile
  *
  */
+
 @Entity
 @Getter
 @Setter
@@ -43,8 +37,5 @@ public class Event {
 	private String lieu;
 	@Temporal(TemporalType.DATE)
 	private Date date;
-	@JsonInclude(Include.NON_EMPTY)
-	@ManyToMany
-	private Collection<Geek> geekParticipant;
 	
 }

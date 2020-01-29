@@ -11,6 +11,7 @@ import co.simplon.gaminlove.model.Geek;
  * @return 
  *
  */
+
 public interface GeekRepository extends CrudRepository<Geek, Integer> {
 
 }

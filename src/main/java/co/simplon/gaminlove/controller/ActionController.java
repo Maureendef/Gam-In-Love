@@ -1,7 +1,6 @@
 package co.simplon.gaminlove.controller;
 
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import co.simplon.gaminlove.model.Action;
 import co.simplon.gaminlove.repository.ActionRepository;
 import io.swagger.annotations.Api;
@@ -23,11 +21,12 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 /**
- * Le controller qui permet d'acceder au CRUD de la table Action
+ * Le controller qui gère les endpoint de l'entité Action
  * 
  * @author Maureen, Nicolas, Virgile
  *
  */
+
 @RestController
 @RequestMapping(path = "/action")
 @Api(tags = "API pour les opérations CRUD sur les Actions.")
@@ -47,9 +46,10 @@ public class ActionController {
 	/**
 	 * Crée une nouvelle action avec le type spécifié.
 	 * 
-	 * @param action récupère un objet Json du front
-	 * @return l'action est stockée en base (avec l'id auto-générée)
+	 * @param un objet action sous forme Json
+	 * @return l'action crée (avec l'id auto-générée)
 	 */
+	
 	@PostMapping(path = "/")
 	@ApiOperation(value = "Crée une nouvelle action avec le type spécifié.")
 	public ResponseEntity<Action> addNew(@RequestBody Action action) {
@@ -62,6 +62,7 @@ public class ActionController {
 	 * 
 	 * @return une liste d'action
 	 */
+	
 	@GetMapping(path = "/")
 	@ApiOperation(value = "Retourne toutes les actions.")
 	public @ResponseBody Iterable<Action> getAll() {
@@ -72,8 +73,9 @@ public class ActionController {
 	 * Retourne l'action pour l'id spécifié.
 	 * 
 	 * @param id de l'action
-	 * @return
+	 * @return l'objet action si réponse positive
 	 */
+	
 	@GetMapping(path = "/{id}")
 	@ApiOperation(value = "Retourne l'action pour l'id spécifié.")
 	public ResponseEntity<Action> getOne(@PathVariable int id) {
@@ -85,8 +87,9 @@ public class ActionController {
 	 * Supprime l'action pour l'id spécifié.
 	 * 
 	 * @param id de l'action
-	 * @return
+	 * @return code la requête (200 => OK)
 	 */
+	
 	@DeleteMapping("/{id}")
 	@ApiOperation(value = "Supprime l'action pour l'id spécifié.")
 	public HttpStatus delOne(@PathVariable int id) {

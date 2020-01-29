@@ -3,9 +3,7 @@ package co.simplon.gaminlove.repository;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
-
 import org.springframework.data.repository.CrudRepository;
-
 import co.simplon.gaminlove.model.Event;
 
 /**
@@ -15,10 +13,12 @@ import co.simplon.gaminlove.model.Event;
  * @author Maureen, Nicolas, Virgile
  *
  */
+
 public interface EventRepository extends CrudRepository<Event, Integer> {
 
 	public Optional<Event> findByNom(String nom);
 	public Collection<Event> findAllByDate(Date date);
+	public Collection<Event> findAllByNom(String nom);
 	
 }
 
