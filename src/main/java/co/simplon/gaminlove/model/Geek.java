@@ -59,7 +59,7 @@ public class Geek {
 	@JsonIgnore
 	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval=true)
 	private Collection<MP> mp;	
-	@JsonIgnore
+	
 	@ManyToMany
 	private Collection<Jeu> jeux;
 	@JsonIgnore

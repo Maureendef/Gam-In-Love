@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Une simple classe pour représenter une recherche personnalisée.
@@ -21,6 +22,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Recherche {
 
 	@Id
@@ -30,7 +32,7 @@ public class Recherche {
 	private int ageMax;
 	private String nom;
 	private String sexe;
-	private String lieu;
+	private String ville;
 	private String jeu;
 	private String rang;
 
