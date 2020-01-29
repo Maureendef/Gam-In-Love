@@ -141,10 +141,10 @@ public class RechercheController {
 		List<Geek> optKinder = rechercheRepository.findByYears();
 		return optKinder;
 	}
-	@GetMapping(path = "/ville/{ville}")
+	@GetMapping(path = "/search")
 	@ApiOperation(value = "Retourne les Geek d'une même ville.")
-	public List<Geek> getCity(@PathVariable String ville) {
-		List<Geek> optCity = rechercheRepository.findCity(ville);
+	public List<Geek> getCity(@RequestBody Recherche recherche) {
+		List<Geek> optCity = rechercheRepository.findCity(recherche);
 		return optCity;
 	}
 	

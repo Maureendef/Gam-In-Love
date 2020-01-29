@@ -22,6 +22,6 @@ public interface RechercheRepository extends CrudRepository<Recherche, Integer> 
     List<Geek> findFemale();
 	@Query("select g from Geek g where g.age between 18 AND 24")
     List<Geek> findByYears();
-	@Query("select g from Geek g where g.ville like ?1")
-    List<Geek> findCity(String ville);
+	@Query("select g from Geek g where g.sexe like %?1%")
+    List<Geek> findCity(Recherche recherche);
 }
