@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -122,6 +123,12 @@ public class RechercheController {
 		List<Geek> optMale = rechercheRepository.findMale();
 		return optMale;
 	}
+	@GetMapping(path = "/female")
+	@ApiOperation(value = "Retourne les Geek de Sexe Féminin")
+	public List<Geek> getFemale() {
+		List<Geek> optFemale = rechercheRepository.findFemale();
+		return optFemale;
+	}
 	
 	/**
 	 * Cherche parmi la liste de Geek tous les enfants
@@ -129,10 +136,16 @@ public class RechercheController {
 	 * @return liste d'enfant
 	 */
 	@GetMapping(path = "/kinder")
-	@ApiOperation(value = "Retourne les Geek de Sexe masculin.")
+	@ApiOperation(value = "Retourne les Geek agés de 18 à 24 ans.")
 	public List<Geek> getKinder() {
-		List<Geek> optMale = rechercheRepository.findKinder();
-		return optMale;
+		List<Geek> optKinder = rechercheRepository.findByYears();
+		return optKinder;
+	}
+	@GetMapping(path = "/ville/{ville}")
+	@ApiOperation(value = "Retourne les Geek d'une même ville.")
+	public List<Geek> getCity(@PathVariable String ville) {
+		List<Geek> optCity = rechercheRepository.findCity(ville);
+		return optCity;
 	}
 	
 }

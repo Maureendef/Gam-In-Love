@@ -17,9 +17,11 @@ import co.simplon.gaminlove.model.Recherche;
  */
 public interface RechercheRepository extends CrudRepository<Recherche, Integer> {
 	@Query("select g from Geek g where g.sexe in ('homme',  'M')")
-    List<Geek> findMale();
+	List<Geek> findMale();
 	@Query("select f from Geek f where f.sexe in ('femme',  'F')")
     List<Geek> findFemale();
 	@Query("select g from Geek g where g.age between 18 AND 24")
-    List<Geek> findKinder();
+    List<Geek> findByYears();
+	@Query("select g from Geek g where g.ville like ?1")
+    List<Geek> findCity(String ville);
 }
