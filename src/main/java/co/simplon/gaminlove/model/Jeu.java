@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,7 +40,8 @@ public class Jeu {
 	@Column(unique=true)
 	private String nom;
 	private String rang;
-	@ManyToMany
+	@JsonIgnore
+	@ManyToMany(mappedBy = "jeux")
 	private Collection<Geek> geekJeux;
 	
 }
