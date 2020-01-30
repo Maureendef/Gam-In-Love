@@ -1,5 +1,9 @@
 package co.simplon.gaminlove.model;
 
+
+import java.util.Date;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +38,8 @@ public class MP {
 	private Geek geekCible;
 	@ManyToOne
 	private Geek geekMP;
+	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private Date date;
 	private String message;
 	
 }

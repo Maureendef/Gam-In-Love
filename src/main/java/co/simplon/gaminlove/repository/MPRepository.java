@@ -15,6 +15,6 @@ import co.simplon.gaminlove.model.MP;
  */
 
 public interface MPRepository extends CrudRepository<MP, Integer> {
-	@Query("select m.message from MP m where m.geekMP.id like ?1 and m.geekCible.id like ?2 or m.geekMP.id like ?2 and m.geekCible.id like ?1")
-    Collection<String> ListMp(int emetteur, int recepteur);
+	@Query("select m from MP m where m.geekMP.id like ?1 and m.geekCible.id like ?2 or m.geekMP.id like ?2 and m.geekCible.id like ?1")
+    Collection<MP> ListMp(int emetteur, int recepteur);
 }

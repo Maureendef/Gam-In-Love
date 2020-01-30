@@ -34,10 +34,10 @@ public interface RechercheRepository extends CrudRepository<Recherche, Integer> 
 	// faire un INNER JOIN avec jeu LEFT OUTER JOIN S
 //	  @Query("select g from Geek g join geek_jeux on g.id = geek_jeux.geek_id join Jeu on geek_jeux.jeux_id = Jeu.id where Jeu.nom like %?1%") 
 //	  List<Geek> findGame(String nom);
-
+/*
 	@Query("select g.pseudo, j.nom from geek g join g.id gj join gj.jeux_id j where j.nom like '%itcher%'")
 	List<Geek> findGame(String nom);
-
+*/
 }
 //  VOICI LE SQL PURE
 //select geek.pseudo, j.nom from geek
