@@ -1,8 +1,6 @@
 package co.simplon.gaminlove.model;
 
 import java.util.Collection;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,23 +42,23 @@ public class Geek {
 	@Column(unique=true)
 	private String email;
 	@JsonIgnore
-	@OneToMany(mappedBy = "geekPhoto")
+	@OneToMany
 	private Collection<Photo> photos;
 	@JsonIgnore
-	@OneToMany(mappedBy = "geekRecherche")
+	@OneToMany
 	private Collection<Recherche> recherches;
 	@JsonIgnore
-	@OneToMany(mappedBy = "geekCoop")
+	@OneToMany
 	private Collection<Coop> coop;
 	@JsonIgnore
-	@OneToMany(mappedBy = "geekAction")
+	@OneToMany
 	private Collection<Action> action;
 	@JsonIgnore
-	@OneToMany(mappedBy = "geekMP", cascade = CascadeType.REMOVE)
+	@OneToMany
 	private Collection<MP> mp;	
-	@ManyToMany(mappedBy = "geekJeux")
+	@ManyToMany
 	private Collection<Jeu> jeux;
-	@ManyToMany(mappedBy = "geekParticipant")
+	@ManyToMany
 	private Collection<Event> event;
 
 }
