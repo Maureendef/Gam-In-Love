@@ -122,11 +122,11 @@ public class RechercheController {
 
 	@GetMapping(path = "/search")
     @ApiOperation(value = "Retourne les Geek d'une même ville.")
-    public List<Geek> getCity(@RequestBody Recherche recherche) {
-        /*List<Geek> optCity = rechercheRepository.findCity(recherche.getSexe(), recherche.getVille(), recherche.getAgeMin(), recherche.getAgeMax());
-        return optCity;*/
-         List<Geek> optCity = rechercheRepository.findGame(recherche.getJeu());
+    public List<String> getCity(@RequestBody Recherche recherche) {
+        List<String> optCity = rechercheRepository.findCity(recherche.getSexe(), recherche.getVille(), recherche.getAgeMin(), recherche.getAgeMax(), recherche.getJeu());
         return optCity;
+        //List<Geek> optCity = rechercheRepository.findGame(recherche.getJeu());
+        //return optCity;
     }
 
 }
