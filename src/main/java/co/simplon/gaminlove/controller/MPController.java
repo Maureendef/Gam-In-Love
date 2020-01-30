@@ -1,5 +1,6 @@
 package co.simplon.gaminlove.controller;
 
+import java.util.Collection;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -72,6 +73,23 @@ public class MPController {
 	@ApiOperation(value = "Retourne tous MP.")
 	public @ResponseBody Iterable<MP> getAll() {
 		return mpRepository.findAll();
+	}
+	
+	/**
+	 * Retourne tous MP.
+	 * 
+	 * @return une liste de MP
+	 */
+
+	@GetMapping(path = "/{idEmetteur}/{idRecepteur}")
+	@ApiOperation(value = "Retourne tous MP.")
+	public ResponseEntity<Collection<String>> getAllMP(@PathVariable int idEmetteur, @PathVariable int idRecepteur) {
+	Collection<String> optMP = mpRepository.ListMp(idEmetteur, idRecepteur);
+	if (!optMP.isEmpty()) {
+		return ResponseEntity.ok(optMP);
+	} else {
+		return ResponseEntity.notFound().build();
+	}
 	}
 
 	/**
