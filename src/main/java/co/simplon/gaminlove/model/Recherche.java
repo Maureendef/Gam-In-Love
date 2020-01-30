@@ -1,5 +1,6 @@
 package co.simplon.gaminlove.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import javax.persistence.ManyToOne;
 
 /**
  * Une simple classe pour représenter une recherche personnalisée.
@@ -35,5 +37,7 @@ public class Recherche {
 	private String ville;
 	private String jeu;
 	private String rang;
+	@ManyToOne(cascade = CascadeType.REMOVE)
+	private Geek geekRecherche;
 
 }

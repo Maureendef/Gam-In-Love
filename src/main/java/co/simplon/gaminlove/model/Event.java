@@ -1,5 +1,6 @@
 package co.simplon.gaminlove.model;
 
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import javax.persistence.ManyToMany;
 
 /**
  * Une simple classe pour représenter un événement.
@@ -37,5 +39,7 @@ public class Event {
 	private String lieu;
 	@Temporal(TemporalType.DATE)
 	private Date date;
+	@ManyToMany
+	private Collection<Geek> geekParticipant;
 	
 }

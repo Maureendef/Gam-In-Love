@@ -1,5 +1,6 @@
 package co.simplon.gaminlove.model;
 
+import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import javax.persistence.ManyToMany;
 
 /**
  * Une simple classe pour représenter un jeu.
@@ -35,5 +37,7 @@ public class Jeu {
 	@Column(unique=true)
 	private String nom;
 	private String rang;
-
+	@ManyToMany
+	private Collection<Geek> geekJeux;
+	
 }

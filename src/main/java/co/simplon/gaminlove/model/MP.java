@@ -32,6 +32,8 @@ public class MP {
 	private int id;
 	@ManyToOne
 	private Geek geekCible;
+	@ManyToOne
+	private Geek geekMP;
 	private String message;
 	
 }

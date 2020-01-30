@@ -58,8 +58,6 @@ public class MPController {
 		Optional<Geek> optGeek = geekRepository.findById(id);
 		if (optGeek.isPresent()) {
 			mpRepository.save(mp);
-			optGeek.get().getMp().add(mp);
-			geekRepository.save(optGeek.get());
 		}
 		return ResponseEntity.ok(mp);
 	}

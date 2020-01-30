@@ -1,5 +1,6 @@
 package co.simplon.gaminlove.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,5 +32,6 @@ public class Coop {
 	private int id;
 	@ManyToOne
 	private Geek geekCible;
-	
+	@ManyToOne(cascade = CascadeType.REMOVE)
+	private Geek geekCoop;
 }
