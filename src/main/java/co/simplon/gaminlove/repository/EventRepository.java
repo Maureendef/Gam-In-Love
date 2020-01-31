@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 import co.simplon.gaminlove.model.Event;
+import org.springframework.stereotype.Repository;
 
 /**
  * Le repository Events, l'héritage de CRUD donne des méthodes de base : save,
@@ -13,12 +14,10 @@ import co.simplon.gaminlove.model.Event;
  * @author Maureen, Nicolas, Virgile
  *
  */
-
+@Repository
 public interface EventRepository extends CrudRepository<Event, Integer> {
 
-	public Optional<Event> findByNom(String nom);
-	public Collection<Event> findAllByDate(Date date);
-	public Collection<Event> findAllByNom(String nom);
+	 Collection<Event> findAllByNom(String nom);
 	
 }
 

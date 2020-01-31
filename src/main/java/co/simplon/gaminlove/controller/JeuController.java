@@ -51,7 +51,7 @@ public class JeuController {
 	/**
 	 * Création d'un nouveau jeu.
 	 * 
-	 * @param un objet event sous forme Json
+	 * @param jeu un objet event sous forme Json
 	 * @return le jeu crée (avec id auto-généré)
 	 */
 
@@ -65,7 +65,7 @@ public class JeuController {
 	/**
 	 * Ajoute un jeu dans la collection du geek sélectionné.
 	 * 
-	 * @param id du jeu et du geek à lier.
+	 * @param idJeu du jeu et idGeek du geek à lier.
 	 * @return le Geek avec sa collection à jour si généré.
 	 */
 
@@ -96,9 +96,9 @@ public class JeuController {
 	}
 
 	/**
-	 * Cherche un event selon l'id.
+	 * Cherche un jeu selon l'id.
 	 * 
-	 * @param id
+	 * @param id du jeu
 	 * @return un event s'il existe ou une erreur
 	 */
 
@@ -112,7 +112,7 @@ public class JeuController {
 	/**
 	 * Retourne le(s) jeu(x) selon le nom spécifié.
 	 * 
-	 * @param nom
+	 * @param nom du jeu
 	 * @return un ou plusieurs jeu(x) s'il(s) existe(nt).
 	 */
 
@@ -143,9 +143,6 @@ public class JeuController {
 			if (jeuInput.getNom() != null) {
 				jeu.setNom(jeuInput.getNom());
 			}
-			if (jeuInput.getRang() != null) {
-				jeu.setRang(jeuInput.getRang());
-			}
 			jeuRepository.save(jeu);
 			return ResponseEntity.ok(jeu);
 		} else {
@@ -156,7 +153,7 @@ public class JeuController {
 	/**
 	 * Supprime le jeu d'id spécifié de la collection du geek.
 	 * 
-	 * @param id du jeu et du Geek
+	 * @param idJeu du jeu et idGeek du Geek
 	 * @return code la requête (200 => OK)
 	 */
 

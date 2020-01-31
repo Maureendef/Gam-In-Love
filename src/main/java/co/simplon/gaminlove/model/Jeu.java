@@ -39,7 +39,6 @@ public class Jeu {
 	private int id;
 	@Column(unique=true)
 	private String nom;
-	private String rang;
 	@JsonIgnore
 	@ManyToMany(mappedBy = "jeux")
 	private Collection<Geek> geekJeux;

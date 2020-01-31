@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import co.simplon.gaminlove.model.MP;
+import org.springframework.stereotype.Repository;
 
 /**
  * Le repository MP, l'héritage de CRUD donne des méthodes de base : save,
@@ -14,9 +15,15 @@ import co.simplon.gaminlove.model.MP;
  * @author Maureen, Nicolas, Virgile
  *
  */
-
+@Repository
 public interface MPRepository extends CrudRepository<MP, Integer> {
-	@Query("select m.date, g.pseudo, m.message from MP m left join m.geekMP g where m.geekMP.id like ?1 and m.geekCible.id like ?2 or m.geekMP.id like ?2 and m.geekCible.id like ?1")
+	@Query("SELECT m.date, g.pseudo, m.message " +
+			"FROM MP m " +
+			"LEFT JOIN m.geekMP g " +
+			"WHERE m.geekMP.id LIKE ?1 " +
+			"AND m.geekCible.id LIKE ?2 " +
+			"OR m.geekMP.id LIKE ?2 " +
+			"AND m.geekCible.id LIKE ?1")
 	ArrayList<?> ListMp(int emetteur, int recepteur);
 }
 
