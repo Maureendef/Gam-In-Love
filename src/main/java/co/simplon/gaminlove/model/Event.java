@@ -46,6 +46,6 @@ public class Event {
 	@Temporal(TemporalType.DATE)
 	private Date date;
 	@ManyToMany
-	private Set<Geek> geekParticipant;
+	private Collection<Geek> geekParticipant;
 
 }
