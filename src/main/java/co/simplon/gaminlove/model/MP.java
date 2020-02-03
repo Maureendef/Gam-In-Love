@@ -3,6 +3,7 @@ package co.simplon.gaminlove.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ public class MP {
 	private int id;
 	@ManyToOne
 	private Geek geekCible;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.REMOVE)
 	private Geek geekMP;
 	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private Date date;

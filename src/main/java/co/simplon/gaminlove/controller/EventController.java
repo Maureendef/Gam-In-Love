@@ -158,7 +158,7 @@ public class EventController {
 	 * @return code de la requête (200 => OK)
 	 */
 	@DeleteMapping("/{idEvent}/{idGeek}")
-	@ApiOperation(value = "Supprime le jeu d'id spécifié.")
+	@ApiOperation(value = "Supprime l'event d'id spécifié.")
 	public HttpStatus delOne(@PathVariable int idGeek, @PathVariable int idEvent) {
 		Optional<Geek> optGeek = geekRepository.findById(idGeek);
 		Optional<Event> optEvent = eventRepository.findById(idEvent);

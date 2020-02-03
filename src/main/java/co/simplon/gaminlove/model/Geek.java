@@ -42,20 +42,20 @@ public class Geek {
 	@Column(unique=true)
 	private String email;
 	@JsonIgnore
-	@OneToMany
+	@OneToMany(orphanRemoval=true)
 	private Collection<Photo> photos;
 	@JsonIgnore
-	@OneToMany
+	@OneToMany(orphanRemoval=true)
 	private Collection<Recherche> recherches;
 	@JsonIgnore
-	@OneToMany
+	@OneToMany(orphanRemoval=true)
 	private Collection<Coop> coop;
 	@JsonIgnore
-	@OneToMany
+	@OneToMany(orphanRemoval=true)
 	private Collection<Action> action;
 	@JsonIgnore
-	@OneToMany
-	private Collection<MP> mp;	
+	@OneToMany(orphanRemoval=true)
+	private Collection<MP> mp;
 	@ManyToMany
 	private Collection<Jeu> jeux;
 	@ManyToMany

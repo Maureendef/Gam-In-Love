@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import co.simplon.gaminlove.model.Action;
+import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.repository.ActionRepository;
+import co.simplon.gaminlove.repository.GeekRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -33,8 +35,7 @@ import io.swagger.annotations.ApiResponses;
 @ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
 		@ApiResponse(code = 400, message = "Mauvaise Requête"),
 		@ApiResponse(code = 401, message = "Echec Authentification"),
-		@ApiResponse(code = 403, message = "Accès Refusé"), 
-		@ApiResponse(code = 500, message = "Problème Serveur") })
+		@ApiResponse(code = 403, message = "Accès Refusé"), @ApiResponse(code = 500, message = "Problème Serveur") })
 @CrossOrigin("*")
 public class ActionController {
 
@@ -43,26 +44,34 @@ public class ActionController {
 	@Autowired
 	private ActionRepository actionRepository;
 
+	@Autowired
+	private GeekRepository geekRepository;
+
 	/**
 	 * Crée une nouvelle action avec le type spécifié.
 	 * 
 	 * @param un objet action sous forme Json
 	 * @return l'action crée (avec l'id auto-générée)
 	 */
-	
-	@PostMapping(path = "/")
+
+	@PostMapping(path = "/{id}")
 	@ApiOperation(value = "Crée une nouvelle action avec le type spécifié.")
-	public ResponseEntity<Action> addNew(@RequestBody Action action) {
-		actionRepository.save(action);
+	public ResponseEntity<Action> addNew(@PathVariable int id, @RequestBody Action action) {
+		Optional<Geek> optGeek = geekRepository.findById(id);
+		if (optGeek.isPresent()) {
+			actionRepository.save(action);
+			optGeek.get().getAction().add(action);
+			geekRepository.save(optGeek.get());
+		}
 		return ResponseEntity.ok(action);
 	}
-	
+
 	/**
 	 * Retourne toutes les actions.
 	 * 
 	 * @return une liste d'action
 	 */
-	
+
 	@GetMapping(path = "/")
 	@ApiOperation(value = "Retourne toutes les actions.")
 	public @ResponseBody Iterable<Action> getAll() {
@@ -75,7 +84,7 @@ public class ActionController {
 	 * @param id de l'action
 	 * @return l'objet action si réponse positive
 	 */
-	
+
 	@GetMapping(path = "/{id}")
 	@ApiOperation(value = "Retourne l'action pour l'id spécifié.")
 	public ResponseEntity<Action> getOne(@PathVariable int id) {
@@ -89,7 +98,7 @@ public class ActionController {
 	 * @param id de l'action
 	 * @return code la requête (200 => OK)
 	 */
-	
+
 	@DeleteMapping("/{id}")
 	@ApiOperation(value = "Supprime l'action pour l'id spécifié.")
 	public HttpStatus delOne(@PathVariable int id) {
