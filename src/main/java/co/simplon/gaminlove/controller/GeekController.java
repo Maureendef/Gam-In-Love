@@ -1,5 +1,6 @@
 package co.simplon.gaminlove.controller;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+
 import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.repository.GeekRepository;
 import io.swagger.annotations.Api;
@@ -52,9 +55,18 @@ public class GeekController {
 
 	@PostMapping(path = "/")
 	@ApiOperation(value = "Crée un nouveau geek avec le nom spécifié.")
-	public ResponseEntity<Geek> addNew(@RequestBody Geek geek) {
+	public HttpStatus addNew(@RequestBody Geek geek) {
+		Optional<Geek> optGeekPseudo = geekRepository.findByPseudo(geek.getPseudo());
+		Optional<Geek> optGeekMail = geekRepository.findByEmail(geek.getEmail());
+		if (optGeekPseudo.isPresent()) {
+			return HttpStatus.CONFLICT;
+		}
+		if (optGeekMail.isPresent()) {
+			return HttpStatus.CONFLICT;
+		}
 		geekRepository.save(geek);
-		return ResponseEntity.ok(geek);
+		return HttpStatus.OK;
+
 	}
 
 	/**
@@ -148,5 +160,4 @@ public class GeekController {
 			return HttpStatus.NOT_FOUND;
 		}
 	}
-
 }

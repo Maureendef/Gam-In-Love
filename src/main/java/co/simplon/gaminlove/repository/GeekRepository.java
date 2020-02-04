@@ -1,8 +1,11 @@
 package co.simplon.gaminlove.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.repository.CrudRepository;
-import co.simplon.gaminlove.model.Geek;
 import org.springframework.stereotype.Repository;
+
+import co.simplon.gaminlove.model.Geek;
 
 /**
  * Le repository Geek, l'héritage de CRUD donne des méthodes de base : save,
@@ -14,5 +17,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface GeekRepository extends CrudRepository<Geek, Integer> {
+
+	Optional<Geek> findByPseudo(String pseudo);
+	Optional<Geek> findByEmail(String email);
 
 }
