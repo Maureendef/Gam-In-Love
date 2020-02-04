@@ -1,21 +1,12 @@
 package co.simplon.gaminlove.model;
 
 import java.util.Collection;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.Set;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import javax.persistence.ManyToMany;
+import lombok.*;
 
 /**
  * Une simple classe pour représenter un jeu.
@@ -30,6 +21,7 @@ import javax.persistence.ManyToMany;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@EqualsAndHashCode
 @Table(name = "JEUX") // par défaut, hibernate crée une table appelée le nom de la classe au pluriel,
 						// ici ça ne marche pas, car le pluriel de Jeu est Jeux...
 public class Jeu {
@@ -42,5 +34,7 @@ public class Jeu {
 	@JsonIgnore
 	@ManyToMany(mappedBy = "jeux")
 	private Collection<Geek> geekJeux;
-	
+	@OneToMany(mappedBy = "jeu")
+	Collection<Rang> rangs;
+
 }

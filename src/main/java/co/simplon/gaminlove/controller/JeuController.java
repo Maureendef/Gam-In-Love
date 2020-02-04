@@ -2,6 +2,10 @@ package co.simplon.gaminlove.controller;
 
 import java.util.Collection;
 import java.util.Optional;
+
+import co.simplon.gaminlove.model.Rang;
+import co.simplon.gaminlove.repository.RangRepository;
+import org.hibernate.id.IdentifierGenerationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +52,8 @@ public class JeuController {
 	@Autowired
 	private GeekRepository geekRepository;
 
+	@Autowired
+	private RangRepository rangRepository;
 	/**
 	 * Création d'un nouveau jeu.
 	 * 
@@ -65,19 +71,18 @@ public class JeuController {
 	/**
 	 * Ajoute un jeu dans la collection du geek sélectionné.
 	 * 
-	 * @param idJeu du jeu et idGeek du geek à lier.
+	 * @param rang un objet avec l'id du geek et du jeu à lier ainsi que le rang de ce dernier.
 	 * @return le Geek avec sa collection à jour si généré.
 	 */
 
-	@PostMapping(path = "/{idJeu}/{idGeek}")
+	@PostMapping(path = "/rang")
 	@ApiOperation(value = "Ajoute un jeu dans la collection du geek sélectionné.")
-	public ResponseEntity<Geek> addGame(@PathVariable int idJeu, @PathVariable int idGeek) {
-		Optional<Geek> optGeek = geekRepository.findById(idGeek);
-		Optional<Jeu> optJeu = jeuRepository.findById(idJeu);
+	public ResponseEntity<Rang> addGame(@RequestBody Rang rang) {
+		Optional<Geek> optGeek = geekRepository.findById(rang.getGeek().getId());
+		Optional<Jeu> optJeu = jeuRepository.findById(rang.getJeu().getId());
 		if (optGeek.isPresent() && optJeu.isPresent()) {
-			optGeek.get().getJeux().add(optJeu.get());
-			geekRepository.save(optGeek.get());
-			return ResponseEntity.ok(optGeek.get());
+			rangRepository.save(rang);
+			return ResponseEntity.ok(rang);
 		} else {
 			return ResponseEntity.notFound().build();
 		}

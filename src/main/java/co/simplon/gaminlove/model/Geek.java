@@ -1,19 +1,11 @@
 package co.simplon.gaminlove.model;
 
 import java.util.Collection;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import java.util.Set;
+import javax.persistence.*;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 /**
  * Une simple classe pour représenter un Geek.
@@ -28,6 +20,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@EqualsAndHashCode
 public class Geek {
 
 	@Id
@@ -36,6 +29,7 @@ public class Geek {
 	private int age;
 	@Column(unique=true)
 	private String pseudo;
+	private String password;
 	private String ville;
 	private String sexe;
 	private String typeCompte;
@@ -58,6 +52,8 @@ public class Geek {
 	private Collection<MP> mp;
 	@ManyToMany
 	private Collection<Jeu> jeux;
+	@OneToMany(mappedBy = "geek")
+	Collection<Rang> rangs;
 	@ManyToMany
 	private Collection<Event> event;
 

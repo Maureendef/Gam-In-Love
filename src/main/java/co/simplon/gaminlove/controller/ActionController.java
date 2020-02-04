@@ -50,7 +50,7 @@ public class ActionController {
 	/**
 	 * Crée une nouvelle action avec le type spécifié.
 	 * 
-	 * @param un objet action sous forme Json
+	 * @param action un objet action sous forme Json
 	 * @return l'action crée (avec l'id auto-générée)
 	 */
 
