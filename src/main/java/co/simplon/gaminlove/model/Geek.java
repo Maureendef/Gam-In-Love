@@ -52,8 +52,6 @@ public class Geek {
 	private Collection<MP> mp;
 	@ManyToMany
 	private Collection<Jeu> jeux;
-	@OneToMany(mappedBy = "geek")
-	Collection<Rang> rangs;
 	@ManyToMany
 	private Collection<Event> event;
 
