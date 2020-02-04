@@ -1,6 +1,5 @@
 package co.simplon.gaminlove.controller;
 
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException;
 
 import co.simplon.gaminlove.model.Geek;
 import co.simplon.gaminlove.repository.GeekRepository;
@@ -49,23 +47,23 @@ public class GeekController {
 	/**
 	 * Crée un nouveau geek avec le nom spécifié et l'enregistre en base.
 	 * 
-	 * @param un objet geek sous forme Json
+	 * @param geek un objet geek sous forme Json
 	 * @return le Geek crée (avec l'id à jour si généré)
 	 */
 
 	@PostMapping(path = "/")
 	@ApiOperation(value = "Crée un nouveau geek avec le nom spécifié.")
-	public HttpStatus addNew(@RequestBody Geek geek) {
+	public ResponseEntity<Geek> addNew(@RequestBody Geek geek) {
 		Optional<Geek> optGeekPseudo = geekRepository.findByPseudo(geek.getPseudo());
 		Optional<Geek> optGeekMail = geekRepository.findByEmail(geek.getEmail());
 		if (optGeekPseudo.isPresent()) {
-			return HttpStatus.CONFLICT;
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(geek);
 		}
 		if (optGeekMail.isPresent()) {
-			return HttpStatus.CONFLICT;
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(geek);
 		}
 		geekRepository.save(geek);
-		return HttpStatus.OK;
+		return ResponseEntity.status(HttpStatus.OK).body(geek);
 
 	}
 
