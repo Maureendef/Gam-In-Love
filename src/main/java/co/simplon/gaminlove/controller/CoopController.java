@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiResponses;
 		@ApiResponse(code = 400, message = "Mauvaise Requête"),
 		@ApiResponse(code = 401, message = "Echec Authentification"),
 		@ApiResponse(code = 403, message = "Accès Refusé"), @ApiResponse(code = 500, message = "Problème Serveur") })
-@CrossOrigin("*")
+@CrossOrigin("*") // TODO changer avec l'adresse du serveur front (en 4200)
 public class CoopController {
 
 	@Autowired
@@ -83,7 +83,7 @@ public class CoopController {
 
 	@GetMapping("/{id}")
 	@ApiOperation(value = "Retourne le match pour l'id spécifié")
-	public ResponseEntity<Coop> delOne(@PathVariable int id) {
+	public ResponseEntity<Coop> delOne(@PathVariable int id) { // TODO bizarre ce nom de fonction
 		Optional<Coop> optCoop = coopRepository.findById(id);
 		return optCoop.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}

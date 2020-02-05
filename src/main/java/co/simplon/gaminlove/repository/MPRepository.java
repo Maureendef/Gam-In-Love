@@ -24,7 +24,7 @@ public interface MPRepository extends CrudRepository<MP, Integer> {
 			"AND m.geekCible.id LIKE ?2 " +
 			"OR m.geekMP.id LIKE ?2 " +
 			"AND m.geekCible.id LIKE ?1")
-	ArrayList<?> ListMp(int emetteur, int recepteur);
+	ArrayList<?> ListMp(int emetteur, int recepteur); // TODO du coup l'emetteur est aussi cherché en tant que recepeteur (OR dans la requete)?
 }
 
 //select g.pseudo from Geek g left join g.jeux j where g.sexe like %?1% and g.ville like %?2% and g.age between ?3 and ?4 and j.nom like %?5%"
