@@ -42,7 +42,7 @@ public class Event {
 	private String nom;
 	private String lieu;
 	@Temporal(TemporalType.DATE)
-	private Date date; // TODO utilisez plutot des java.time
+	private Date date; // TODO utilisez plutot des java.time 
 //	https://stackoverflow.com/questions/530012/how-to-convert-java-util-date-to-java-sql-date
 	@ManyToMany
 	private Collection<Geek> geekParticipant;
