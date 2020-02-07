@@ -75,7 +75,9 @@ public class EventController {
 		Optional<Event> optEvent = eventRepository.findById(idEvent);
 		if (optGeek.isPresent() && optEvent.isPresent()) {
 			optGeek.get().getEvent().add(optEvent.get());
+			optEvent.get().getGeekParticipant().add(optGeek.get());
 			geekRepository.save(optGeek.get());
+			;
 			return ResponseEntity.ok(optGeek.get());
 		} else {
 			return ResponseEntity.notFound().build();
@@ -188,5 +190,4 @@ public class EventController {
 			return HttpStatus.NOT_FOUND;
 		}
 	}
-
 }

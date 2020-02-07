@@ -1,7 +1,6 @@
 package co.simplon.gaminlove.controller;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,17 +50,17 @@ public class MPController {
 	 * Crée un MP.
 	 * 
 	 * @param un objet MP sous forme Json et l'id du Geek cible
-	 * @return le MP crée (avec id auto-généré)
 	 */
 
-	@PostMapping(path = "/{id}")
+	@PostMapping(path = "/")
 	@ApiOperation(value = "Crée un MP.")
-	public ResponseEntity<MP> addNew(@PathVariable int id, @RequestBody MP mp) {
-		Optional<Geek> optGeek = geekRepository.findById(id);
-		if (optGeek.isPresent()) {
-			mpRepository.save(mp);
-		}
-		return ResponseEntity.ok(mp);
+	public MP addNew(@RequestBody MP mp) {
+//		Optional<Geek> optGeek = geekRepository.findById(id);
+//		if (optGeek.isPresent()) {
+//			optGeek.get().getMp().add(mp);
+		return mpRepository.save(mp);
+//		}
+//		return ResponseEntity.ok(mp);
 	}
 
 	/**
@@ -75,18 +74,30 @@ public class MPController {
 	public @ResponseBody Iterable<MP> getAll() {
 		return mpRepository.findAll();
 	}
-	
+
 	/**
-	 * Retourne tous MP.
+	 * Retourne tous les MP d'un geek selon son id.
+	 * 
+	 * @return une liste de MP
+	 */
+	@GetMapping(path = "/{id}")
+	@ApiOperation(value = "Retourne tous MP d'un geek.")
+	public Iterable<MP> getMpByGeek(@PathVariable int id) {
+		Optional<Geek> optGeek = geekRepository.findById(id);
+		return optGeek.get().getMp();
+	}
+
+	/**
+	 * Retourne tous MP entre deux geeks.
 	 * 
 	 * @return une liste de MP
 	 */
 
 	@GetMapping(path = "/{idEmetteur}/{idRecepteur}")
-	@ApiOperation(value = "Retourne tous MP.")
+	@ApiOperation(value = "Retourne tous MP entre deux Geeks.")
 	public ArrayList<?> getAllMP(@PathVariable int idEmetteur, @PathVariable int idRecepteur) {
 		ArrayList<?> optMP = mpRepository.ListMp(idEmetteur, idRecepteur);
-	  
+
 		return optMP;
 	}
 
@@ -97,12 +108,12 @@ public class MPController {
 	 * @return un MP s'il existe.
 	 */
 
-	@GetMapping(path = "/{id}")
-	@ApiOperation(value = "Retourne le mp d'id spécifié.")
-	public ResponseEntity<MP> getOne(@PathVariable int id) {
-		Optional<MP> optMP = mpRepository.findById(id);
-		return optMP.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-	}
+//	@GetMapping(path = "/{idMP}")
+//	@ApiOperation(value = "Retourne le mp d'id spécifié.")
+//	public ResponseEntity<MP> getOne(@PathVariable int idMP) {
+//		Optional<MP> optMP = mpRepository.findById(idMP);
+//		return optMP.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+//	}
 
 	/**
 	 * Supprime le MP avec l'id spécifié.
