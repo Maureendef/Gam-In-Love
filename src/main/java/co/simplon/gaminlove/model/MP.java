@@ -1,7 +1,6 @@
 package co.simplon.gaminlove.model;
 
-
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,7 +39,7 @@ public class MP {
 	@ManyToOne(cascade = CascadeType.REMOVE)
 	private Geek geekMP;
 	@Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	private Date date;
+	private LocalDate date;
 	private String message;
 	
 }

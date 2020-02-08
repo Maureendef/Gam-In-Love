@@ -1,18 +1,12 @@
 package co.simplon.gaminlove.model;
 
-import java.util.Collection;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-
-import javax.persistence.JoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -42,9 +36,8 @@ public class Event {
 	private String nom;
 	private String lieu;
 	@Temporal(TemporalType.DATE)
-	private Date date; // TODO utilisez plutot des java.time 
-//	https://stackoverflow.com/questions/530012/how-to-convert-java-util-date-to-java-sql-date
+	private LocalDate date;
 	@ManyToMany
-	private Collection<Geek> geekParticipant;
+	private Set<Geek> geekParticipant;
 
 }

@@ -1,6 +1,6 @@
 package co.simplon.gaminlove.model;
 
-import java.util.Collection;
+import java.util.Set;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,6 +32,6 @@ public class Jeu {
 	private String nom;
 	@JsonIgnore
 	@ManyToMany(mappedBy = "jeux")
-	private Collection<Geek> geekJeux;
+	private Set<Geek> geekJeux;
 
 }

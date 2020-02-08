@@ -1,6 +1,6 @@
 package co.simplon.gaminlove.model;
 
-import java.util.Collection;
+import java.time.LocalDate;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -26,7 +26,7 @@ public class Geek {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private int age;
+	private LocalDate age;
 	@Column(unique=true)
 	private String pseudo;
 	private String password;
@@ -37,22 +37,22 @@ public class Geek {
 	private String email;
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
-	private Collection<Photo> photos;
+	private Set<Photo> photos;
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
-	private Collection<Recherche> recherches;
+	private Set<Recherche> recherches;
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
-	private Collection<Coop> coop;
+	private Set<Coop> coop;
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
-	private Collection<Action> action;
+	private Set<Action> action;
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
-	private Collection<MP> mp;
+	private Set<MP> mp;
 	@ManyToMany
-	private Collection<Jeu> jeux;
+	private Set<Jeu> jeux;
 	@ManyToMany
-	private Collection<Event> event;
+	private Set<Event> event;
 
 }
