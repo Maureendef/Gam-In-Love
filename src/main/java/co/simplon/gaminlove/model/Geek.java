@@ -1,6 +1,5 @@
 package co.simplon.gaminlove.model;
 
-import java.time.LocalDate;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -26,7 +25,7 @@ public class Geek {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private LocalDate age;
+	private int age;
 	@Column(unique=true)
 	private String pseudo;
 	private String password;

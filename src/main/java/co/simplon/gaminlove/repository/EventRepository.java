@@ -1,6 +1,8 @@
 package co.simplon.gaminlove.repository;
 
 import java.util.Collection;
+import java.util.Set;
+
 import org.springframework.data.repository.CrudRepository;
 import co.simplon.gaminlove.model.Event;
 import co.simplon.gaminlove.model.Geek;
@@ -17,5 +19,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EventRepository extends CrudRepository<Event, Integer> {
 
-	Collection<Event> findAllByNom(String nom);
+	Set<Event> findAllByNom(String nom);
 }

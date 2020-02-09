@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import lombok.*;
 
@@ -35,7 +33,6 @@ public class Event {
 	private int id;
 	private String nom;
 	private String lieu;
-	@Temporal(TemporalType.DATE)
 	private LocalDate date;
 	@ManyToMany
 	private Set<Geek> geekParticipant;
