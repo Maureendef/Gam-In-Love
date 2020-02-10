@@ -2,7 +2,6 @@ package co.simplon.gaminlove.controller;
 
 import java.util.Collection;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,15 +41,18 @@ import io.swagger.annotations.ApiResponses;
 public class EventController {
 
 	// permet d'initialiser le repo, par le mécanisme d'injection de dépendance
-	@Autowired
-	private EventRepository eventRepository;
-	@Autowired
-	private GeekRepository geekRepository;
+	private final EventRepository eventRepository;
+	private final GeekRepository geekRepository;
+
+	public EventController(EventRepository eventRepository, GeekRepository geekRepository) {
+		this.eventRepository = eventRepository;
+		this.geekRepository = geekRepository;
+	}
 
 	/**
 	 * Crée un nouvel event.
 	 * 
-	 * @param un objet event sous forme Json
+	 * @param event un objet event sous forme Json
 	 * @return un event crée (avec id auto-généré).
 	 */
 
@@ -64,7 +66,7 @@ public class EventController {
 	/**
 	 * Ajoute un event dans la collection du geek sélectionné.
 	 * 
-	 * @param id de l'event et du geek à lier.
+	 * @param idEvent,idGeek de l'event et du geek à lier.
 	 * @return le Geek avec sa collection à jour si généré.
 	 */
 
@@ -77,7 +79,6 @@ public class EventController {
 			optGeek.get().getEvent().add(optEvent.get());
 			optEvent.get().getGeekParticipant().add(optGeek.get());
 			geekRepository.save(optGeek.get());
-			;
 			return ResponseEntity.ok(optGeek.get());
 		} else {
 			return ResponseEntity.notFound().build();
@@ -98,37 +99,36 @@ public class EventController {
 	/**
 	 * Cherche un event selon l'id.
 	 * 
-	 * @param id
+	 * @param id de l'event
 	 * @return un event s'il existe.
 	 */
 	@GetMapping(path = "/{id}")
 	@ApiOperation(value = "Cherche un event selon l'id.")
 	public ResponseEntity<Event> getOne(@PathVariable int id) {
-		Optional<Event> optEvent = eventRepository.findById(id);
-		return optEvent.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+		return eventRepository.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
 	/**
 	 * Cherche un event selon le nom.
 	 * 
-	 * @param nom
+	 * @param nom de l'event
 	 * @return un ou plusieurs event(s) s'il(s) existe(nt).
 	 */
 	@GetMapping(path = "/nom")
 	@ApiOperation(value = "Cherche un event selon le nom.")
 	public ResponseEntity<Collection<Event>> getName(@RequestBody String nom) {
 		Collection<Event> optEvent = eventRepository.findAllByNom(nom);
-		if (!optEvent.isEmpty()) {
-			return ResponseEntity.ok(optEvent);
-		} else {
+		if (optEvent.isEmpty()) {
 			return ResponseEntity.notFound().build();
+		} else {
+			return ResponseEntity.ok(optEvent);
 		}
 	}
 
 	/**
 	 * Met a jour de l'event
 	 * 
-	 * @param l'event à modifier et son id
+	 * @param id l'event à modifier et son id
 	 * @return l'event a jour
 	 */
 	@PatchMapping(path = "/{id}")
@@ -156,7 +156,7 @@ public class EventController {
 	/**
 	 * Supprime l'event d'id spécifié de la collection du geek.
 	 * 
-	 * @param id
+	 * @param idEvent,idGeek de l'event et du geek
 	 * @return code de la requête (200 => OK)
 	 */
 	@DeleteMapping("/{idEvent}/{idGeek}")
@@ -176,12 +176,12 @@ public class EventController {
 	/**
 	 * Supprime l'event via son id
 	 * 
-	 * @param id
+	 * @param id de l'event
 	 * @return code de la requête (200 => OK)
 	 */
 	@DeleteMapping(path = "/{id}")
 	@ApiOperation(value = "Supprime l'event via son id.")
-	public HttpStatus delOne(@PathVariable int id) {
+	public HttpStatus suppr(@PathVariable int id) {
 		Optional<Event> optEvent = eventRepository.findById(id);
 		if (optEvent.isPresent()) {
 			eventRepository.deleteById(id);

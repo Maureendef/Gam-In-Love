@@ -1,9 +1,7 @@
 package co.simplon.gaminlove.controller;
 
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,32 +32,35 @@ import io.swagger.annotations.ApiResponses;
 		@ApiResponse(code = 400, message = "Mauvaise Requête"),
 		@ApiResponse(code = 401, message = "Echec Authentification"),
 		@ApiResponse(code = 403, message = "Accès Refusé"), @ApiResponse(code = 500, message = "Problème Serveur") })
-@CrossOrigin("*") // TODO changer avec l'adresse du serveur front (en 4200) 
 public class CoopController {
 
-	@Autowired
-	private CoopRepository coopRepository;
+	private final CoopRepository coopRepository;
 
-	@Autowired
-	private GeekRepository geekRepository;
+	private final GeekRepository geekRepository;
+
+	public CoopController(CoopRepository coopRepository, GeekRepository geekRepository) {
+		this.coopRepository = coopRepository;
+		this.geekRepository = geekRepository;
+	}
 
 	/**
 	 * Crée un nouveau match avec le type spécifié.
 	 * 
-	 * @param un objet coop sous forme Json et l'id du Geek cible
+	 * @param coop un objet coop sous forme Json et l'id du Geek cible
 	 * @return la coop crée (avec l'id auto-générée)
 	 */
 
 	@PostMapping(path = "/{id}")
 	@ApiOperation(value = "Crée un nouveau match avec le type spécifié.")
-	public ResponseEntity<Coop> addNew(@PathVariable int id, @RequestBody Coop coop) {
-		Optional<Geek> optGeek = geekRepository.findById(id);
+	public ResponseEntity<Coop> addNew(@RequestBody Coop coop) {
+		Optional<Geek> optGeek = geekRepository.findById(coop.getGeekCoop().getId());
 		if (optGeek.isPresent()) {
-			coopRepository.save(coop);
 			optGeek.get().getCoop().add(coop);
+			coopRepository.save(coop);
 			geekRepository.save(optGeek.get());
+			return ResponseEntity.ok(coop);
 		}
-		return ResponseEntity.ok(coop);
+		return ResponseEntity.notFound().build();
 	}
 
 	/**
@@ -77,14 +78,13 @@ public class CoopController {
 	/**
 	 * Retourne le match pour l'id spécifié.
 	 * 
-	 * @param id
+	 * @param id du match
 	 * @return l'objet coop si réponse positive
 	 */
 
 	@GetMapping("/{id}")
 	@ApiOperation(value = "Retourne le match pour l'id spécifié")
-	public ResponseEntity<Coop> delOne(@PathVariable int id) { // TODO bizarre ce nom de fonction 
-		Optional<Coop> optCoop = coopRepository.findById(id);
-		return optCoop.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+	public ResponseEntity<Coop> suppr(@PathVariable int id) {
+		return coopRepository.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 }

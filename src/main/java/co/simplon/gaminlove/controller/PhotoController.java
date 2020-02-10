@@ -1,7 +1,8 @@
 package co.simplon.gaminlove.controller;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,16 +40,19 @@ import io.swagger.annotations.ApiResponses;
 @CrossOrigin("*")
 public class PhotoController {
 
-	@Autowired
-	private PhotoRepository photoRepository;
+	private final PhotoRepository photoRepository;
 
-	@Autowired
-	private GeekRepository geekRepository;
+	private final GeekRepository geekRepository;
+
+	public PhotoController(PhotoRepository photoRepository, GeekRepository geekRepository) {
+		this.photoRepository = photoRepository;
+		this.geekRepository = geekRepository;
+	}
 
 	/**
 	 * Ajoute une photo pour le Geek.
 	 * 
-	 * @param un objet photo sous forme Json et l'id du Geek
+	 * @param photo un objet photo sous forme Json et l'id du Geek
 	 * @return la photo crée (avec id auto-généré)
 	 */
 
@@ -70,12 +74,10 @@ public class PhotoController {
 	 * @return une liste de photo
 	 */
 
-	// TODO à changer pour un seul geek !
-
-	@GetMapping(path = "/")
+	@GetMapping(path = "/album/{id}")
 	@ApiOperation(value = "Retourne toutes les photos.")
-	public @ResponseBody Iterable<Photo> getAll() {
-		return photoRepository.findAll();
+	public @ResponseBody ArrayList<?> getAllForGeek(@PathVariable int id) {
+		return photoRepository.findForGeek(id);
 	}
 
 	/**
@@ -85,7 +87,7 @@ public class PhotoController {
 	 * @return une ou des photos si elle(s) existe(nt).
 	 */
 
-	@GetMapping(path = "/{id}")
+	@GetMapping(path = "/")
 	@ApiOperation(value = "Retourne la photo pour l'id spécifié.")
 	public ResponseEntity<Photo> getOne(@PathVariable int id) {
 		Optional<Photo> optPhoto = photoRepository.findById(id);
@@ -95,7 +97,7 @@ public class PhotoController {
 	/**
 	 * Supprime la photo pour l'id spécifié.
 	 * 
-	 * @param id
+	 * @param idGeek,idPhoto du geek et de la photo
 	 * @return code la requête (200 => OK)
 	 */
 

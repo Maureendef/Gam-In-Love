@@ -3,10 +3,8 @@ package co.simplon.gaminlove.controller;
 import java.util.Collection;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -39,15 +37,17 @@ import io.swagger.annotations.ApiResponses;
 		@ApiResponse(code = 400, message = "Mauvaise Requête"),
 		@ApiResponse(code = 401, message = "Echec Authentification"),
 		@ApiResponse(code = 403, message = "Accès Refusé"), @ApiResponse(code = 500, message = "Problème Serveur") })
-@CrossOrigin("*")
 public class JeuController {
 
 	// permet d'initialiser le repo, par le mécanisme d'injection de dépendance
-	@Autowired
-	private JeuRepository jeuRepository;
+	private final JeuRepository jeuRepository;
 
-	@Autowired
-	private GeekRepository geekRepository;
+	private final GeekRepository geekRepository;
+
+	public JeuController(JeuRepository jeuRepository, GeekRepository geekRepository) {
+		this.jeuRepository = jeuRepository;
+		this.geekRepository = geekRepository;
+	}
 
 	/**
 	 * Création d'un nouveau jeu.
@@ -106,8 +106,7 @@ public class JeuController {
 	@GetMapping(path = "/{id}")
 	@ApiOperation(value = "Cherche un jeu selon l'id.")
 	public ResponseEntity<Jeu> getOne(@PathVariable int id) {
-		Optional<Jeu> optJeu = jeuRepository.findById(id);
-		return optJeu.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+		return jeuRepository.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
 	/**
@@ -129,14 +128,14 @@ public class JeuController {
 	}
 
 	/**
-	 * Retourne le jeu selon le nom spécifié et le met à jour.
+	 * Retourne le jeu selon l'id spécifié et le met à jour.
 	 * 
 	 * @param id du jeu
 	 * @return jeu à jour
 	 */
 
 	@PatchMapping(path = "/{id}")
-	@ApiOperation(value = "Retourne le jeu selon le nom spécifié et le met à jour.")
+	@ApiOperation(value = "Retourne le jeu selon l'id spécifié et le met à jour.")
 	public ResponseEntity<Jeu> updateOne(@PathVariable int id, @RequestBody Jeu jeuInput) {
 		Optional<Jeu> optJeu = jeuRepository.findById(id);
 		if (optJeu.isPresent()) {

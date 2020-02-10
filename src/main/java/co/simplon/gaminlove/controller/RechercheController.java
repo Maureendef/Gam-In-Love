@@ -37,31 +37,33 @@ import io.swagger.annotations.ApiResponses;
 		@ApiResponse(code = 400, message = "Mauvaise Requête"),
 		@ApiResponse(code = 401, message = "Echec Authentification"),
 		@ApiResponse(code = 403, message = "Accès Refusé"), @ApiResponse(code = 500, message = "Problème Serveur") })
-@CrossOrigin("*")
 public class RechercheController {
 
 	// permet d'initialiser le repo, par le mécanisme d'injection de dépendance
 	// (IOC)
-	@Autowired
-	private RechercheRepository rechercheRepository;
+	private final RechercheRepository rechercheRepository;
 
-	@Autowired
-	private GeekRepository geekRepository;
+	private final GeekRepository geekRepository;
+
+	public RechercheController(RechercheRepository rechercheRepository, GeekRepository geekRepository) {
+		this.rechercheRepository = rechercheRepository;
+		this.geekRepository = geekRepository;
+	}
 
 	/**
 	 * Crée une nouvelle recherche.
 	 * 
-	 * @param un objet recherche sous forme Json
+	 * @param recherche un objet recherche sous forme Json
 	 * @return la recherche crée (avec id auto-généré)
 	 */
 	
-	@PostMapping(path = "/{id}")
+	@PostMapping(path = "/")
 	@ApiOperation(value = "Crée une nouvelle recherche.")
-	public ResponseEntity<Recherche> addNew(@PathVariable int id, @RequestBody Recherche recherche) {
-		Optional<Geek> optGeek = geekRepository.findById(id);
+	public ResponseEntity<Recherche> addNew(@RequestBody Recherche recherche) {
+		Optional<Geek> optGeek = geekRepository.findById(recherche.getId());
 		if (optGeek.isPresent()) {
-			rechercheRepository.save(recherche);
 			optGeek.get().getRecherches().add(recherche);
+			rechercheRepository.save(recherche);
 			geekRepository.save(optGeek.get());
 		}
 		return ResponseEntity.ok(recherche);
@@ -76,8 +78,7 @@ public class RechercheController {
 	@GetMapping(path = "/{id}")
 	@ApiOperation(value = "Retourne la recherche pour l'id spécifié.")
 	public ResponseEntity<Recherche> getOne(@PathVariable int id) {
-		Optional<Recherche> optRecherche = rechercheRepository.findById(id);
-		return optRecherche.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+		return rechercheRepository.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 
 	/**
@@ -95,7 +96,7 @@ public class RechercheController {
 	/**
 	 * Supprime la recherche pour l'id spécifié.
 	 * 
-	 * @param id de la recherche a supprimer
+	 * @param idGeek,idRecherche de la recherche a supprimer
 	 * @return code la requête (200 => OK)
 	 */
 	
@@ -123,10 +124,7 @@ public class RechercheController {
 	@GetMapping(path = "/search")
     @ApiOperation(value = "Retourne les Geek d'une même ville.")
     public List<String> getCity(@RequestBody Recherche recherche) {
-        List<String> optCity = rechercheRepository.findCity(recherche.getSexe(), recherche.getVille(), recherche.getAgeMin(), recherche.getAgeMax(), recherche.getJeu());
-        return optCity;
-        //List<Geek> optCity = rechercheRepository.findGame(recherche.getJeu());
-        //return optCity;
+        return rechercheRepository.findCity(recherche.getSexe(), recherche.getVille(), recherche.getAgeMin(), recherche.getAgeMax(), recherche.getJeu());
     }
 
 }

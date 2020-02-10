@@ -55,12 +55,7 @@ public class MPController {
 	@PostMapping(path = "/")
 	@ApiOperation(value = "Crée un MP.")
 	public MP addNew(@RequestBody MP mp) {
-//		Optional<Geek> optGeek = geekRepository.findById(id);
-//		if (optGeek.isPresent()) {
-//			optGeek.get().getMp().add(mp);
 		return mpRepository.save(mp);
-//		}
-//		return ResponseEntity.ok(mp);
 	}
 
 	/**
