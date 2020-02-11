@@ -2,6 +2,7 @@ package co.simplon.gaminlove.model;
 
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -25,14 +26,21 @@ public class Geek {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@NotNull
 	private int age;
 	@Column(unique=true)
+	@NotNull
 	private String pseudo;
+	@NotNull
 	private String password;
+	@NotNull
 	private String ville;
+	@NotNull
 	private String sexe;
+	@NotNull
 	private String typeCompte;
 	@Column(unique=true)
+	@NotNull
 	private String email;
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
