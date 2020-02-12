@@ -55,14 +55,14 @@ public class GeekController {
 
     @PostMapping(path = "/")
     @ApiOperation(value = "Crée un nouveau geek avec le nom spécifié.")
-    public ResponseEntity<Geek> addNew(@RequestBody Geek geek) {
+    public HttpStatus addNew(@RequestBody Geek geek) {
         Optional<Geek> optGeekPseudo = geekRepository.findByPseudo(geek.getPseudo());
         Optional<Geek> optGeekMail = geekRepository.findByEmail(geek.getEmail());
         if (optGeekPseudo.isPresent() || optGeekMail.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(geek);
+            return HttpStatus.CONFLICT;
         }
         geekRepository.save(geek);
-        return ResponseEntity.ok(geek);
+        return HttpStatus.OK;
     }
 
     /**
