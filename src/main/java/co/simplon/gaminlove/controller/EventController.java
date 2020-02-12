@@ -76,9 +76,8 @@ public class EventController {
 		Optional<Geek> optGeek = geekRepository.findById(idGeek);
 		Optional<Event> optEvent = eventRepository.findById(idEvent);
 		if (optGeek.isPresent() && optEvent.isPresent()) {
-			optGeek.get().getEvent().add(optEvent.get());
 			optEvent.get().getGeekParticipant().add(optGeek.get());
-			geekRepository.save(optGeek.get());
+			eventRepository.save(optEvent.get());
 			return ResponseEntity.ok(optGeek.get());
 		} else {
 			return ResponseEntity.notFound().build();

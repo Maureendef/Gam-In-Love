@@ -1,5 +1,6 @@
 package co.simplon.gaminlove.model;
 
+import java.util.Collection;
 import java.util.Set;
 import javax.persistence.*;
 
@@ -55,7 +56,7 @@ public class Geek {
 	private Set<Action> action;
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
-	private Set<MP> mp;
+	private Collection<MP> mp;
 	@ManyToMany
 	private Set<Jeu> jeux;
 	@ManyToMany
