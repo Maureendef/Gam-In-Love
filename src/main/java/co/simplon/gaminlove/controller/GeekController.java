@@ -58,8 +58,7 @@ public class GeekController {
 	@ApiOperation(value = "Crée un nouveau geek avec le nom spécifié.")
 	public HttpStatus addNew(@RequestBody Geek geek) {
 		Optional<Geek> optGeekPseudo = geekRepository.findByPseudo(geek.getPseudo());
-		Iterable<Geek> optGeekMail = geekRepository.findByEmail(geek.getEmail());
-		if (optGeekPseudo.isPresent() || optGeekMail.isPresent()) {
+		if (optGeekPseudo.isPresent()) {
 			return HttpStatus.CONFLICT;
 		}
 		geekRepository.save(geek);
