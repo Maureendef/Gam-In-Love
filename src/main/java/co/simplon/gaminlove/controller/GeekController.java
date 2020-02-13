@@ -66,6 +66,18 @@ public class GeekController {
     }
 
     /**
+     * Retourne un geek en fonction de son mail
+     * @param mail le mail du geek
+     * @return le geek en question
+     */
+
+    @GetMapping(path = "auth")
+    @ApiOperation(value = "Retourne un geek en fonction de son mail")
+    public ResponseEntity<Geek> auth(String mail) {
+        return geekRepository.findByEmail(mail).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    /**
      * Retourne tous les geek de la base.
      *
      * @return une liste de geek
