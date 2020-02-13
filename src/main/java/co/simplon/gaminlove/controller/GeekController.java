@@ -73,7 +73,7 @@ public class GeekController {
 
     @GetMapping(path = "auth")
     @ApiOperation(value = "Retourne un geek en fonction de son mail")
-    public ResponseEntity<Geek> auth(String mail) {
+    public ResponseEntity<Geek> auth(@RequestBody String mail) {
         return geekRepository.findByEmail(mail).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
