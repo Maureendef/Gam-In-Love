@@ -5,9 +5,9 @@ INSERT INTO gamin_love.geek (id, age, email, pseudo, sexe,type_compte,ville, pas
 INSERT INTO gamin_love.geek (id, age, email, pseudo, sexe,type_compte,ville, password) VALUES (5, 23, 'olivier@gmail.com', 'twonails', 'homme', 'premium++', 'Paris', 'jemmanger');
 INSERT INTO gamin_love.geek (id, age, email, pseudo, sexe,type_compte,ville, password) VALUES (6, 45, 'julien@gmail.com', 'jujulegeek', 'homme', 'basique', 'Nantes', 'jemleschevres');
 
-INSERT INTO gamin_love.event (id, lieu, nom) VALUES (1, 'Paris', 'Paris Game Lover');
-INSERT INTO gamin_love.event (id, lieu, nom) VALUES (2, 'Lille', 'Christmas Lover Geek');
-INSERT INTO gamin_love.event (id, lieu, nom) VALUES (3, 'Nantes', 'Summer Geek Love');
+INSERT INTO gamin_love.event (id, lieu, nom, date) VALUES (1, 'Paris', 'Paris Game Lover', '2020-02-21');
+INSERT INTO gamin_love.event (id, lieu, nom, date) VALUES (2, 'Lille', 'Christmas Lover Geek', '2020-05-01');
+INSERT INTO gamin_love.event (id, lieu, nom, date) VALUES (3, 'Nantes', 'Summer Geek Love', '2020-11-19');
 
 INSERT INTO gamin_love.action(id, type_action, geek_cible_id, geek_action_id) VALUES (1, 'like', 1, 4);
 INSERT INTO gamin_love.action(id, type_action, geek_cible_id, geek_action_id) VALUES (2, 'superlike', 4, 1);
@@ -24,6 +24,7 @@ INSERT INTO gamin_love.geek_jeux(geek_jeux_id, jeux_id) VALUES(4,38);
 INSERT INTO gamin_love.geek_jeux(geek_jeux_id, jeux_id) VALUES(4,394);
 
 INSERT INTO gamin_love.mp(id, message, geek_cible_id, geekmp_id) VALUES(1, 'Depuis que je t ai vu je ne dors plus la nuit', 4, 1);
+INSERT INTO gamin_love.geek_mp(geek_id, mp_id) VALUES (1, 1);
 
 INSERT INTO gamin_love.photo(id, url, geek_photo_id) VALUES(1, 'https://www.babelio.com/users/AVT_Marjorie-Levasseur_1107.jpg',1);
 INSERT INTO gamin_love.photo(id, url, geek_photo_id) VALUES(2, 'https://gal.img.pmdstatic.net/fit/http.3A.2F.2Fprd2-bone-image.jpg',2);
