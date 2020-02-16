@@ -2,6 +2,7 @@ package co.simplon.gaminlove.repository;
 
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,5 @@ import co.simplon.gaminlove.model.Geek;
 public interface GeekRepository extends CrudRepository<Geek, Integer> {
 
 	Optional<Geek> findByPseudo(String pseudo);
-	Iterable<Geek> findByEmail(String email);
-
+	Iterable<Geek> findByToken(String token);
 }

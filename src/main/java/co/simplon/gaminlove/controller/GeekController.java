@@ -66,7 +66,7 @@ public class GeekController {
 	}
 
 	/**
-	 * Retourne un geek en fonction de son mail
+	 * Retourne un geek en fonction de son token
 	 * 
 	 * @param mail le mail du geek
 	 * @return le geek en question
@@ -74,7 +74,7 @@ public class GeekController {
 	@GetMapping(path = "auth")
 	@ApiOperation(value = "Retourne un geek en fonction de son mail")
 	public @ResponseBody Iterable<Geek> auth(@RequestParam String mail) {
-		return geekRepository.findByEmail(mail);
+		return geekRepository.findByToken(mail);
 	}
 
 	/**

@@ -42,6 +42,8 @@ public class Geek {
 	@Column(unique=true)
 	@NonNull
 	private String email;
+	@NonNull
+	private String token;
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
 	private Set<Photo> photos;
