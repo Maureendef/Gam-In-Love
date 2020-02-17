@@ -37,7 +37,6 @@ import io.swagger.annotations.ApiResponses;
 		@ApiResponse(code = 400, message = "Mauvaise Requête"),
 		@ApiResponse(code = 401, message = "Echec Authentification"),
 		@ApiResponse(code = 403, message = "Accès Refusé"), @ApiResponse(code = 500, message = "Problème Serveur") })
-@CrossOrigin("*")
 public class PhotoController {
 
 	private final PhotoRepository photoRepository;
@@ -60,7 +59,9 @@ public class PhotoController {
 	@ApiOperation(value = "Ajoute une photo pour le Geek.")
 	public ResponseEntity<Photo> addNew(@PathVariable int id, @RequestBody Photo photo) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
+		System.out.println(photo);
 		if (optGeek.isPresent()) {
+			photo.setGeekPhoto(optGeek.get());
 			photoRepository.save(photo);
 			optGeek.get().getPhotos().add(photo);
 			geekRepository.save(optGeek.get());
