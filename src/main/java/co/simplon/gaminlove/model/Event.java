@@ -1,6 +1,7 @@
 package co.simplon.gaminlove.model;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -35,6 +36,6 @@ public class Event {
 	private String lieu;
 	private LocalDate date;
 	@ManyToMany
-	private Set<Geek> geekParticipant;
+	private Collection<Geek> geekParticipant;
 
 }
