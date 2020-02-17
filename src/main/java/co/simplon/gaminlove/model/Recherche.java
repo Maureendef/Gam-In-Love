@@ -35,7 +35,6 @@ public class Recherche {
 	private String sexe;
 	private String ville;
 	private String jeu;
-	private String rang;
 	@ManyToOne(cascade = CascadeType.REMOVE)
 	private Geek geekRecherche;
 

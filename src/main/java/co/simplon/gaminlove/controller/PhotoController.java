@@ -76,7 +76,7 @@ public class PhotoController {
 
 	@GetMapping(path = "/album/{id}")
 	@ApiOperation(value = "Retourne toutes les photos.")
-	public @ResponseBody ArrayList<?> getAllForGeek(@PathVariable int id) {
+	public @ResponseBody ArrayList<String> getAllForGeek(@PathVariable int id) {
 		return photoRepository.findForGeek(id);
 	}
 

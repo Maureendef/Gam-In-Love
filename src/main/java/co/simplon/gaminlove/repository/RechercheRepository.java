@@ -22,8 +22,9 @@ public interface RechercheRepository extends CrudRepository<Recherche, Integer> 
 			"LEFT JOIN g.jeux j " +
 			"WHERE g.sexe LIKE %?1% " +
 			"AND g.ville LIKE %?2% " +
-			"AND g.age BETWEEN ?3 AND ?4 " +
-			"AND j.nom LIKE %?5%")
+			"AND g.age BETWEEN ?3 AND ?4 "
+			//+		"AND j.nom LIKE %?5%")
+	)
 	List<String> findCity(String sexe, String ville, int ageMin, int ageMax, String nom); //  TODO on peut aussi générer des requetes avec Like sans les écrire
 	// https://docs.spring.io/spring-data/jpa/docs/current/reference/html/#jpa.query-methods.query-creation
 }
