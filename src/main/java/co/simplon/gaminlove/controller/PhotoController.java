@@ -37,6 +37,7 @@ import io.swagger.annotations.ApiResponses;
 		@ApiResponse(code = 400, message = "Mauvaise Requête"),
 		@ApiResponse(code = 401, message = "Echec Authentification"),
 		@ApiResponse(code = 403, message = "Accès Refusé"), @ApiResponse(code = 500, message = "Problème Serveur") })
+@CrossOrigin("*")
 public class PhotoController {
 
 	private final PhotoRepository photoRepository;
@@ -59,7 +60,6 @@ public class PhotoController {
 	@ApiOperation(value = "Ajoute une photo pour le Geek.")
 	public ResponseEntity<Photo> addNew(@PathVariable int id, @RequestBody Photo photo) {
 		Optional<Geek> optGeek = geekRepository.findById(id);
-		System.out.println(photo);
 		if (optGeek.isPresent()) {
 			photo.setGeekPhoto(optGeek.get());
 			photoRepository.save(photo);
@@ -77,7 +77,7 @@ public class PhotoController {
 
 	@GetMapping(path = "/album/{id}")
 	@ApiOperation(value = "Retourne toutes les photos.")
-	public @ResponseBody ArrayList<String> getAllForGeek(@PathVariable int id) {
+	public @ResponseBody ArrayList<Photo> getAllForGeek(@PathVariable int id) {
 		return photoRepository.findForGeek(id);
 	}
 
@@ -110,6 +110,7 @@ public class PhotoController {
 		if (optPhoto.isPresent() && optGeek.isPresent()) {
 			optGeek.get().getPhotos().remove(optPhoto.get());
 			geekRepository.save(optGeek.get());
+			System.out.println(idPhoto);
 			photoRepository.deleteById(idPhoto);
 			return HttpStatus.OK;
 		} else {
