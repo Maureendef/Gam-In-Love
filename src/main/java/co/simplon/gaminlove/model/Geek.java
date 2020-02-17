@@ -1,7 +1,6 @@
 package co.simplon.gaminlove.model;
 
 import java.util.Collection;
-import java.util.Set;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -46,22 +45,22 @@ public class Geek {
 	private String token;
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
-	private Set<Photo> photos;
+	private Collection<Photo> photos;
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
-	private Set<Recherche> recherches;
+	private Collection<Recherche> recherches;
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
-	private Set<Coop> coop;
+	private Collection<Coop> coop;
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
-	private Set<Action> action;
+	private Collection<Action> action;
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
 	private Collection<MP> mp;
 	@ManyToMany
-	private Set<Jeu> jeux;
+	private Collection<Jeu> jeux;
 	@ManyToMany
-	private Set<Event> event;
+	private Collection<Event> event;
 
 }

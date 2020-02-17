@@ -121,8 +121,8 @@ public class RechercheController {
 	 * @return un ou plusieurs Geek(s)
 	 */
 
-	@GetMapping(path = "/search")
-    @ApiOperation(value = "Retourne les Geek d'une même ville.")
+	@PostMapping(path = "/search")
+    @ApiOperation(value = "Retourne les Geek pour les critères renseignés")
     public List<String> getCity(@RequestBody Recherche recherche) {
         return rechercheRepository.findCity(recherche.getSexe(), recherche.getVille(), recherche.getAgeMin(), recherche.getAgeMax(), recherche.getJeu());
     }
