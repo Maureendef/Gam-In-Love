@@ -20,5 +20,5 @@ import co.simplon.gaminlove.model.Geek;
 public interface GeekRepository extends CrudRepository<Geek, Integer> {
 
 	Optional<Geek> findByPseudo(String pseudo);
-	Iterable<Geek> findByToken(String token);
+	Optional<Geek> findByToken(String token);
 }
