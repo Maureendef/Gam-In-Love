@@ -43,7 +43,6 @@ public class Geek {
 	@NonNull
 	private String email;
 	@NonNull
-	@JsonIgnore
 	private String token;
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
