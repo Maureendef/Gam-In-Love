@@ -18,8 +18,7 @@ import java.util.Collection;
 @Repository
 public interface PhotoRepository extends CrudRepository<Photo, Integer> {
     @Query("SELECT p.url " +
-            "FROM Geek g " +
-            "LEFT JOIN g.photos p " +
-            "WHERE g.id LIKE ?1 ")
-    ArrayList<?> findForGeek(int id);
+            "FROM Photo p " +
+            "WHERE p.geekPhoto.id = ?1 ")
+    ArrayList<String> findForGeek(int id);
 }
