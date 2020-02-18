@@ -43,6 +43,8 @@ public class Geek {
 	private String email;
 	@NonNull
 	private String token;
+	@NonNull
+	private String description;
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
 	private Collection<Photo> photos;
@@ -58,8 +60,10 @@ public class Geek {
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
 	private Collection<MP> mp;
+	@JsonIgnore
 	@ManyToMany
 	private Collection<Jeu> jeux;
+	@JsonIgnore
 	@ManyToMany
 	private Collection<Event> event;
 
