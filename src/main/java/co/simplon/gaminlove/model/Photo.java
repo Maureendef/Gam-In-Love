@@ -29,6 +29,6 @@ public class Photo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String url;
-	@ManyToOne(cascade = CascadeType.REMOVE)
+	@ManyToOne
 	private Geek geekPhoto;
 }
