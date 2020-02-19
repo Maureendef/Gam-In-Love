@@ -87,11 +87,11 @@ public class ActionController {
 	 * @return l'objet action si réponse positive
 	 */
 
-	@GetMapping(path = "/{id}")
-	@ApiOperation(value = "Retourne l'action pour l'id spécifié.")
-	public ResponseEntity<Geek> getOne(@PathVariable int id) {
-		return geekRepository.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-	}
+    @GetMapping(path = "/{id}")
+    @ApiOperation(value = "Retourne l'action pour l'id spécifié.")
+    public Collection<Action> getOne(@PathVariable int id) {
+        return geekRepository.findById(id).get().getAction();
+    }
 
 	/**
 	 * Supprime l'action pour l'id spécifié.
