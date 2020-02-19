@@ -20,7 +20,7 @@ public interface RechercheRepository extends CrudRepository<Recherche, Integer> 
 	@Query("SELECT g " +
 			"FROM Geek g " +
 			"LEFT JOIN g.jeux j " +
-			"WHERE g.sexe LIKE %?1% " +
+			"WHERE g.sexe LIKE ?1 " +
 			"AND g.ville LIKE %?2% " +
 			"AND g.age BETWEEN ?3 AND ?4 "
 			//+		"AND j.nom LIKE %?5%")
