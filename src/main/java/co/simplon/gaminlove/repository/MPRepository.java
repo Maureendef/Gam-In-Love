@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MPRepository extends CrudRepository<MP, Integer> {
-	@Query("SELECT m.date, g.pseudo, m.message " +
+	@Query("SELECT m.date, g.pseudo, m.message, m.geekMP.id, m.geekCible.id " +
 			"FROM MP m " +
 			"LEFT JOIN m.geekMP g " +
 			"WHERE m.geekMP.id LIKE ?1 " +
