@@ -41,8 +41,10 @@ public class Geek {
 	@Column(unique=true)
 	@NonNull
 	private String email;
+	@JsonIgnore
 	@NonNull
 	private String token;
+	@JsonIgnore
 	@NonNull
 	private String description;
 	@JsonIgnore
@@ -51,7 +53,7 @@ public class Geek {
 	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
 	private Collection<Recherche> recherches;
-	@JsonIgnore
+//	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
 	private Collection<Coop> coop;
 	@JsonIgnore

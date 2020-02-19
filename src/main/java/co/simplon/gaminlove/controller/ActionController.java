@@ -1,5 +1,6 @@
 package co.simplon.gaminlove.controller;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -89,8 +90,9 @@ public class ActionController {
 
     @GetMapping(path = "/{id}")
     @ApiOperation(value = "Retourne l'action pour l'id spécifié.")
-    public ResponseEntity<Action> getOne(@PathVariable int id) {
-        return actionRepository.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public Collection<Action> getOne(@PathVariable int id) {
+        return geekRepository.findById(id).get().getAction();
+//        		.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     /**
