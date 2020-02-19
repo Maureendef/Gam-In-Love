@@ -41,11 +41,7 @@ public class Geek {
 	@Column(unique=true)
 	@NonNull
 	private String email;
-	@JsonIgnore
-	@NonNull
 	private String token;
-	@JsonIgnore
-	@NonNull
 	private String description;
 //	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
