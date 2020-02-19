@@ -47,7 +47,7 @@ public class Geek {
 	@JsonIgnore
 	@NonNull
 	private String description;
-	@JsonIgnore
+//	@JsonIgnore
 	@OneToMany(orphanRemoval=true)
 	private Collection<Photo> photos;
 	@JsonIgnore

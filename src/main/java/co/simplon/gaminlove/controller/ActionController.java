@@ -31,86 +31,84 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping(path = "/action")
 @Api(tags = "API pour les opérations CRUD sur les Actions.")
-@ApiResponses(value = {@ApiResponse(code = 200, message = "Succès"),
-        @ApiResponse(code = 400, message = "Mauvaise Requête"),
-        @ApiResponse(code = 401, message = "Echec Authentification"),
-        @ApiResponse(code = 403, message = "Accès Refusé"), @ApiResponse(code = 500, message = "Problème Serveur")})
+@ApiResponses(value = { @ApiResponse(code = 200, message = "Succès"),
+		@ApiResponse(code = 400, message = "Mauvaise Requête"),
+		@ApiResponse(code = 401, message = "Echec Authentification"),
+		@ApiResponse(code = 403, message = "Accès Refusé"), @ApiResponse(code = 500, message = "Problème Serveur") })
 public class ActionController {
 
-    // permet d'initialiser le repo, par le mécanisme d'injection de dépendance
-    // (IOC)
-    private final ActionRepository actionRepository;
+	// permet d'initialiser le repo, par le mécanisme d'injection de dépendance
+	// (IOC)
+	private final ActionRepository actionRepository;
 
-    private final GeekRepository geekRepository;
+	private final GeekRepository geekRepository;
 
-    public ActionController(ActionRepository actionRepository, GeekRepository geekRepository) {
-        this.actionRepository = actionRepository;
-        this.geekRepository = geekRepository;
-    }
+	public ActionController(ActionRepository actionRepository, GeekRepository geekRepository) {
+		this.actionRepository = actionRepository;
+		this.geekRepository = geekRepository;
+	}
 
-    /**
-     * Crée une nouvelle action avec le type spécifié.
-     *
-     * @param action un objet action sous forme Json
-     * @return l'action crée (avec l'id auto-générée)
-     */
+	/**
+	 * Crée une nouvelle action avec le type spécifié.
+	 *
+	 * @param action un objet action sous forme Json
+	 * @return l'action crée (avec l'id auto-générée)
+	 */
 
-    @PostMapping(path = "/")
-    @ApiOperation(value = "Crée une nouvelle action avec le type spécifié.")
-    public ResponseEntity<Action> addNew(@RequestBody Action action) {
-        Optional<Geek> optGeek = geekRepository.findById(action.getGeekAction().getId());
-        if (optGeek.isPresent()) {
-            optGeek.get().getAction().add(action);
-            actionRepository.save(action);
-            geekRepository.save(optGeek.get());
-            return ResponseEntity.ok(action);
-        }
-        return ResponseEntity.notFound().build();
-    }
+	@PostMapping(path = "/")
+	@ApiOperation(value = "Crée une nouvelle action avec le type spécifié.")
+	public ResponseEntity<Action> addNew(@RequestBody Action action) {
+		Optional<Geek> optGeek = geekRepository.findById(action.getGeekAction().getId());
+		if (optGeek.isPresent()) {
+			optGeek.get().getAction().add(action);
+			actionRepository.save(action);
+			geekRepository.save(optGeek.get());
+			return ResponseEntity.ok(action);
+		}
+		return ResponseEntity.notFound().build();
+	}
 
-    /**
-     * Retourne toutes les actions.
-     *
-     * @return une liste d'action
-     */
+	/**
+	 * Retourne toutes les actions.
+	 *
+	 * @return une liste d'action
+	 */
 
-    @GetMapping(path = "/")
-    @ApiOperation(value = "Retourne toutes les actions.")
-    public @ResponseBody
-    Iterable<Action> getAll() {
-        return actionRepository.findAll();
-    }
+	@GetMapping(path = "/")
+	@ApiOperation(value = "Retourne toutes les actions.")
+	public @ResponseBody Iterable<Action> getAll() {
+		return actionRepository.findAll();
+	}
 
-    /**
-     * Retourne l'action pour l'id spécifié.
-     *
-     * @param id de l'action
-     * @return l'objet action si réponse positive
-     */
+	/**
+	 * Retourne l'action pour l'id spécifié.
+	 *
+	 * @param id de l'action
+	 * @return l'objet action si réponse positive
+	 */
 
-    @GetMapping(path = "/{id}")
-    @ApiOperation(value = "Retourne l'action pour l'id spécifié.")
-    public Collection<Action> getOne(@PathVariable int id) {
-        return geekRepository.findById(id).get().getAction();
-//        		.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
+	@GetMapping(path = "/{id}")
+	@ApiOperation(value = "Retourne l'action pour l'id spécifié.")
+	public ResponseEntity<Geek> getOne(@PathVariable int id) {
+		return geekRepository.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+	}
 
-    /**
-     * Supprime l'action pour l'id spécifié.
-     *
-     * @param id de l'action
-     * @return code la requête (200 => OK)
-     */
+	/**
+	 * Supprime l'action pour l'id spécifié.
+	 *
+	 * @param id de l'action
+	 * @return code la requête (200 => OK)
+	 */
 
-    @DeleteMapping("/{id}")
-    @ApiOperation(value = "Supprime l'action pour l'id spécifié.")
-    public HttpStatus suppr(@PathVariable int id) {
-        Optional<Action> optAction = actionRepository.findById(id);
-        if (optAction.isPresent()) {
-            actionRepository.deleteById(id);
-            return HttpStatus.OK;
-        } else {
-            return HttpStatus.NOT_FOUND;
-        }
-    }
+	@DeleteMapping("/{id}")
+	@ApiOperation(value = "Supprime l'action pour l'id spécifié.")
+	public HttpStatus suppr(@PathVariable int id) {
+		Optional<Action> optAction = actionRepository.findById(id);
+		if (optAction.isPresent()) {
+			actionRepository.deleteById(id);
+			return HttpStatus.OK;
+		} else {
+			return HttpStatus.NOT_FOUND;
+		}
+	}
 }
