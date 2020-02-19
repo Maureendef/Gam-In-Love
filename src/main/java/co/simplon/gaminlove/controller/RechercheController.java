@@ -123,7 +123,7 @@ public class RechercheController {
 
 	@PostMapping(path = "/search")
     @ApiOperation(value = "Retourne les Geek pour les critères renseignés")
-    public List<String> getCity(@RequestBody Recherche recherche) {
+    public List<Geek> getCity(@RequestBody Recherche recherche) {
         return rechercheRepository.findCity(recherche.getSexe(), recherche.getVille(), recherche.getAgeMin(), recherche.getAgeMax(), recherche.getJeu());
     }
 
